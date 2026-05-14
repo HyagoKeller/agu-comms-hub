@@ -52,7 +52,6 @@ export interface Ativo {
   hotdesking?: string;
   origemImport?: string; // nome da aba/arquivo
   criadoEm: string;
-  criadoEm: string;
 }
 
 export interface Unidade {
