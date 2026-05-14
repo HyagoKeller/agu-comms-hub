@@ -171,18 +171,14 @@ export const store = {
 };
 
 function log(entry: Omit<AuditoriaLog, "id" | "ts" | "ator">) {
-  // Lazy import to avoid circular dependency between store and auth
   let ator = "sistema@agu.gov.br";
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const mod = require("./auth") as { auth?: { current: { email: string } | null } };
-    if (mod.auth?.current?.email) ator = mod.auth.current.email;
-  } catch {
-    try {
-      const raw = typeof window !== "undefined" ? localStorage.getItem("agu-auth-v1") : null;
-      if (raw) ator = (JSON.parse(raw) as { email: string }).email;
-    } catch {}
-  }
+    const raw = typeof window !== "undefined" ? localStorage.getItem("agu-auth-v1") : null;
+    if (raw) {
+      const u = JSON.parse(raw) as { email?: string };
+      if (u?.email) ator = u.email;
+    }
+  } catch {}
   const full: AuditoriaLog = {
     id: crypto.randomUUID(),
     ts: new Date().toISOString(),
