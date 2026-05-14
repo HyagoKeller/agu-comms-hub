@@ -9,38 +9,188 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UsuariosRouteImport } from './routes/usuarios'
+import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as EstruturaRouteImport } from './routes/estrutura'
+import { Route as CustosRouteImport } from './routes/custos'
+import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
+import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InventarioIndexRouteImport } from './routes/inventario.index'
+import { Route as InventarioNovoRouteImport } from './routes/inventario.novo'
 
+const UsuariosRoute = UsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RelatoriosRoute = RelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstruturaRoute = EstruturaRouteImport.update({
+  id: '/estrutura',
+  path: '/estrutura',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustosRoute = CustosRouteImport.update({
+  id: '/custos',
+  path: '/custos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BilhetagemRoute = BilhetagemRouteImport.update({
+  id: '/bilhetagem',
+  path: '/bilhetagem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuditoriaRoute = AuditoriaRouteImport.update({
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InventarioIndexRoute = InventarioIndexRouteImport.update({
+  id: '/inventario/',
+  path: '/inventario/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventarioNovoRoute = InventarioNovoRouteImport.update({
+  id: '/inventario/novo',
+  path: '/inventario/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auditoria': typeof AuditoriaRoute
+  '/bilhetagem': typeof BilhetagemRoute
+  '/custos': typeof CustosRoute
+  '/estrutura': typeof EstruturaRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/inventario/novo': typeof InventarioNovoRoute
+  '/inventario/': typeof InventarioIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auditoria': typeof AuditoriaRoute
+  '/bilhetagem': typeof BilhetagemRoute
+  '/custos': typeof CustosRoute
+  '/estrutura': typeof EstruturaRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/inventario/novo': typeof InventarioNovoRoute
+  '/inventario': typeof InventarioIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auditoria': typeof AuditoriaRoute
+  '/bilhetagem': typeof BilhetagemRoute
+  '/custos': typeof CustosRoute
+  '/estrutura': typeof EstruturaRoute
+  '/relatorios': typeof RelatoriosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/inventario/novo': typeof InventarioNovoRoute
+  '/inventario/': typeof InventarioIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/relatorios'
+    | '/usuarios'
+    | '/inventario/novo'
+    | '/inventario/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/relatorios'
+    | '/usuarios'
+    | '/inventario/novo'
+    | '/inventario'
+  id:
+    | '__root__'
+    | '/'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/relatorios'
+    | '/usuarios'
+    | '/inventario/novo'
+    | '/inventario/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuditoriaRoute: typeof AuditoriaRoute
+  BilhetagemRoute: typeof BilhetagemRoute
+  CustosRoute: typeof CustosRoute
+  EstruturaRoute: typeof EstruturaRoute
+  RelatoriosRoute: typeof RelatoriosRoute
+  UsuariosRoute: typeof UsuariosRoute
+  InventarioNovoRoute: typeof InventarioNovoRoute
+  InventarioIndexRoute: typeof InventarioIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/usuarios': {
+      id: '/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof UsuariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatorios': {
+      id: '/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estrutura': {
+      id: '/estrutura'
+      path: '/estrutura'
+      fullPath: '/estrutura'
+      preLoaderRoute: typeof EstruturaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custos': {
+      id: '/custos'
+      path: '/custos'
+      fullPath: '/custos'
+      preLoaderRoute: typeof CustosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bilhetagem': {
+      id: '/bilhetagem'
+      path: '/bilhetagem'
+      fullPath: '/bilhetagem'
+      preLoaderRoute: typeof BilhetagemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auditoria': {
+      id: '/auditoria'
+      path: '/auditoria'
+      fullPath: '/auditoria'
+      preLoaderRoute: typeof AuditoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +198,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inventario/': {
+      id: '/inventario/'
+      path: '/inventario'
+      fullPath: '/inventario/'
+      preLoaderRoute: typeof InventarioIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventario/novo': {
+      id: '/inventario/novo'
+      path: '/inventario/novo'
+      fullPath: '/inventario/novo'
+      preLoaderRoute: typeof InventarioNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuditoriaRoute: AuditoriaRoute,
+  BilhetagemRoute: BilhetagemRoute,
+  CustosRoute: CustosRoute,
+  EstruturaRoute: EstruturaRoute,
+  RelatoriosRoute: RelatoriosRoute,
+  UsuariosRoute: UsuariosRoute,
+  InventarioNovoRoute: InventarioNovoRoute,
+  InventarioIndexRoute: InventarioIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
