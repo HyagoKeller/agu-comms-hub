@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { Ativo, AuditoriaLog, CustoItem, PerfilUsuario, Unidade } from "./types";
+import type { Ativo, AuditoriaLog, CustoItem, PerfilUsuario, Unidade, WhatsappNumero } from "./types";
 
 interface State {
   ativos: Ativo[];
@@ -7,6 +7,7 @@ interface State {
   custos: CustoItem[];
   logs: AuditoriaLog[];
   usuarios: PerfilUsuario[];
+  whats: WhatsappNumero[];
 }
 
 const KEY = "agu-telefonia-v1";
