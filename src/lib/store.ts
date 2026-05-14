@@ -171,10 +171,18 @@ export const store = {
 };
 
 function log(entry: Omit<AuditoriaLog, "id" | "ts" | "ator">) {
+  let ator = "sistema@agu.gov.br";
+  try {
+    const raw = typeof window !== "undefined" ? localStorage.getItem("agu-auth-v1") : null;
+    if (raw) {
+      const u = JSON.parse(raw) as { email?: string };
+      if (u?.email) ator = u.email;
+    }
+  } catch {}
   const full: AuditoriaLog = {
     id: crypto.randomUUID(),
     ts: new Date().toISOString(),
-    ator: "admin@agu.gov.br",
+    ator,
     ...entry,
   };
   setState((s) => ({ ...s, logs: [full, ...s.logs] }));

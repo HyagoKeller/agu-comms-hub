@@ -10,6 +10,8 @@ import {
 
 import appCss from "../styles.css?url";
 import { GovHeader } from "@/components/GovHeader";
+import { useAuth } from "@/lib/auth";
+import { useEffect } from "react";
 
 function NotFoundComponent() {
   return (
@@ -111,21 +113,35 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const user = useAuth();
+  const router = useRouter();
+  const path = router.state.location.pathname;
+  const isLogin = path === "/login";
+
+  useEffect(() => {
+    if (!user && !isLogin) {
+      router.navigate({ to: "/login" });
+    }
+  }, [user, isLogin, router]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen flex flex-col bg-background">
-        <GovHeader />
-        <main className="flex-1">
-          <Outlet />
-        </main>
-        <footer className="border-t border-border bg-card mt-12">
-          <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
-            <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
-            <span>Sistema de Gestão de Telefonia & WhatsApp · v1.0</span>
-          </div>
-        </footer>
-      </div>
+      {isLogin || !user ? (
+        <Outlet />
+      ) : (
+        <div className="min-h-screen flex flex-col bg-background">
+          <GovHeader />
+          <main className="flex-1">
+            <Outlet />
+          </main>
+          <footer className="border-t border-border bg-card mt-12">
+            <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
+              <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
+              <span>Sistema de Gestão de Telefonia & WhatsApp · v1.0</span>
+            </div>
+          </footer>
+        </div>
+      )}
     </QueryClientProvider>
   );
 }
