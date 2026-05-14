@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { Ativo, AuditoriaLog, CustoItem, PerfilUsuario, Unidade } from "./types";
+import type { Ativo, AuditoriaLog, CustoItem, PerfilUsuario, Unidade, WhatsappNumero } from "./types";
 
 interface State {
   ativos: Ativo[];
@@ -7,6 +7,7 @@ interface State {
   custos: CustoItem[];
   logs: AuditoriaLog[];
   usuarios: PerfilUsuario[];
+  whats: WhatsappNumero[];
 }
 
 const KEY = "agu-telefonia-v1";
@@ -100,21 +101,45 @@ function seed(): State {
       antes: { statusMDM: "CONFORME" }, depois: { statusMDM: "VIOLACAO" },
     },
   ];
-  return { ativos, unidades, custos, logs, usuarios };
+  const whats: WhatsappNumero[] = [
+    {
+      id: "w1", msisdn: "+5561999110011", operadora: "Vivo", plano: "Corp 20GB",
+      categoria: "MESSENGER_PESSOAL",
+      responsavelNome: "Ana Beatriz", responsavelLogin: "ana.beatriz@agu.gov.br",
+      setor: "Consultivo", regiao: "R3", unidade: "SEDE 3",
+      imei: "356938035643809",
+      statusMDM: "CONFORME", statusTermo: "ASSINADO", status: "ATIVO",
+      dataAtivacao: "2025-03-10",
+      criadoEm: "2025-03-10T10:00:00Z",
+    },
+    {
+      id: "w2", msisdn: "+5511988221122", operadora: "Claro", plano: "Pós 15GB",
+      categoria: "BUSINESS_APP",
+      responsavelNome: "Carlos Mendes", responsavelLogin: "carlos.mendes@agu.gov.br",
+      setor: "Procuradoria", regiao: "R2", unidade: "SEDE 2",
+      statusMDM: "VIOLACAO", statusTermo: "PENDENTE", status: "ATIVO",
+      observacoes: "WhatsApp Business detectado em uso pessoal — chamado aberto.",
+      criadoEm: "2025-04-18T10:00:00Z",
+    },
+  ];
+  return { ativos, unidades, custos, logs, usuarios, whats };
 }
 
 let state: State = load();
 const listeners = new Set<() => void>();
 
 function load(): State {
-  if (typeof window === "undefined") return seed();
+  const def = seed();
+  if (typeof window === "undefined") return def;
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as State;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<State>;
+      return { ...def, ...parsed, whats: parsed.whats ?? def.whats };
+    }
   } catch {}
-  const s = seed();
-  try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
-  return s;
+  try { localStorage.setItem(KEY, JSON.stringify(def)); } catch {}
+  return def;
 }
 
 function persist() {
@@ -140,6 +165,30 @@ export const store = {
   addAtivo(a: Ativo) {
     setState((s) => ({ ...s, ativos: [a, ...s.ativos] }));
     log({ modulo: "Inventário", acao: "CRIAR", registroId: a.id, depois: a as unknown as Record<string, unknown> });
+  },
+  bulkAddAtivos(items: Ativo[], origem: string) {
+    if (!items.length) return;
+    setState((s) => ({ ...s, ativos: [...items, ...s.ativos] }));
+    log({ modulo: "Inventário", acao: "IMPORTAR", registroId: origem, depois: { quantidade: items.length, origem } });
+  },
+  bulkAddWhats(items: WhatsappNumero[], origem: string) {
+    if (!items.length) return;
+    setState((s) => ({ ...s, whats: [...items, ...s.whats] }));
+    log({ modulo: "WhatsApp", acao: "IMPORTAR", registroId: origem, depois: { quantidade: items.length, origem } });
+  },
+  addWhats(w: WhatsappNumero) {
+    setState((s) => ({ ...s, whats: [w, ...s.whats] }));
+    log({ modulo: "WhatsApp", acao: "CRIAR", registroId: w.id, depois: w as unknown as Record<string, unknown> });
+  },
+  updateWhats(id: string, patch: Partial<WhatsappNumero>) {
+    const antes = state.whats.find((x) => x.id === id);
+    setState((s) => ({ ...s, whats: s.whats.map((x) => x.id === id ? { ...x, ...patch } : x) }));
+    log({ modulo: "WhatsApp", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  removeWhats(id: string) {
+    const antes = state.whats.find((x) => x.id === id);
+    setState((s) => ({ ...s, whats: s.whats.filter((x) => x.id !== id) }));
+    log({ modulo: "WhatsApp", acao: "EXCLUIR", registroId: id, antes: antes as unknown as Record<string, unknown> });
   },
   updateAtivo(id: string, patch: Partial<Ativo>) {
     const antes = state.ativos.find((x) => x.id === id);

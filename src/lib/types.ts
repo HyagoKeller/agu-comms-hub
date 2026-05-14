@@ -43,6 +43,14 @@ export interface Ativo {
   statusTermo: StatusTermo;
   observacoes?: string;
   anexos?: string[];
+  // Campos extra importados da planilha (PABX)
+  dominio?: string;
+  ip?: string;
+  modeloAparelho?: string;
+  fabricante?: string;
+  permissaoChamada?: string;
+  hotdesking?: string;
+  origemImport?: string; // nome da aba/arquivo
   criadoEm: string;
 }
 
@@ -69,6 +77,28 @@ export interface AuditoriaLog {
   registroId?: string;
   antes?: Record<string, unknown>;
   depois?: Record<string, unknown>;
+}
+
+export type WhatsCategoria = "MESSENGER_PESSOAL" | "WABA_INSTITUCIONAL" | "BUSINESS_APP";
+
+export interface WhatsappNumero {
+  id: string;
+  msisdn: string;             // ex: +5561999110011
+  operadora?: string;         // Vivo / Claro / Tim / Oi
+  plano?: string;
+  categoria: WhatsCategoria;
+  responsavelNome?: string;
+  responsavelLogin?: string;
+  setor?: string;
+  regiao: Regiao;
+  unidade: string;
+  imei?: string;
+  statusMDM: StatusMDM;
+  statusTermo: StatusTermo;
+  status: StatusOperacional;
+  dataAtivacao?: string;
+  observacoes?: string;
+  criadoEm: string;
 }
 
 export interface PerfilUsuario {

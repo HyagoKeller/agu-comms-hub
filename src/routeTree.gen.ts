@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhatsappRouteImport } from './routes/whatsapp'
 import { Route as UsuariosRouteImport } from './routes/usuarios'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
 import { Route as LoginRouteImport } from './routes/login'
@@ -19,7 +20,13 @@ import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InventarioIndexRouteImport } from './routes/inventario.index'
 import { Route as InventarioNovoRouteImport } from './routes/inventario.novo'
+import { Route as InventarioImportarRouteImport } from './routes/inventario.importar'
 
+const WhatsappRoute = WhatsappRouteImport.update({
+  id: '/whatsapp',
+  path: '/whatsapp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsuariosRoute = UsuariosRouteImport.update({
   id: '/usuarios',
   path: '/usuarios',
@@ -70,6 +77,11 @@ const InventarioNovoRoute = InventarioNovoRouteImport.update({
   path: '/inventario/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InventarioImportarRoute = InventarioImportarRouteImport.update({
+  id: '/inventario/importar',
+  path: '/inventario/importar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +92,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
   '/inventario/': typeof InventarioIndexRoute
 }
@@ -92,6 +106,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
   '/inventario': typeof InventarioIndexRoute
 }
@@ -105,6 +121,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
+  '/whatsapp': typeof WhatsappRoute
+  '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
   '/inventario/': typeof InventarioIndexRoute
 }
@@ -119,6 +137,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/relatorios'
     | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
     | '/inventario/novo'
     | '/inventario/'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +151,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/relatorios'
     | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
     | '/inventario/novo'
     | '/inventario'
   id:
@@ -143,6 +165,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/relatorios'
     | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
     | '/inventario/novo'
     | '/inventario/'
   fileRoutesById: FileRoutesById
@@ -156,12 +180,21 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RelatoriosRoute: typeof RelatoriosRoute
   UsuariosRoute: typeof UsuariosRoute
+  WhatsappRoute: typeof WhatsappRoute
+  InventarioImportarRoute: typeof InventarioImportarRoute
   InventarioNovoRoute: typeof InventarioNovoRoute
   InventarioIndexRoute: typeof InventarioIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/whatsapp': {
+      id: '/whatsapp'
+      path: '/whatsapp'
+      fullPath: '/whatsapp'
+      preLoaderRoute: typeof WhatsappRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/usuarios': {
       id: '/usuarios'
       path: '/usuarios'
@@ -232,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InventarioNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inventario/importar': {
+      id: '/inventario/importar'
+      path: '/inventario/importar'
+      fullPath: '/inventario/importar'
+      preLoaderRoute: typeof InventarioImportarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -244,6 +284,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RelatoriosRoute: RelatoriosRoute,
   UsuariosRoute: UsuariosRoute,
+  WhatsappRoute: WhatsappRoute,
+  InventarioImportarRoute: InventarioImportarRoute,
   InventarioNovoRoute: InventarioNovoRoute,
   InventarioIndexRoute: InventarioIndexRoute,
 }

@@ -7,6 +7,7 @@ import { auth, useAuth } from "@/lib/auth";
 const NAV: { to: string; label: string }[] = [
   { to: "/", label: "Painel" },
   { to: "/inventario", label: "Inventário" },
+  { to: "/whatsapp", label: "WhatsApp" },
   { to: "/custos", label: "Tabela de Custos" },
   { to: "/bilhetagem", label: "Bilhetagem" },
   { to: "/estrutura", label: "Estrutura" },
