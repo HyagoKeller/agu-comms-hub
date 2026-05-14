@@ -163,6 +163,30 @@ export const store = {
     setState((s) => ({ ...s, ativos: [a, ...s.ativos] }));
     log({ modulo: "Inventário", acao: "CRIAR", registroId: a.id, depois: a as unknown as Record<string, unknown> });
   },
+  bulkAddAtivos(items: Ativo[], origem: string) {
+    if (!items.length) return;
+    setState((s) => ({ ...s, ativos: [...items, ...s.ativos] }));
+    log({ modulo: "Inventário", acao: "IMPORTAR", registroId: origem, depois: { quantidade: items.length, origem } });
+  },
+  bulkAddWhats(items: WhatsappNumero[], origem: string) {
+    if (!items.length) return;
+    setState((s) => ({ ...s, whats: [...items, ...s.whats] }));
+    log({ modulo: "WhatsApp", acao: "IMPORTAR", registroId: origem, depois: { quantidade: items.length, origem } });
+  },
+  addWhats(w: WhatsappNumero) {
+    setState((s) => ({ ...s, whats: [w, ...s.whats] }));
+    log({ modulo: "WhatsApp", acao: "CRIAR", registroId: w.id, depois: w as unknown as Record<string, unknown> });
+  },
+  updateWhats(id: string, patch: Partial<WhatsappNumero>) {
+    const antes = state.whats.find((x) => x.id === id);
+    setState((s) => ({ ...s, whats: s.whats.map((x) => x.id === id ? { ...x, ...patch } : x) }));
+    log({ modulo: "WhatsApp", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  removeWhats(id: string) {
+    const antes = state.whats.find((x) => x.id === id);
+    setState((s) => ({ ...s, whats: s.whats.filter((x) => x.id !== id) }));
+    log({ modulo: "WhatsApp", acao: "EXCLUIR", registroId: id, antes: antes as unknown as Record<string, unknown> });
+  },
   updateAtivo(id: string, patch: Partial<Ativo>) {
     const antes = state.ativos.find((x) => x.id === id);
     setState((s) => ({ ...s, ativos: s.ativos.map((x) => x.id === id ? { ...x, ...patch } : x) }));
