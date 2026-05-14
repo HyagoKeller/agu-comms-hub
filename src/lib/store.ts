@@ -101,7 +101,28 @@ function seed(): State {
       antes: { statusMDM: "CONFORME" }, depois: { statusMDM: "VIOLACAO" },
     },
   ];
-  return { ativos, unidades, custos, logs, usuarios };
+  const whats: WhatsappNumero[] = [
+    {
+      id: "w1", msisdn: "+5561999110011", operadora: "Vivo", plano: "Corp 20GB",
+      categoria: "MESSENGER_PESSOAL",
+      responsavelNome: "Ana Beatriz", responsavelLogin: "ana.beatriz@agu.gov.br",
+      setor: "Consultivo", regiao: "R3", unidade: "SEDE 3",
+      imei: "356938035643809",
+      statusMDM: "CONFORME", statusTermo: "ASSINADO", status: "ATIVO",
+      dataAtivacao: "2025-03-10",
+      criadoEm: "2025-03-10T10:00:00Z",
+    },
+    {
+      id: "w2", msisdn: "+5511988221122", operadora: "Claro", plano: "Pós 15GB",
+      categoria: "BUSINESS_APP",
+      responsavelNome: "Carlos Mendes", responsavelLogin: "carlos.mendes@agu.gov.br",
+      setor: "Procuradoria", regiao: "R2", unidade: "SEDE 2",
+      statusMDM: "VIOLACAO", statusTermo: "PENDENTE", status: "ATIVO",
+      observacoes: "WhatsApp Business detectado em uso pessoal — chamado aberto.",
+      criadoEm: "2025-04-18T10:00:00Z",
+    },
+  ];
+  return { ativos, unidades, custos, logs, usuarios, whats };
 }
 
 let state: State = load();
