@@ -6,7 +6,7 @@ import { GovTag } from "@/components/StatusTag";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/auditoria")({
-  head: () => ({ meta: [{ title: "Auditoria do Sistema — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Auditoria do Sistema — SGT AGU" }] }),
   component: Auditoria,
 });
 

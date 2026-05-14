@@ -137,7 +137,7 @@ function RootComponent() {
           <footer className="border-t border-border bg-card mt-12">
             <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
               <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
-              <span>Sistema de Gestão de Telefonia & WhatsApp · v1.0</span>
+              <span>Sistema de Gestão de Telecomunicações - SGT AGU · v1.0</span>
             </div>
           </footer>
         </div>

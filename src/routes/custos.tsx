@@ -7,7 +7,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { TIPOS_ATIVO, type AtivoTipo } from "@/lib/types";
 
 export const Route = createFileRoute("/custos")({
-  head: () => ({ meta: [{ title: "Tabela de Custos — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Tabela de Custos — SGT AGU" }] }),
   component: Custos,
 });
 

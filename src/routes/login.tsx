@@ -5,7 +5,7 @@ import { AguLogo } from "@/components/AguLogo";
 import { auth, MOCK_USERS, useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Entrar — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Entrar — SGT AGU" }] }),
   component: LoginPage,
 });
 

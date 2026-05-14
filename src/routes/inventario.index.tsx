@@ -7,7 +7,7 @@ import { useStore, store } from "@/lib/store";
 import { REGIOES, TIPOS_ATIVO } from "@/lib/types";
 
 export const Route = createFileRoute("/inventario/")({
-  head: () => ({ meta: [{ title: "Inventário Unificado — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Inventário Unificado — SGT AGU" }] }),
   component: Inventario,
 });
 
