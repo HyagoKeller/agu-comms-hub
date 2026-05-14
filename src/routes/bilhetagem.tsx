@@ -6,7 +6,7 @@ import { useStore } from "@/lib/store";
 import { REGIOES, TIPOS_ATIVO, type AtivoTipo } from "@/lib/types";
 
 export const Route = createFileRoute("/bilhetagem")({
-  head: () => ({ meta: [{ title: "Bilhetagem Simplificada — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Bilhetagem Simplificada — SGT AGU" }] }),
   component: Bilhetagem,
 });
 

@@ -6,7 +6,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { REGIOES, TIPOS_ATIVO, type Ativo, type AtivoTipo, type CategoriaWhats, type Regiao, type StatusMDM, type StatusOperacional, type StatusTermo } from "@/lib/types";
 
 export const Route = createFileRoute("/inventario/novo")({
-  head: () => ({ meta: [{ title: "Cadastro de Ativo — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Cadastro de Ativo — SGT AGU" }] }),
   component: NovoAtivo,
 });
 

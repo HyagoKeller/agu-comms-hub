@@ -5,7 +5,7 @@ import { GovTag, StatusBadge } from "@/components/StatusTag";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Painel — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Painel — SGT AGU" }] }),
   component: Dashboard,
 });
 

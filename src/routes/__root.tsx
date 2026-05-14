@@ -75,10 +75,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Telefonia & WhatsApp Institucional — AGU" },
+      { title: "Sistema de Gestão de Telecomunicações - SGT AGU — AGU" },
       { name: "description", content: "Sistema de Gestão de Telefonia Fixa (PABX) e Linhas Móveis WhatsApp da Advocacia-Geral da União." },
       { name: "author", content: "AGU" },
-      { property: "og:title", content: "Telefonia & WhatsApp Institucional — AGU" },
+      { property: "og:title", content: "Sistema de Gestão de Telecomunicações - SGT AGU — AGU" },
       { property: "og:description", content: "Inventário, custos, bilhetagem e auditoria de telefonia institucional da AGU." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -137,7 +137,7 @@ function RootComponent() {
           <footer className="border-t border-border bg-card mt-12">
             <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
               <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
-              <span>Sistema de Gestão de Telefonia & WhatsApp · v1.0</span>
+              <span>Sistema de Gestão de Telecomunicações - SGT AGU · v1.0</span>
             </div>
           </footer>
         </div>

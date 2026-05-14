@@ -7,7 +7,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { REGIOES, type Regiao } from "@/lib/types";
 
 export const Route = createFileRoute("/estrutura")({
-  head: () => ({ meta: [{ title: "Estrutura Organizacional — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Estrutura Organizacional — SGT AGU" }] }),
   component: Estrutura,
 });
 

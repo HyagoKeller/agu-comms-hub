@@ -5,7 +5,7 @@ import { GovTag } from "@/components/StatusTag";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/usuarios")({
-  head: () => ({ meta: [{ title: "Usuários e Permissões — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Usuários e Permissões — SGT AGU" }] }),
   component: Usuarios,
 });
 

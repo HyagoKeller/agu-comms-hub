@@ -4,7 +4,7 @@ import { GovBreadcrumb } from "@/components/GovHeader";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/relatorios")({
-  head: () => ({ meta: [{ title: "Relatórios e Exportações — Telefonia & WhatsApp AGU" }] }),
+  head: () => ({ meta: [{ title: "Relatórios e Exportações — SGT AGU" }] }),
   component: Relatorios,
 });
 

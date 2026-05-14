@@ -46,7 +46,7 @@ export function GovHeader() {
           <AguLogo size={48} />
           <div className="min-w-0">
             <div className="font-bold text-base md:text-lg leading-tight text-gov-blue-dark truncate">
-              Telefonia & WhatsApp Institucional
+              Sistema de Gestão de Telecomunicações - SGT AGU
             </div>
             <div className="text-xs text-muted-foreground truncate">
               Sistema de Gestão — Advocacia-Geral da União
