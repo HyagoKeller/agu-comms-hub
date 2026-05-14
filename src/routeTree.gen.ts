@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UsuariosRouteImport } from './routes/usuarios'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as EstruturaRouteImport } from './routes/estrutura'
 import { Route as CustosRouteImport } from './routes/custos'
 import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
@@ -27,6 +28,11 @@ const UsuariosRoute = UsuariosRouteImport.update({
 const RelatoriosRoute = RelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstruturaRoute = EstruturaRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/inventario/novo': typeof InventarioNovoRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/inventario/novo': typeof InventarioNovoRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/login': typeof LoginRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/inventario/novo': typeof InventarioNovoRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/bilhetagem'
     | '/custos'
     | '/estrutura'
+    | '/login'
     | '/relatorios'
     | '/usuarios'
     | '/inventario/novo'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/bilhetagem'
     | '/custos'
     | '/estrutura'
+    | '/login'
     | '/relatorios'
     | '/usuarios'
     | '/inventario/novo'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/bilhetagem'
     | '/custos'
     | '/estrutura'
+    | '/login'
     | '/relatorios'
     | '/usuarios'
     | '/inventario/novo'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   BilhetagemRoute: typeof BilhetagemRoute
   CustosRoute: typeof CustosRoute
   EstruturaRoute: typeof EstruturaRoute
+  LoginRoute: typeof LoginRoute
   RelatoriosRoute: typeof RelatoriosRoute
   UsuariosRoute: typeof UsuariosRoute
   InventarioNovoRoute: typeof InventarioNovoRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/relatorios'
       fullPath: '/relatorios'
       preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estrutura': {
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   BilhetagemRoute: BilhetagemRoute,
   CustosRoute: CustosRoute,
   EstruturaRoute: EstruturaRoute,
+  LoginRoute: LoginRoute,
   RelatoriosRoute: RelatoriosRoute,
   UsuariosRoute: UsuariosRoute,
   InventarioNovoRoute: InventarioNovoRoute,
