@@ -1,7 +1,8 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { Bell, Menu, X, LogOut } from "lucide-react";
 import { useState } from "react";
 import { AguLogo } from "./AguLogo";
+import { auth, useAuth } from "@/lib/auth";
 
 const NAV: { to: string; label: string }[] = [
   { to: "/", label: "Painel" },
@@ -17,6 +18,13 @@ const NAV: { to: string; label: string }[] = [
 export function GovHeader() {
   const [open, setOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const user = useAuth();
+
+  function handleLogout() {
+    auth.logout();
+    navigate({ to: "/login" });
+  }
 
   return (
     <header className="bg-card border-b border-border">
@@ -59,15 +67,17 @@ export function GovHeader() {
           </button>
           <div className="hidden md:flex items-center gap-3 border-l border-border pl-3">
             <div className="text-right leading-tight">
-              <div className="text-sm font-semibold text-gov-blue-dark">Admin AGU</div>
-              <div className="text-xs text-muted-foreground">admin@agu.gov.br</div>
+              <div className="text-sm font-semibold text-gov-blue-dark">{user?.nome ?? "—"}</div>
+              <div className="text-xs text-muted-foreground">{user?.email ?? ""}</div>
             </div>
             <button
               type="button"
+              onClick={handleLogout}
               aria-label="Sair"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-gov-blue-dark hover:bg-accent"
+              title="Sair"
+              className="inline-flex h-10 items-center gap-1.5 rounded-md border border-border px-3 text-sm font-semibold text-gov-blue-dark hover:bg-accent"
             >
-              <LogOut className="h-4 w-4" />
+              <LogOut className="h-4 w-4" /> Sair
             </button>
           </div>
           <button
