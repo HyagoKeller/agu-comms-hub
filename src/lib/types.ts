@@ -43,6 +43,15 @@ export interface Ativo {
   statusTermo: StatusTermo;
   observacoes?: string;
   anexos?: string[];
+  // Campos extra importados da planilha (PABX)
+  dominio?: string;
+  ip?: string;
+  modeloAparelho?: string;
+  fabricante?: string;
+  permissaoChamada?: string;
+  hotdesking?: string;
+  origemImport?: string; // nome da aba/arquivo
+  criadoEm: string;
   criadoEm: string;
 }
 
