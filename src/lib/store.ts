@@ -129,14 +129,17 @@ let state: State = load();
 const listeners = new Set<() => void>();
 
 function load(): State {
-  if (typeof window === "undefined") return seed();
+  const def = seed();
+  if (typeof window === "undefined") return def;
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as State;
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<State>;
+      return { ...def, ...parsed, whats: parsed.whats ?? def.whats };
+    }
   } catch {}
-  const s = seed();
-  try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
-  return s;
+  try { localStorage.setItem(KEY, JSON.stringify(def)); } catch {}
+  return def;
 }
 
 function persist() {
