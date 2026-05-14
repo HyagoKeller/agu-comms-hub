@@ -49,6 +49,7 @@ function Inventario() {
           </div>
           <div className="flex gap-2">
             <button className="gov-btn-secondary"><Download className="h-4 w-4" /> Exportar</button>
+            <Link to="/inventario/importar" className="gov-btn-secondary"><Download className="h-4 w-4 rotate-180" /> Carga em Lote</Link>
             <Link to="/inventario/novo" className="gov-btn-primary"><Plus className="h-4 w-4" /> Novo Ativo</Link>
           </div>
         </div>
