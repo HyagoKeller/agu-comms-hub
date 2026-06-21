@@ -3,26 +3,15 @@ import { Check, X, Shield } from "lucide-react";
 import { GovBreadcrumb } from "@/components/GovHeader";
 import { GovTag } from "@/components/StatusTag";
 import { useStore } from "@/lib/store";
+import { PERM_LABELS, PERFIL_LABELS } from "@/lib/types";
 
 export const Route = createFileRoute("/usuarios")({
   head: () => ({ meta: [{ title: "Usuários e Permissões — SGT AGU" }] }),
   component: Usuarios,
 });
 
-const PERFIL_LABEL: Record<string, string> = {
-  ADMIN_GERAL: "Administrador Geral",
-  GESTOR_REGIONAL: "Gestor Regional",
-  OPERADOR: "Operador",
-  AUDITOR: "Auditor",
-};
-
-const PERM_LABEL: Record<string, string> = {
-  verCadastro: "Ver Cadastro",
-  editar: "Editar",
-  excluir: "Excluir",
-  gerirCustos: "Gerir Custos",
-  importarBilhetagem: "Importar Bilhetagem",
-};
+const PERFIL_LABEL = PERFIL_LABELS;
+const PERM_LABEL = PERM_LABELS as Record<string, string>;
 
 function Usuarios() {
   const usuarios = useStore((s) => s.usuarios);
