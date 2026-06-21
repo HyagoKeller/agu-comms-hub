@@ -33,6 +33,7 @@ function NovoAtivo() {
   const [statusTermo, setStatusTermo] = useState<StatusTermo>("PENDENTE");
   const [catWhats, setCatWhats] = useState<CategoriaWhats>(categoria === "MOVEL" ? "MESSENGER_PESSOAL" : null);
   const [observacoes, setObservacoes] = useState("");
+  const [protocoloAGUServicos, setProtocoloAGUServicos] = useState("");
   const [erro, setErro] = useState("");
 
   function onChangeTipo(t: AtivoTipo) {
