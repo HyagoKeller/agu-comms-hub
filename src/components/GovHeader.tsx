@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AguLogo } from "./AguLogo";
 import { auth, useAuth } from "@/lib/auth";
 
-const NAV: { to: string; label: string }[] = [
+const NAV: { to: string; label: string; adminOnly?: boolean }[] = [
   { to: "/", label: "Painel" },
   { to: "/inventario", label: "Inventário" },
   { to: "/whatsapp", label: "WhatsApp" },
@@ -14,6 +14,7 @@ const NAV: { to: string; label: string }[] = [
   { to: "/usuarios", label: "Usuários" },
   { to: "/relatorios", label: "Relatórios" },
   { to: "/auditoria", label: "Auditoria" },
+  { to: "/admin", label: "Administração", adminOnly: true },
 ];
 
 export function GovHeader() {
@@ -97,7 +98,7 @@ export function GovHeader() {
         className={`border-t border-border bg-card ${open ? "block" : "hidden md:block"}`}
       >
         <div className="gov-container flex flex-col md:flex-row md:items-stretch overflow-x-auto">
-          {NAV.map((n) => {
+          {NAV.filter((n) => !n.adminOnly || user?.perfil === "ADMIN_GERAL").map((n) => {
             const active = n.to === "/" ? path === "/" : path.startsWith(n.to);
             return (
               <Link

@@ -1,5 +1,8 @@
 import { useSyncExternalStore } from "react";
-import type { Ativo, AuditoriaLog, CustoItem, PerfilUsuario, Unidade, WhatsappNumero } from "./types";
+import type {
+  Ativo, AuditoriaLog, AuthConfig, CustoItem, PerfilTemplate, PerfilUsuario,
+  Permissoes, Unidade, WhatsappNumero,
+} from "./types";
 
 interface State {
   ativos: Ativo[];
@@ -8,121 +11,77 @@ interface State {
   logs: AuditoriaLog[];
   usuarios: PerfilUsuario[];
   whats: WhatsappNumero[];
+  perfilTemplates: PerfilTemplate[];
+  authConfig: AuthConfig;
 }
 
-const KEY = "agu-telefonia-v1";
+const KEY = "agu-telefonia-v2";
+
+const FULL: Permissoes = {
+  verCadastro: true, editar: true, excluir: true,
+  gerirCustos: true, importarBilhetagem: true,
+  gerirUsuarios: true, gerirEstrutura: true, exportarRelatorios: true,
+};
+const READONLY: Permissoes = {
+  verCadastro: true, editar: false, excluir: false,
+  gerirCustos: false, importarBilhetagem: false,
+  gerirUsuarios: false, gerirEstrutura: false, exportarRelatorios: true,
+};
 
 function seed(): State {
   const unidades: Unidade[] = [
-    { id: "u1", nome: "SEDE 1", regiao: "R1" },
-    { id: "u2", nome: "SEDE 2", regiao: "R2" },
-    { id: "u3", nome: "SEDE 3", regiao: "R3" },
-    { id: "u4", nome: "PRU 4", regiao: "R4" },
-    { id: "u5", nome: "PRU 5", regiao: "R5" },
-    { id: "u6", nome: "PRU 6", regiao: "R6" },
+    { id: "u1", nome: "Ed. Sede I - Setor de Autarquias Sul (SAS)", regiao: "R1", regiaoLabel: "SAD 1ª Região", estado: "Distrito Federal", cidade: "Brasília" },
+    { id: "u2", nome: "SEDE 2", regiao: "R2", regiaoLabel: "SAD 2ª Região", estado: "Bahia", cidade: "Salvador" },
+    { id: "u3", nome: "SEDE 3", regiao: "R3", regiaoLabel: "SAD 3ª Região", estado: "Rio de Janeiro", cidade: "Rio de Janeiro" },
+    { id: "u4", nome: "PU - Procuradoria da União", regiao: "R4", regiaoLabel: "SAD 4ª Região", estado: "Santa Catarina", cidade: "Florianópolis" },
+    { id: "u5", nome: "PF - Procuradoria Federal", regiao: "R5", regiaoLabel: "SAD 5ª Região", estado: "Ceará", cidade: "Fortaleza" },
+    { id: "u6", nome: "PRF - Procuradoria Regional Federal", regiao: "R6", regiaoLabel: "SAD 6ª Região", estado: "Minas Gerais", cidade: "Belo Horizonte" },
   ];
   const ativos: Ativo[] = [
-    {
-      id: "a1", categoria: "PABX", identificador: "2101", tipo: "RAMAL_FISICO", catWhats: null,
-      regiao: "R1", unidade: "SEDE 1", sala: "302",
-      usuarioNome: "Mariana Souza", usuarioLogin: "mariana.souza@agu.gov.br", setor: "Procuradoria",
-      dataAtribuicao: "2024-09-12", enderecoMac: "AC:DE:48:00:11:22",
-      status: "ATIVO", statusMDM: "NA", statusTermo: "ASSINADO",
-      observacoes: "", anexos: [], criadoEm: "2024-09-12T10:00:00Z",
-    },
-    {
-      id: "a2", categoria: "PABX", identificador: "2102", tipo: "SOFTPHONE", catWhats: null,
-      regiao: "R3", unidade: "SEDE 3", sala: "104",
-      usuarioNome: "João Lima", usuarioLogin: "joao.lima@agu.gov.br", setor: "Contencioso",
-      dataAtribuicao: "2025-01-05",
-      status: "ATIVO", statusMDM: "NA", statusTermo: "ASSINADO",
-      criadoEm: "2025-01-05T10:00:00Z",
-    },
-    {
-      id: "a3", categoria: "MOVEL", identificador: "+5561999110011", tipo: "CHIP_OPERADORA",
-      catWhats: "MESSENGER_PESSOAL",
-      regiao: "R3", unidade: "SEDE 3",
-      usuarioNome: "Ana Beatriz", usuarioLogin: "ana.beatriz@agu.gov.br", setor: "Consultivo",
-      dataAtribuicao: "2025-03-10",
-      status: "ATIVO", statusMDM: "CONFORME", statusTermo: "ASSINADO",
-      observacoes: "Linha funcional com WhatsApp Messenger.",
-      criadoEm: "2025-03-10T10:00:00Z",
-    },
-    {
-      id: "a4", categoria: "MOVEL", identificador: "+5511988221122", tipo: "CHIP_OPERADORA",
-      catWhats: "MESSENGER_PESSOAL",
-      regiao: "R2", unidade: "SEDE 2",
-      usuarioNome: "Carlos Mendes", usuarioLogin: "carlos.mendes@agu.gov.br", setor: "Procuradoria",
-      dataAtribuicao: "2025-04-18",
-      status: "ATIVO", statusMDM: "VIOLACAO", statusTermo: "PENDENTE",
-      observacoes: "Detectado WhatsApp Business ativo — abrir chamado.",
-      criadoEm: "2025-04-18T10:00:00Z",
-    },
-    {
-      id: "a5", categoria: "PABX", identificador: "4501", tipo: "RAMAL_FISICO", catWhats: null,
-      regiao: "R5", unidade: "PRU 5", sala: "208",
-      status: "DISPONIVEL", statusMDM: "NA", statusTermo: "NA",
-      enderecoMac: "AC:DE:48:11:22:33",
-      criadoEm: "2025-02-01T10:00:00Z",
-    },
+    { id: "a1", categoria: "PABX", identificador: "2101", tipo: "RAMAL_FISICO", catWhats: null, regiao: "R1", unidade: "Ed. Sede I - Setor de Autarquias Sul (SAS)", sala: "302", usuarioNome: "Mariana Souza", usuarioLogin: "mariana.souza@agu.gov.br", setor: "Procuradoria", dataAtribuicao: "2024-09-12", enderecoMac: "AC:DE:48:00:11:22", status: "ATIVO", statusMDM: "NA", statusTermo: "ASSINADO", criadoEm: "2024-09-12T10:00:00Z" },
+    { id: "a2", categoria: "PABX", identificador: "2102", tipo: "SOFTPHONE", catWhats: null, regiao: "R3", unidade: "SEDE 3", sala: "104", usuarioNome: "João Lima", usuarioLogin: "joao.lima@agu.gov.br", setor: "Contencioso", dataAtribuicao: "2025-01-05", status: "ATIVO", statusMDM: "NA", statusTermo: "ASSINADO", criadoEm: "2025-01-05T10:00:00Z" },
+    { id: "a3", categoria: "MOVEL", identificador: "+5561999110011", tipo: "CHIP_OPERADORA", catWhats: "MESSENGER_PESSOAL", regiao: "R3", unidade: "SEDE 3", usuarioNome: "Ana Beatriz", usuarioLogin: "ana.beatriz@agu.gov.br", setor: "Consultivo", dataAtribuicao: "2025-03-10", status: "ATIVO", statusMDM: "CONFORME", statusTermo: "ASSINADO", criadoEm: "2025-03-10T10:00:00Z" },
   ];
   const custos: CustoItem[] = [
-    { id: "c1", tipo: "RAMAL_FISICO", valorMensal: 38.50, vigenciaInicio: "2024-01" },
-    { id: "c2", tipo: "SOFTPHONE", valorMensal: 22.00, vigenciaInicio: "2024-01" },
-    { id: "c3", tipo: "CHIP_OPERADORA", valorMensal: 65.00, vigenciaInicio: "2024-01", vigenciaFim: "2025-05" },
-    { id: "c4", tipo: "CHIP_OPERADORA", valorMensal: 71.90, vigenciaInicio: "2025-06" },
+    { id: "c1", tipo: "RAMAL_FISICO", valorMensal: 38.5, vigenciaInicio: "2024-01" },
+    { id: "c2", tipo: "SOFTPHONE", valorMensal: 22.0, vigenciaInicio: "2024-01" },
+    { id: "c3", tipo: "CHIP_OPERADORA", valorMensal: 71.9, vigenciaInicio: "2025-06" },
   ];
   const usuarios: PerfilUsuario[] = [
-    {
-      id: "us1", nome: "Admin AGU", email: "admin@agu.gov.br", perfil: "ADMIN_GERAL",
-      regioes: ["R1", "R2", "R3", "R4", "R5", "R6"],
-      permissoes: { verCadastro: true, editar: true, excluir: true, gerirCustos: true, importarBilhetagem: true },
-    },
-    {
-      id: "us2", nome: "Gestora R3", email: "gestora.r3@agu.gov.br", perfil: "GESTOR_REGIONAL",
-      regioes: ["R3"],
-      permissoes: { verCadastro: true, editar: true, excluir: false, gerirCustos: false, importarBilhetagem: true },
-    },
-    {
-      id: "us3", nome: "Auditor", email: "auditor@agu.gov.br", perfil: "AUDITOR",
-      regioes: ["R1", "R2", "R3", "R4", "R5", "R6"],
-      permissoes: { verCadastro: true, editar: false, excluir: false, gerirCustos: false, importarBilhetagem: false },
-    },
+    { id: "us1", nome: "Admin AGU", email: "admin@agu.gov.br", perfil: "ADMIN_GERAL", regioes: ["R1","R2","R3","R4","R5","R6"], permissoes: FULL, mfaEnabled: false },
+    { id: "us2", nome: "Gestora R3", email: "gestora.r3@agu.gov.br", perfil: "GESTOR_REGIONAL", regioes: ["R3"], permissoes: { ...FULL, excluir: false, gerirCustos: false, gerirUsuarios: false, gerirEstrutura: false } },
+    { id: "us3", nome: "Auditor", email: "auditor@agu.gov.br", perfil: "AUDITOR", regioes: ["R1","R2","R3","R4","R5","R6"], permissoes: READONLY },
   ];
-  const logs: AuditoriaLog[] = [
-    {
-      id: "l1", ts: new Date().toISOString(), ator: "admin@agu.gov.br",
-      modulo: "Inventário", acao: "CRIAR", registroId: "a1",
-      depois: { identificador: "2101", status: "ATIVO" },
-    },
-    {
-      id: "l2", ts: new Date().toISOString(), ator: "gestora.r3@agu.gov.br",
-      modulo: "Inventário", acao: "EDITAR", registroId: "a4",
-      antes: { statusMDM: "CONFORME" }, depois: { statusMDM: "VIOLACAO" },
-    },
+  const logs: AuditoriaLog[] = [];
+  const whats: WhatsappNumero[] = [];
+  const perfilTemplates: PerfilTemplate[] = [
+    { id: "ADMIN_GERAL", label: "Administrador Geral", descricao: "Acesso irrestrito a todos os módulos.", permissoes: FULL },
+    { id: "GESTOR_REGIONAL", label: "Gestor Regional", descricao: "Gerencia ativos da(s) sua(s) região(ões).", permissoes: { ...FULL, excluir: false, gerirCustos: false, gerirUsuarios: false, gerirEstrutura: false } },
+    { id: "OPERADOR", label: "Operador", descricao: "Cadastro e atualização operacional.", permissoes: { ...FULL, excluir: false, gerirCustos: false, gerirUsuarios: false, gerirEstrutura: false, importarBilhetagem: false } },
+    { id: "AUDITOR", label: "Auditor", descricao: "Somente leitura e exportação.", permissoes: READONLY },
   ];
-  const whats: WhatsappNumero[] = [
-    {
-      id: "w1", msisdn: "+5561999110011", operadora: "Vivo", plano: "Corp 20GB",
-      categoria: "MESSENGER_PESSOAL",
-      responsavelNome: "Ana Beatriz", responsavelLogin: "ana.beatriz@agu.gov.br",
-      setor: "Consultivo", regiao: "R3", unidade: "SEDE 3",
-      imei: "356938035643809",
-      statusMDM: "CONFORME", statusTermo: "ASSINADO", status: "ATIVO",
-      dataAtivacao: "2025-03-10",
-      criadoEm: "2025-03-10T10:00:00Z",
+  const authConfig: AuthConfig = {
+    metodoPrimario: "LOCAL",
+    mfaObrigatorioAdmin: true,
+    mfaObrigatorioTodos: false,
+    ad: {
+      habilitado: false,
+      dominio: "AGU.GOV.BR",
+      servidor: "ldaps://dc.agu.gov.br:636",
+      baseDN: "OU=Usuarios,DC=agu,DC=gov,DC=br",
+      grupoAdmin: "CN=SGT-Admins,OU=Grupos,DC=agu,DC=gov,DC=br",
+      usuarioServico: "svc-sgt@agu.gov.br",
     },
-    {
-      id: "w2", msisdn: "+5511988221122", operadora: "Claro", plano: "Pós 15GB",
-      categoria: "BUSINESS_APP",
-      responsavelNome: "Carlos Mendes", responsavelLogin: "carlos.mendes@agu.gov.br",
-      setor: "Procuradoria", regiao: "R2", unidade: "SEDE 2",
-      statusMDM: "VIOLACAO", statusTermo: "PENDENTE", status: "ATIVO",
-      observacoes: "WhatsApp Business detectado em uso pessoal — chamado aberto.",
-      criadoEm: "2025-04-18T10:00:00Z",
+    m365: {
+      habilitado: false,
+      tenantId: "",
+      clientId: "",
+      clientSecretConfigurado: false,
+      redirectUri: typeof window !== "undefined" ? `${window.location.origin}/auth/callback` : "",
+      escopos: "openid profile email User.Read",
     },
-  ];
-  return { ativos, unidades, custos, logs, usuarios, whats };
+  };
+  return { ativos, unidades, custos, logs, usuarios, whats, perfilTemplates, authConfig };
 }
 
 let state: State = load();
@@ -135,7 +94,13 @@ function load(): State {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<State>;
-      return { ...def, ...parsed, whats: parsed.whats ?? def.whats };
+      return {
+        ...def,
+        ...parsed,
+        whats: parsed.whats ?? def.whats,
+        perfilTemplates: parsed.perfilTemplates ?? def.perfilTemplates,
+        authConfig: parsed.authConfig ?? def.authConfig,
+      };
     }
   } catch {}
   try { localStorage.setItem(KEY, JSON.stringify(def)); } catch {}
@@ -212,6 +177,31 @@ export const store = {
   addUnidade(u: Unidade) {
     setState((s) => ({ ...s, unidades: [...s.unidades, u] }));
     log({ modulo: "Estrutura", acao: "CRIAR", registroId: u.id, depois: u as unknown as Record<string, unknown> });
+  },
+  bulkAddUnidades(items: Unidade[], origem: string) {
+    if (!items.length) return;
+    setState((s) => ({ ...s, unidades: [...s.unidades, ...items] }));
+    log({ modulo: "Estrutura", acao: "IMPORTAR", registroId: origem, depois: { quantidade: items.length, origem } });
+  },
+  removeUnidade(id: string) {
+    const antes = state.unidades.find((x) => x.id === id);
+    setState((s) => ({ ...s, unidades: s.unidades.filter((x) => x.id !== id) }));
+    log({ modulo: "Estrutura", acao: "EXCLUIR", registroId: id, antes: antes as unknown as Record<string, unknown> });
+  },
+  updatePerfilTemplate(id: string, permissoes: Permissoes) {
+    const antes = state.perfilTemplates.find((t) => t.id === id);
+    setState((s) => ({ ...s, perfilTemplates: s.perfilTemplates.map((t) => t.id === id ? { ...t, permissoes } : t) }));
+    log({ modulo: "Administração", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: { permissoes } });
+  },
+  updateUsuario(id: string, patch: Partial<PerfilUsuario>) {
+    const antes = state.usuarios.find((u) => u.id === id);
+    setState((s) => ({ ...s, usuarios: s.usuarios.map((u) => u.id === id ? { ...u, ...patch } : u) }));
+    log({ modulo: "Usuários", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  updateAuthConfig(patch: Partial<AuthConfig>) {
+    const antes = state.authConfig;
+    setState((s) => ({ ...s, authConfig: { ...s.authConfig, ...patch } }));
+    log({ modulo: "Administração", acao: "EDITAR", registroId: "authConfig", antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
   },
   reset() {
     state = seed();
