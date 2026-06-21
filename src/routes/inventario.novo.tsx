@@ -222,7 +222,7 @@ function NovoAtivo() {
                 <label className="gov-label">Protocolo AGU Serviços (ITSM)</label>
                 <input
                   className="gov-input font-mono"
-                  placeholder="Ex.: AGS-2025-000123"
+                  placeholder=""
                   value={protocoloAGUServicos}
                   onChange={(e) => setProtocoloAGUServicos(e.target.value)}
                 />
