@@ -17,6 +17,7 @@ import { Route as EstruturaRouteImport } from './routes/estrutura'
 import { Route as CustosRouteImport } from './routes/custos'
 import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
 import { Route as AuditoriaRouteImport } from './routes/auditoria'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InventarioIndexRouteImport } from './routes/inventario.index'
 import { Route as InventarioNovoRouteImport } from './routes/inventario.novo'
@@ -62,6 +63,11 @@ const AuditoriaRoute = AuditoriaRouteImport.update({
   path: '/auditoria',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -85,6 +91,7 @@ const InventarioImportarRoute = InventarioImportarRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
@@ -114,6 +122,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
   '/custos': typeof CustosRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auditoria'
     | '/bilhetagem'
     | '/custos'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/auditoria'
     | '/bilhetagem'
     | '/custos'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auditoria'
     | '/bilhetagem'
     | '/custos'
@@ -173,6 +185,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AuditoriaRoute: typeof AuditoriaRoute
   BilhetagemRoute: typeof BilhetagemRoute
   CustosRoute: typeof CustosRoute
@@ -244,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuditoriaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -277,6 +297,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AuditoriaRoute: AuditoriaRoute,
   BilhetagemRoute: BilhetagemRoute,
   CustosRoute: CustosRoute,

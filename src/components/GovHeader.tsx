@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AguLogo } from "./AguLogo";
 import { auth, useAuth } from "@/lib/auth";
 
-const NAV: { to: string; label: string }[] = [
+const NAV: { to: string; label: string; adminOnly?: boolean }[] = [
   { to: "/", label: "Painel" },
   { to: "/inventario", label: "Inventário" },
   { to: "/whatsapp", label: "WhatsApp" },
@@ -14,6 +14,7 @@ const NAV: { to: string; label: string }[] = [
   { to: "/usuarios", label: "Usuários" },
   { to: "/relatorios", label: "Relatórios" },
   { to: "/auditoria", label: "Auditoria" },
+  { to: "/admin", label: "Administração", adminOnly: true },
 ];
 
 export function GovHeader() {
