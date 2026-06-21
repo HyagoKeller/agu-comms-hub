@@ -70,6 +70,7 @@ function NovoAtivo() {
       statusMDM,
       statusTermo,
       observacoes: observacoes || undefined,
+      protocoloAGUServicos: protocoloAGUServicos.trim() || undefined,
       anexos: [],
       criadoEm: new Date().toISOString(),
     };
