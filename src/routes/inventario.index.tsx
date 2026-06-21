@@ -29,6 +29,7 @@ function Inventario() {
           !a.identificador.toLowerCase().includes(s) &&
           !(a.usuarioNome ?? "").toLowerCase().includes(s) &&
           !(a.usuarioLogin ?? "").toLowerCase().includes(s) &&
+          !(a.protocoloAGUServicos ?? "").toLowerCase().includes(s) &&
           !a.unidade.toLowerCase().includes(s)
         ) return false;
       }
