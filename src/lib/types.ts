@@ -59,6 +59,7 @@ export interface Ativo {
   permissaoChamada?: string;
   hotdesking?: string;
   origemImport?: string;
+  protocoloAGUServicos?: string; // nº do chamado/protocolo no ITSM AGU Serviços
   criadoEm: string;
 }
 
