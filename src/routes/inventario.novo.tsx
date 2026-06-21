@@ -33,6 +33,7 @@ function NovoAtivo() {
   const [statusTermo, setStatusTermo] = useState<StatusTermo>("PENDENTE");
   const [catWhats, setCatWhats] = useState<CategoriaWhats>(categoria === "MOVEL" ? "MESSENGER_PESSOAL" : null);
   const [observacoes, setObservacoes] = useState("");
+  const [protocoloAGUServicos, setProtocoloAGUServicos] = useState("");
   const [erro, setErro] = useState("");
 
   function onChangeTipo(t: AtivoTipo) {
@@ -69,6 +70,7 @@ function NovoAtivo() {
       statusMDM,
       statusTermo,
       observacoes: observacoes || undefined,
+      protocoloAGUServicos: protocoloAGUServicos.trim() || undefined,
       anexos: [],
       criadoEm: new Date().toISOString(),
     };
@@ -215,7 +217,25 @@ function NovoAtivo() {
 
           <div className="gov-card">
             <h2 className="text-lg mb-4">Documentação</h2>
-            <div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div>
+                <label className="gov-label">Protocolo AGU Serviços (ITSM)</label>
+                <input
+                  className="gov-input font-mono"
+                  placeholder="Ex.: AGS-2025-000123"
+                  value={protocoloAGUServicos}
+                  onChange={(e) => setProtocoloAGUServicos(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Nº do chamado/atendimento no AGU Serviços, se houver.
+                </p>
+              </div>
+              <div>
+                <label className="gov-label">Data de Atribuição (atendimento)</label>
+                <input className="gov-input" type="date" value={dataAtribuicao} onChange={(e) => setDataAtribuicao(e.target.value)} />
+              </div>
+            </div>
+            <div className="mt-4">
               <label className="gov-label">Observações gerais</label>
               <textarea className="gov-input min-h-24" value={observacoes} onChange={(e) => setObservacoes(e.target.value)} />
             </div>

@@ -29,6 +29,7 @@ function Inventario() {
           !a.identificador.toLowerCase().includes(s) &&
           !(a.usuarioNome ?? "").toLowerCase().includes(s) &&
           !(a.usuarioLogin ?? "").toLowerCase().includes(s) &&
+          !(a.protocoloAGUServicos ?? "").toLowerCase().includes(s) &&
           !a.unidade.toLowerCase().includes(s)
         ) return false;
       }
@@ -76,7 +77,7 @@ function Inventario() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <input
                   className="gov-input pl-9"
-                  placeholder="Ramal, MSISDN, usuário, unidade..."
+                  placeholder="Ramal, MSISDN, usuário, unidade, protocolo AGU Serviços..."
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                 />
@@ -115,6 +116,7 @@ function Inventario() {
                 <th className="px-4 py-3 font-semibold">Tipo</th>
                 <th className="px-4 py-3 font-semibold">Região / Unidade</th>
                 <th className="px-4 py-3 font-semibold">Atribuído a</th>
+                <th className="px-4 py-3 font-semibold">Protocolo AGU Serviços</th>
                 <th className="px-4 py-3 font-semibold">Status</th>
                 <th className="px-4 py-3 font-semibold">MDM</th>
                 <th className="px-4 py-3 font-semibold text-right">Ações</th>
@@ -144,6 +146,11 @@ function Inventario() {
                         </>
                       ) : <span className="text-muted-foreground italic">— sem atribuição —</span>}
                     </td>
+                    <td className="px-4 py-3">
+                      {a.protocoloAGUServicos
+                        ? <span className="font-mono text-xs rounded bg-muted px-2 py-1">{a.protocoloAGUServicos}</span>
+                        : <span className="text-muted-foreground italic text-xs">—</span>}
+                    </td>
                     <td className="px-4 py-3"><StatusBadge status={a.status} /></td>
                     <td className="px-4 py-3"><StatusBadge status={a.statusMDM} /></td>
                     <td className="px-4 py-3 text-right">
@@ -164,7 +171,7 @@ function Inventario() {
                 );
               })}
               {filtrados.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">Nenhum ativo encontrado.</td></tr>
+                <tr><td colSpan={9} className="px-4 py-10 text-center text-muted-foreground">Nenhum ativo encontrado.</td></tr>
               )}
             </tbody>
           </table>
