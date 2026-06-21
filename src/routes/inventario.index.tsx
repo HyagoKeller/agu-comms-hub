@@ -171,7 +171,7 @@ function Inventario() {
                 );
               })}
               {filtrados.length === 0 && (
-                <tr><td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">Nenhum ativo encontrado.</td></tr>
+                <tr><td colSpan={9} className="px-4 py-10 text-center text-muted-foreground">Nenhum ativo encontrado.</td></tr>
               )}
             </tbody>
           </table>
