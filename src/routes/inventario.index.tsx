@@ -116,6 +116,7 @@ function Inventario() {
                 <th className="px-4 py-3 font-semibold">Tipo</th>
                 <th className="px-4 py-3 font-semibold">Região / Unidade</th>
                 <th className="px-4 py-3 font-semibold">Atribuído a</th>
+                <th className="px-4 py-3 font-semibold">Protocolo AGU Serviços</th>
                 <th className="px-4 py-3 font-semibold">Status</th>
                 <th className="px-4 py-3 font-semibold">MDM</th>
                 <th className="px-4 py-3 font-semibold text-right">Ações</th>
