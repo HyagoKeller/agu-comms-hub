@@ -98,7 +98,7 @@ export function GovHeader() {
         className={`border-t border-border bg-card ${open ? "block" : "hidden md:block"}`}
       >
         <div className="gov-container flex flex-col md:flex-row md:items-stretch overflow-x-auto">
-          {NAV.map((n) => {
+          {NAV.filter((n) => !n.adminOnly || user?.perfil === "ADMIN_GERAL").map((n) => {
             const active = n.to === "/" ? path === "/" : path.startsWith(n.to);
             return (
               <Link
