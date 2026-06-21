@@ -24,43 +24,69 @@ import { Route as InventarioNovoRouteImport } from './routes/inventario.novo'
 import { Route as InventarioImportarRouteImport } from './routes/inventario.importar'
 
 const WhatsappRoute = WhatsappRouteImport.update({
-  id: '/whatsapp', path: '/whatsapp', getParentRoute: () => rootRouteImport,
+  id: '/whatsapp',
+  path: '/whatsapp',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const UsuariosRoute = UsuariosRouteImport.update({
-  id: '/usuarios', path: '/usuarios', getParentRoute: () => rootRouteImport,
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const RelatoriosRoute = RelatoriosRouteImport.update({
-  id: '/relatorios', path: '/relatorios', getParentRoute: () => rootRouteImport,
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
-  id: '/login', path: '/login', getParentRoute: () => rootRouteImport,
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EstruturaRoute = EstruturaRouteImport.update({
-  id: '/estrutura', path: '/estrutura', getParentRoute: () => rootRouteImport,
+  id: '/estrutura',
+  path: '/estrutura',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CustosRoute = CustosRouteImport.update({
-  id: '/custos', path: '/custos', getParentRoute: () => rootRouteImport,
+  id: '/custos',
+  path: '/custos',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BilhetagemRoute = BilhetagemRouteImport.update({
-  id: '/bilhetagem', path: '/bilhetagem', getParentRoute: () => rootRouteImport,
+  id: '/bilhetagem',
+  path: '/bilhetagem',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuditoriaRoute = AuditoriaRouteImport.update({
-  id: '/auditoria', path: '/auditoria', getParentRoute: () => rootRouteImport,
+  id: '/auditoria',
+  path: '/auditoria',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
-  id: '/admin', path: '/admin', getParentRoute: () => rootRouteImport,
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
-  id: '/', path: '/', getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const InventarioIndexRoute = InventarioIndexRouteImport.update({
-  id: '/inventario/', path: '/inventario/', getParentRoute: () => rootRouteImport,
+  id: '/inventario/',
+  path: '/inventario/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const InventarioNovoRoute = InventarioNovoRouteImport.update({
-  id: '/inventario/novo', path: '/inventario/novo', getParentRoute: () => rootRouteImport,
+  id: '/inventario/novo',
+  path: '/inventario/novo',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const InventarioImportarRoute = InventarioImportarRouteImport.update({
-  id: '/inventario/importar', path: '/inventario/importar', getParentRoute: () => rootRouteImport,
+  id: '/inventario/importar',
+  path: '/inventario/importar',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -112,18 +138,49 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/' | '/admin' | '/auditoria' | '/bilhetagem' | '/custos' | '/estrutura'
-    | '/login' | '/relatorios' | '/usuarios' | '/whatsapp'
-    | '/inventario/importar' | '/inventario/novo' | '/inventario/'
+    | '/'
+    | '/admin'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/login'
+    | '/relatorios'
+    | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
+    | '/inventario/novo'
+    | '/inventario/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/' | '/admin' | '/auditoria' | '/bilhetagem' | '/custos' | '/estrutura'
-    | '/login' | '/relatorios' | '/usuarios' | '/whatsapp'
-    | '/inventario/importar' | '/inventario/novo' | '/inventario'
+    | '/'
+    | '/admin'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/login'
+    | '/relatorios'
+    | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
+    | '/inventario/novo'
+    | '/inventario'
   id:
-    | '__root__' | '/' | '/admin' | '/auditoria' | '/bilhetagem' | '/custos' | '/estrutura'
-    | '/login' | '/relatorios' | '/usuarios' | '/whatsapp'
-    | '/inventario/importar' | '/inventario/novo' | '/inventario/'
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/auditoria'
+    | '/bilhetagem'
+    | '/custos'
+    | '/estrutura'
+    | '/login'
+    | '/relatorios'
+    | '/usuarios'
+    | '/whatsapp'
+    | '/inventario/importar'
+    | '/inventario/novo'
+    | '/inventario/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,47 +201,115 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/whatsapp': { id: '/whatsapp'; path: '/whatsapp'; fullPath: '/whatsapp'; preLoaderRoute: typeof WhatsappRouteImport; parentRoute: typeof rootRouteImport }
-    '/usuarios': { id: '/usuarios'; path: '/usuarios'; fullPath: '/usuarios'; preLoaderRoute: typeof UsuariosRouteImport; parentRoute: typeof rootRouteImport }
-    '/relatorios': { id: '/relatorios'; path: '/relatorios'; fullPath: '/relatorios'; preLoaderRoute: typeof RelatoriosRouteImport; parentRoute: typeof rootRouteImport }
-    '/login': { id: '/login'; path: '/login'; fullPath: '/login'; preLoaderRoute: typeof LoginRouteImport; parentRoute: typeof rootRouteImport }
-    '/estrutura': { id: '/estrutura'; path: '/estrutura'; fullPath: '/estrutura'; preLoaderRoute: typeof EstruturaRouteImport; parentRoute: typeof rootRouteImport }
-    '/custos': { id: '/custos'; path: '/custos'; fullPath: '/custos'; preLoaderRoute: typeof CustosRouteImport; parentRoute: typeof rootRouteImport }
-    '/bilhetagem': { id: '/bilhetagem'; path: '/bilhetagem'; fullPath: '/bilhetagem'; preLoaderRoute: typeof BilhetagemRouteImport; parentRoute: typeof rootRouteImport }
-    '/auditoria': { id: '/auditoria'; path: '/auditoria'; fullPath: '/auditoria'; preLoaderRoute: typeof AuditoriaRouteImport; parentRoute: typeof rootRouteImport }
-    '/admin': { id: '/admin'; path: '/admin'; fullPath: '/admin'; preLoaderRoute: typeof AdminRouteImport; parentRoute: typeof rootRouteImport }
-    '/': { id: '/'; path: '/'; fullPath: '/'; preLoaderRoute: typeof IndexRouteImport; parentRoute: typeof rootRouteImport }
-    '/inventario/': { id: '/inventario/'; path: '/inventario'; fullPath: '/inventario/'; preLoaderRoute: typeof InventarioIndexRouteImport; parentRoute: typeof rootRouteImport }
-    '/inventario/novo': { id: '/inventario/novo'; path: '/inventario/novo'; fullPath: '/inventario/novo'; preLoaderRoute: typeof InventarioNovoRouteImport; parentRoute: typeof rootRouteImport }
-    '/inventario/importar': { id: '/inventario/importar'; path: '/inventario/importar'; fullPath: '/inventario/importar'; preLoaderRoute: typeof InventarioImportarRouteImport; parentRoute: typeof rootRouteImport }
+    '/whatsapp': {
+      id: '/whatsapp'
+      path: '/whatsapp'
+      fullPath: '/whatsapp'
+      preLoaderRoute: typeof WhatsappRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/usuarios': {
+      id: '/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof UsuariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/relatorios': {
+      id: '/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estrutura': {
+      id: '/estrutura'
+      path: '/estrutura'
+      fullPath: '/estrutura'
+      preLoaderRoute: typeof EstruturaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custos': {
+      id: '/custos'
+      path: '/custos'
+      fullPath: '/custos'
+      preLoaderRoute: typeof CustosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bilhetagem': {
+      id: '/bilhetagem'
+      path: '/bilhetagem'
+      fullPath: '/bilhetagem'
+      preLoaderRoute: typeof BilhetagemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auditoria': {
+      id: '/auditoria'
+      path: '/auditoria'
+      fullPath: '/auditoria'
+      preLoaderRoute: typeof AuditoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventario/': {
+      id: '/inventario/'
+      path: '/inventario'
+      fullPath: '/inventario/'
+      preLoaderRoute: typeof InventarioIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventario/novo': {
+      id: '/inventario/novo'
+      path: '/inventario/novo'
+      fullPath: '/inventario/novo'
+      preLoaderRoute: typeof InventarioNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventario/importar': {
+      id: '/inventario/importar'
+      path: '/inventario/importar'
+      fullPath: '/inventario/importar'
+      preLoaderRoute: typeof InventarioImportarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute,
-  AdminRoute,
-  AuditoriaRoute,
-  BilhetagemRoute,
-  CustosRoute,
-  EstruturaRoute,
-  LoginRoute,
-  RelatoriosRoute,
-  UsuariosRoute,
-  WhatsappRoute,
-  InventarioImportarRoute,
-  InventarioNovoRoute,
-  InventarioIndexRoute,
+  IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  AuditoriaRoute: AuditoriaRoute,
+  BilhetagemRoute: BilhetagemRoute,
+  CustosRoute: CustosRoute,
+  EstruturaRoute: EstruturaRoute,
+  LoginRoute: LoginRoute,
+  RelatoriosRoute: RelatoriosRoute,
+  UsuariosRoute: UsuariosRoute,
+  WhatsappRoute: WhatsappRoute,
+  InventarioImportarRoute: InventarioImportarRoute,
+  InventarioNovoRoute: InventarioNovoRoute,
+  InventarioIndexRoute: InventarioIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
