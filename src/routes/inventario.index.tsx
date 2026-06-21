@@ -77,7 +77,7 @@ function Inventario() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <input
                   className="gov-input pl-9"
-                  placeholder="Ramal, MSISDN, usuário, unidade..."
+                  placeholder="Ramal, MSISDN, usuário, unidade, protocolo AGU Serviços..."
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                 />
