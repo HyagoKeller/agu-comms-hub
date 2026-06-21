@@ -139,6 +139,7 @@ export interface PerfilUsuario {
   email: string;
   perfil: PerfilTipo;
   regioes: Regiao[];
+  unidades?: string[]; // escopo opcional por unidade (granular). Vazio/undefined = todas da(s) região(ões).
   permissoes: Permissoes;
   mfaEnabled?: boolean;
   mfaSecret?: string;
