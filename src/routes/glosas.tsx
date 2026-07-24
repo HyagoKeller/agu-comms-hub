@@ -12,6 +12,8 @@ export const Route = createFileRoute("/glosas")({
   component: GlosasPage,
 });
 
+function toISODate(d: Date) { return d.toISOString().slice(0, 10); }
+
 function GlosasPage() {
   const contratos = useStore((s) => s.contratos);
   const ordens = useStore((s) => s.ordensServico);
@@ -19,15 +21,26 @@ function GlosasPage() {
   const iars = useStore((s) => s.relatoriosIAR);
   const [contratoId, setContratoId] = useState(contratos[0]?.id ?? "");
 
+  const hoje = new Date();
+  const defDe = new Date(hoje.getFullYear(), hoje.getMonth() - 5, 1);
+  const [de, setDe] = useState(toISODate(defDe));
+  const [ate, setAte] = useState(toISODate(hoje));
+
+  const inRange = (iso?: string) => {
+    if (!iso) return false;
+    const t = new Date(iso).getTime();
+    return t >= new Date(de + "T00:00:00").getTime() && t <= new Date(ate + "T23:59:59").getTime();
+  };
+
   const dados = useMemo(() => {
-    const os = ordens.filter((o) => o.contratoId === contratoId);
-    const ch = chamados.filter((c) => c.contratoId === contratoId);
-    const ir = iars.filter((i) => i.contratoId === contratoId);
+    const os = ordens.filter((o) => o.contratoId === contratoId && inRange(o.dataEmissao));
+    const ch = chamados.filter((c) => c.contratoId === contratoId && inRange(c.abertoEm));
+    const ir = iars.filter((i) => i.contratoId === contratoId && (inRange(i.dataUpload) || inRange(i.criadoEm)));
     const glosaIAE = os.reduce((a, o) => a + (o.glosaFinal ?? 0), 0);
     const glosaIST = ch.reduce((a, c) => a + (c.glosaIST ?? 0), 0);
     const glosaIAR = ir.reduce((a, r) => a + (r.glosaIAR ?? 0), 0);
     return { os, ch, ir, glosaIAE, glosaIST, glosaIAR, total: glosaIAE + glosaIST + glosaIAR };
-  }, [ordens, chamados, iars, contratoId]);
+  }, [ordens, chamados, iars, contratoId, de, ate]);
 
   const contrato = contratos.find((c) => c.id === contratoId);
   const valorMensal = contrato?.valorMensalTotal ?? 0;
@@ -44,11 +57,21 @@ function GlosasPage() {
               Consolidação de IAE (ordens de serviço) + IST (chamados técnicos) + IAR (relatório semestral) por contrato.
             </p>
           </div>
-          <div>
-            <label className="gov-label">Contrato</label>
-            <select className="gov-input" value={contratoId} onChange={(e) => setContratoId(e.target.value)}>
-              {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero}</option>)}
-            </select>
+          <div className="flex flex-wrap items-end gap-2">
+            <div>
+              <label className="gov-label">De</label>
+              <input type="date" className="gov-input" value={de} onChange={(e) => setDe(e.target.value)} />
+            </div>
+            <div>
+              <label className="gov-label">Até</label>
+              <input type="date" className="gov-input" value={ate} onChange={(e) => setAte(e.target.value)} />
+            </div>
+            <div>
+              <label className="gov-label">Contrato</label>
+              <select className="gov-input" value={contratoId} onChange={(e) => setContratoId(e.target.value)}>
+                {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero}</option>)}
+              </select>
+            </div>
           </div>
         </div>
 

@@ -26,6 +26,7 @@ import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InventarioIndexRouteImport } from './routes/inventario.index'
+import { Route as PainelInventarioRouteImport } from './routes/painel.inventario'
 import { Route as InventarioNovoRouteImport } from './routes/inventario.novo'
 import { Route as InventarioImportarRouteImport } from './routes/inventario.importar'
 
@@ -114,6 +115,11 @@ const InventarioIndexRoute = InventarioIndexRouteImport.update({
   path: '/inventario/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PainelInventarioRoute = PainelInventarioRouteImport.update({
+  id: '/painel/inventario',
+  path: '/painel/inventario',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InventarioNovoRoute = InventarioNovoRouteImport.update({
   id: '/inventario/novo',
   path: '/inventario/novo',
@@ -144,6 +150,7 @@ export interface FileRoutesByFullPath {
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
+  '/painel/inventario': typeof PainelInventarioRoute
   '/inventario/': typeof InventarioIndexRoute
 }
 export interface FileRoutesByTo {
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
+  '/painel/inventario': typeof PainelInventarioRoute
   '/inventario': typeof InventarioIndexRoute
 }
 export interface FileRoutesById {
@@ -187,6 +195,7 @@ export interface FileRoutesById {
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
   '/inventario/novo': typeof InventarioNovoRoute
+  '/painel/inventario': typeof PainelInventarioRoute
   '/inventario/': typeof InventarioIndexRoute
 }
 export interface FileRouteTypes {
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/whatsapp'
     | '/inventario/importar'
     | '/inventario/novo'
+    | '/painel/inventario'
     | '/inventario/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/whatsapp'
     | '/inventario/importar'
     | '/inventario/novo'
+    | '/painel/inventario'
     | '/inventario'
   id:
     | '__root__'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/whatsapp'
     | '/inventario/importar'
     | '/inventario/novo'
+    | '/painel/inventario'
     | '/inventario/'
   fileRoutesById: FileRoutesById
 }
@@ -274,6 +286,7 @@ export interface RootRouteChildren {
   WhatsappRoute: typeof WhatsappRoute
   InventarioImportarRoute: typeof InventarioImportarRoute
   InventarioNovoRoute: typeof InventarioNovoRoute
+  PainelInventarioRoute: typeof PainelInventarioRoute
   InventarioIndexRoute: typeof InventarioIndexRoute
 }
 
@@ -398,6 +411,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InventarioIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/painel/inventario': {
+      id: '/painel/inventario'
+      path: '/painel/inventario'
+      fullPath: '/painel/inventario'
+      preLoaderRoute: typeof PainelInventarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inventario/novo': {
       id: '/inventario/novo'
       path: '/inventario/novo'
@@ -434,6 +454,7 @@ const rootRouteChildren: RootRouteChildren = {
   WhatsappRoute: WhatsappRoute,
   InventarioImportarRoute: InventarioImportarRoute,
   InventarioNovoRoute: InventarioNovoRoute,
+  PainelInventarioRoute: PainelInventarioRoute,
   InventarioIndexRoute: InventarioIndexRoute,
 }
 export const routeTree = rootRouteImport

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   AlertTriangle, ShieldCheck, FileBarChart2, Wallet, GaugeCircle, History,
   Phone, Users, TicketCheck, FileWarning,
@@ -20,15 +20,31 @@ export const Route = createFileRoute("/")({
 const LIMITE_RAMAIS = 9000;
 const LIMITE_CANAIS = 2000;
 
+function toISODate(d: Date) { return d.toISOString().slice(0, 10); }
+
 function Dashboard() {
   const ativos = useStore((s) => s.ativos);
   const logs = useStore((s) => s.logs);
   const contratos = useStore((s) => s.contratos);
-  const ordens = useStore((s) => s.ordensServico);
-  const chamados = useStore((s) => s.chamados);
+  const ordensAll = useStore((s) => s.ordensServico);
+  const chamadosAll = useStore((s) => s.chamados);
   const iars = useStore((s) => s.relatoriosIAR);
   const unidades = useStore((s) => s.unidades);
   const faixas = useStore((s) => s.faixasDDR);
+
+  const hoje = new Date();
+  const defDe = new Date(hoje.getFullYear(), hoje.getMonth() - 2, 1);
+  const [de, setDe] = useState(toISODate(defDe));
+  const [ate, setAte] = useState(toISODate(hoje));
+
+  const inRange = (iso?: string) => {
+    if (!iso) return false;
+    const t = new Date(iso).getTime();
+    return t >= new Date(de + "T00:00:00").getTime() && t <= new Date(ate + "T23:59:59").getTime();
+  };
+
+  const ordens = useMemo(() => ordensAll.filter((o) => inRange(o.dataEmissao)), [ordensAll, de, ate]);
+  const chamados = useMemo(() => chamadosAll.filter((c) => inRange(c.abertoEm)), [chamadosAll, de, ate]);
 
   const contratoAtivo = contratos.find((c) => c.status === "ATIVO");
   const alertas = contratoAtivo ? alertasContrato(contratoAtivo) : [];
@@ -69,11 +85,27 @@ function Dashboard() {
     <>
       <GovBreadcrumb items={[{ label: "Painel Executivo" }]} />
       <section className="gov-container pb-10">
-        <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl">Painel Executivo - Contrato STFC {contratoAtivo?.numero ?? "-"}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Visão consolidada de execução contratual, IMR (IAE/IST/IAR), capacidade e portabilidade.
-          </p>
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="text-2xl md:text-3xl">Painel Executivo - Contrato STFC {contratoAtivo?.numero ?? "-"}</h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Visão consolidada de execução contratual, IMR (IAE/IST/IAR), capacidade e portabilidade.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-end gap-2">
+            <div>
+              <label className="gov-label">De</label>
+              <input type="date" className="gov-input" value={de} onChange={(e) => setDe(e.target.value)} />
+            </div>
+            <div>
+              <label className="gov-label">Até</label>
+              <input type="date" className="gov-input" value={ate} onChange={(e) => setAte(e.target.value)} />
+            </div>
+            <button
+              className="gov-btn-secondary h-10"
+              onClick={() => { setDe(toISODate(defDe)); setAte(toISODate(hoje)); }}
+            >Últimos 3 meses</button>
+          </div>
         </div>
 
         {alertas.length > 0 && (
