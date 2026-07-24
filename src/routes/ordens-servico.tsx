@@ -215,7 +215,7 @@ function DetalheOSModal({ os, onClose }: { os: OrdemServico; onClose: () => void
   function aplicarOverride() {
     const v = parseFloat(override.replace(",", "."));
     if (isNaN(v) || !justificativa.trim()) return;
-    const user = auth.current();
+    const user = auth.current;
     store.overrideGlosaOS(os.id, {
       valorOriginal: os.glosaCalculada ?? 0,
       valorAjustado: v,
