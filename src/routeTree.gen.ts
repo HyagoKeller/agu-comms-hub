@@ -15,6 +15,7 @@ import { Route as RelatoriosRouteImport } from './routes/relatorios'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EstruturaRouteImport } from './routes/estrutura'
 import { Route as CustosRouteImport } from './routes/custos'
+import { Route as ContratosRouteImport } from './routes/contratos'
 import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
 import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -51,6 +52,11 @@ const EstruturaRoute = EstruturaRouteImport.update({
 const CustosRoute = CustosRouteImport.update({
   id: '/custos',
   path: '/custos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContratosRoute = ContratosRouteImport.update({
+  id: '/contratos',
+  path: '/contratos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BilhetagemRoute = BilhetagemRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
@@ -188,6 +200,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuditoriaRoute: typeof AuditoriaRoute
   BilhetagemRoute: typeof BilhetagemRoute
+  ContratosRoute: typeof ContratosRoute
   CustosRoute: typeof CustosRoute
   EstruturaRoute: typeof EstruturaRoute
   LoginRoute: typeof LoginRoute
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/custos'
       fullPath: '/custos'
       preLoaderRoute: typeof CustosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contratos': {
+      id: '/contratos'
+      path: '/contratos'
+      fullPath: '/contratos'
+      preLoaderRoute: typeof ContratosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bilhetagem': {
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuditoriaRoute: AuditoriaRoute,
   BilhetagemRoute: BilhetagemRoute,
+  ContratosRoute: ContratosRoute,
   CustosRoute: CustosRoute,
   EstruturaRoute: EstruturaRoute,
   LoginRoute: LoginRoute,
