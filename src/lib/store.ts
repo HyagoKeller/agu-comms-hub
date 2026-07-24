@@ -1,8 +1,9 @@
 import { useSyncExternalStore } from "react";
 import type {
-  Ativo, AuditoriaLog, AuthConfig, CustoItem, PerfilTemplate, PerfilUsuario,
-  Permissoes, Unidade, WhatsappNumero,
+  Ativo, AuditoriaLog, AuthConfig, Contrato, CustoItem, OrdemServico, OSGlosaOverride,
+  PerfilTemplate, PerfilUsuario, Permissoes, StatusOS, Unidade, WhatsappNumero,
 } from "./types";
+import { addDias, aplicaIAE } from "./imr";
 
 interface State {
   ativos: Ativo[];
@@ -13,9 +14,12 @@ interface State {
   whats: WhatsappNumero[];
   perfilTemplates: PerfilTemplate[];
   authConfig: AuthConfig;
+  contratos: Contrato[];
+  ordensServico: OrdemServico[];
 }
 
-const KEY = "agu-telefonia-v2";
+const KEY = "agu-telefonia-v3";
+
 
 const FULL: Permissoes = {
   verCadastro: true, editar: true, excluir: true,
@@ -81,7 +85,65 @@ function seed(): State {
       escopos: "openid profile email User.Read",
     },
   };
-  return { ativos, unidades, custos, logs, usuarios, whats, perfilTemplates, authConfig };
+
+  // Seed do Contrato STFC nº 12/2026 (TR item 1.1)
+  const contratoSTFC: Contrato = {
+    id: "ct1",
+    numero: "12/2026",
+    processoAdministrativo: "00400.001234/2025-99",
+    uasg: "110061",
+    orgaoContratante: "Advocacia-Geral da União",
+    fornecedorRazaoSocial: "Operadora STFC S.A.",
+    fornecedorCnpj: "00.000.000/0001-00",
+    modalidade: "PREGAO",
+    objeto: "Serviço Telefônico Fixo Comutado (STFC) via SIP Trunk, com 2.000 canais simultâneos e 9.000 ramais DDR distribuídos em 158 unidades da AGU.",
+    itens: [
+      { id: "ci1", item: "1", descricao: "Assinatura de tronco SIP (canal simultâneo)", catser: "26069", unidadeMedida: "Canal/mês", quantidade: 2000, valorUnitario: 12.50, valorMensal: 25000, valorTotal: 900000 },
+      { id: "ci2", item: "2", descricao: "Ramal DDR (numeração)", catser: "26069", unidadeMedida: "Ramal/mês", quantidade: 9000, valorUnitario: 0.65, valorMensal: 5850, valorTotal: 210600 },
+      { id: "ci3", item: "3", descricao: "Franquia de minutagem (local, DDD, móvel)", catser: "26077", unidadeMedida: "Verba/mês", quantidade: 36, valorUnitario: 122.28, valorMensal: 122.28, valorTotal: 4402.08 },
+    ],
+    vigenciaAssinatura: "2026-02-01",
+    vigenciaInicio: "2026-02-15",
+    vigenciaFim: "2029-02-14",
+    prazoMeses: 36,
+    prorrogavelAteAnos: 5,
+    valorMensalTotal: 30972.28,
+    valorAnualTotal: 371667.36,
+    valorTotalPeriodo: 1115002.08,
+    dotacao: {
+      gestaoUnidade: "110061",
+      fonte: "0100",
+      programaTrabalho: "03.032.0032.2000",
+      elementoDespesa: "339040",
+      planoInterno: "SGT-AGU-2026",
+      notaEmpenho: "2026NE000123",
+    },
+    garantia: {
+      modalidade: "SEGURO_GARANTIA",
+      percentual: 5,
+      valor: 55750.10,
+      vigenciaInicio: "2026-02-15",
+      vigenciaFim: "2029-05-15",
+      observacao: "Vigência = execução contratual + 90 dias.",
+    },
+    reajuste: {
+      dataBaseOrcamento: "2025-10",
+      indice: "IST-ANATEL",
+      interregnoMeses: 12,
+      proximoElegivelEm: "2026-10-01",
+      historico: [],
+    },
+    fiscalizacao: {},
+    anexos: [],
+    status: "ATIVO",
+    criadoEm: "2026-02-01T10:00:00Z",
+  };
+
+  return {
+    ativos, unidades, custos, logs, usuarios, whats, perfilTemplates, authConfig,
+    contratos: [contratoSTFC],
+    ordensServico: [],
+  };
 }
 
 let state: State = load();
@@ -94,13 +156,17 @@ function load(): State {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<State>;
+
       return {
         ...def,
         ...parsed,
         whats: parsed.whats ?? def.whats,
         perfilTemplates: parsed.perfilTemplates ?? def.perfilTemplates,
         authConfig: parsed.authConfig ?? def.authConfig,
+        contratos: parsed.contratos ?? def.contratos,
+        ordensServico: parsed.ordensServico ?? def.ordensServico,
       };
+
     }
   } catch {}
   try { localStorage.setItem(KEY, JSON.stringify(def)); } catch {}
@@ -203,11 +269,76 @@ export const store = {
     setState((s) => ({ ...s, authConfig: { ...s.authConfig, ...patch } }));
     log({ modulo: "Administração", acao: "EDITAR", registroId: "authConfig", antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
   },
+
+  // ---------- Contratos ----------
+  addContrato(c: Contrato) {
+    setState((s) => ({ ...s, contratos: [c, ...s.contratos] }));
+    log({ modulo: "Contratos", acao: "CRIAR", registroId: c.id, depois: c as unknown as Record<string, unknown> });
+  },
+  updateContrato(id: string, patch: Partial<Contrato>) {
+    const antes = state.contratos.find((x) => x.id === id);
+    setState((s) => ({ ...s, contratos: s.contratos.map((x) => x.id === id ? { ...x, ...patch } : x) }));
+    log({ modulo: "Contratos", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  addContratoAnexo(contratoId: string, anexo: Contrato["anexos"][number]) {
+    setState((s) => ({ ...s, contratos: s.contratos.map((x) => x.id === contratoId ? { ...x, anexos: [anexo, ...x.anexos] } : x) }));
+    log({ modulo: "Contratos", acao: "CRIAR", registroId: contratoId, depois: { anexo } as unknown as Record<string, unknown> });
+  },
+
+  // ---------- Ordens de Serviço + IAE ----------
+  addOS(input: Omit<OrdemServico, "id" | "numero" | "dataEmissao" | "dataLimite" | "status" | "criadoEm">) {
+    const dataEmissao = new Date().toISOString();
+    const dataLimite = addDias(dataEmissao, input.prazoDias);
+    const seq = state.ordensServico.length + 1;
+    const os: OrdemServico = {
+      ...input,
+      id: uid("os"),
+      numero: `OS-${String(seq).padStart(4, "0")}`,
+      dataEmissao,
+      dataLimite,
+      status: "ABERTA",
+      criadoEm: dataEmissao,
+    };
+    setState((s) => ({ ...s, ordensServico: [os, ...s.ordensServico] }));
+    log({ modulo: "OrdensServico", acao: "CRIAR", registroId: os.id, depois: os as unknown as Record<string, unknown> });
+    return os;
+  },
+  moverOS(id: string, novoStatus: StatusOS) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch: Partial<OrdemServico> = { status: novoStatus };
+    // Ao entrar em execução, marca timestamp automático.
+    if (novoStatus === "EM_EXECUCAO" && !antes.dataInicioExecucao) {
+      patch.dataInicioExecucao = new Date().toISOString();
+    }
+    // Ao passar para recebimento provisório, aplica IAE se ainda não concluída.
+    if (novoStatus === "RECEBIMENTO_PROVISORIO" && !antes.dataConclusao) {
+      Object.assign(patch, aplicaIAE(antes, new Date().toISOString()));
+    }
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { status: antes.status } as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  concluirOS(id: string) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch = { ...aplicaIAE(antes, new Date().toISOString()), status: "RECEBIMENTO_PROVISORIO" as StatusOS };
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { status: antes.status } as Record<string, unknown>, depois: patch as unknown as Record<string, unknown> });
+  },
+  overrideGlosaOS(id: string, override: OSGlosaOverride) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch: Partial<OrdemServico> = { override, glosaFinal: override.valorAjustado };
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { glosaFinal: antes.glosaFinal } as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+
   reset() {
     state = seed();
     persist();
   },
 };
+
 
 function log(entry: Omit<AuditoriaLog, "id" | "ts" | "ator">) {
   let ator = "sistema@agu.gov.br";

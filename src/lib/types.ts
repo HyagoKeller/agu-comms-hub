@@ -184,3 +184,166 @@ export const PERFIL_LABELS: Record<PerfilTipo, string> = {
   OPERADOR: "Operador",
   AUDITOR: "Auditor",
 };
+
+// =====================================================
+// Contratos (Fase 1) — Lei 14.133/2021 + STFC 12/2026
+// =====================================================
+
+export type ContratoStatus = "ATIVO" | "SUSPENSO" | "ENCERRADO";
+
+export interface ContratoItem {
+  id: string;
+  grupo?: string;
+  item: string;                 // ex.: "1"
+  descricao: string;            // ex.: "Serviço Telefônico Fixo Comutado — SIP Trunk"
+  catser?: string;
+  unidadeMedida: string;        // ex.: "Canal", "Ramal DDR", "Mês"
+  quantidade: number;
+  valorUnitario: number;
+  valorMensal: number;
+  valorTotal: number;
+}
+
+export type GarantiaModalidade =
+  | "CAUCAO"
+  | "SEGURO_GARANTIA"
+  | "FIANCA_BANCARIA"
+  | "TITULO_CAPITALIZACAO";
+
+export interface ContratoGarantia {
+  modalidade: GarantiaModalidade;
+  percentual: number;
+  valor: number;
+  vigenciaInicio: string;   // YYYY-MM-DD
+  vigenciaFim: string;      // YYYY-MM-DD (execução + 90 dias)
+  observacao?: string;
+}
+
+export interface ContratoReajuste {
+  dataBaseOrcamento: string;    // YYYY-MM
+  indice: string;               // ex.: "IST-ANATEL"
+  interregnoMeses: number;      // 12
+  proximoElegivelEm?: string;   // YYYY-MM-DD (calculado)
+  historico: { data: string; percentual: number; observacao?: string }[];
+}
+
+export interface ContratoFiscalizacao {
+  gestorContratoId?: string;    // referência a PerfilUsuario.id
+  fiscalTecnicoId?: string;
+  fiscalAdministrativoId?: string;
+  fiscalSetorialId?: string;
+}
+
+export interface ContratoAnexo {
+  id: string;
+  nome: string;                 // "Contrato assinado.pdf"
+  tipo: "TR" | "CONTRATO" | "APOLICE" | "OUTRO";
+  tamanhoBytes?: number;
+  uploadedAt: string;
+  observacao?: string;
+}
+
+export interface Contrato {
+  id: string;
+  numero: string;               // "12/2026"
+  processoAdministrativo: string;
+  uasg?: string;
+  orgaoContratante: string;     // "Advocacia-Geral da União"
+  fornecedorRazaoSocial: string;
+  fornecedorCnpj: string;
+  modalidade: "PREGAO" | "SRP" | "DISPENSA" | "INEXIGIBILIDADE" | "OUTRO";
+  objeto: string;
+  itens: ContratoItem[];
+  vigenciaAssinatura: string;   // YYYY-MM-DD
+  vigenciaInicio: string;
+  vigenciaFim: string;
+  prazoMeses: number;           // 36
+  prorrogavelAteAnos: number;   // 5 (padrão Lei 14.133)
+  valorMensalTotal: number;
+  valorAnualTotal: number;
+  valorTotalPeriodo: number;
+  dotacao?: {
+    gestaoUnidade?: string;
+    fonte?: string;
+    programaTrabalho?: string;
+    elementoDespesa?: string;
+    planoInterno?: string;
+    notaEmpenho?: string;
+  };
+  garantia?: ContratoGarantia;
+  reajuste?: ContratoReajuste;
+  fiscalizacao: ContratoFiscalizacao;
+  anexos: ContratoAnexo[];
+  status: ContratoStatus;
+  criadoEm: string;
+}
+
+// =====================================================
+// Ordens de Serviço (Fase 2.1) e cálculo IAE (2.2)
+// =====================================================
+
+export type TipoOS =
+  | "INSTALACAO"
+  | "PORTABILIDADE"
+  | "MANUTENCAO_CORRETIVA"
+  | "ENTREGA_RELATORIO"
+  | "OUTRO";
+
+export const TIPOS_OS: { value: TipoOS; label: string; tcePadraoDias: number }[] = [
+  { value: "INSTALACAO", label: "Instalação", tcePadraoDias: 30 },
+  { value: "PORTABILIDADE", label: "Portabilidade Numérica", tcePadraoDias: 60 },
+  { value: "MANUTENCAO_CORRETIVA", label: "Manutenção Corretiva", tcePadraoDias: 5 },
+  { value: "ENTREGA_RELATORIO", label: "Entrega de Relatório", tcePadraoDias: 15 },
+  { value: "OUTRO", label: "Outro", tcePadraoDias: 15 },
+];
+
+export type StatusOS =
+  | "ABERTA"
+  | "EM_EXECUCAO"
+  | "RECEBIMENTO_PROVISORIO"
+  | "RECEBIMENTO_DEFINITIVO"
+  | "FATURADA"
+  | "CANCELADA";
+
+export const STATUS_OS_LABELS: Record<StatusOS, string> = {
+  ABERTA: "Aberta",
+  EM_EXECUCAO: "Em execução",
+  RECEBIMENTO_PROVISORIO: "Recebimento provisório",
+  RECEBIMENTO_DEFINITIVO: "Recebimento definitivo",
+  FATURADA: "Faturada",
+  CANCELADA: "Cancelada",
+};
+
+export interface OSGlosaOverride {
+  valorOriginal: number;
+  valorAjustado: number;
+  justificativa: string;
+  ator: string;
+  ts: string;
+}
+
+export interface OrdemServico {
+  id: string;
+  numero: string;                 // sequencial, ex.: "OS-0001"
+  contratoId: string;
+  tipo: TipoOS;
+  descricao: string;
+  unidadesAlvo: string[];         // nomes das unidades
+  regiao?: Regiao;
+  fiscalRequisitanteId?: string;
+  gestorContratoId?: string;
+  dataEmissao: string;            // ISO — automático na criação
+  prazoDias: number;              // TCE
+  dataLimite: string;             // YYYY-MM-DD (calculado: dataEmissao + prazoDias)
+  dataInicioExecucao?: string;    // ISO — ao mover para EM_EXECUCAO
+  dataConclusao?: string;         // ISO — TEC, automático ao concluir
+  status: StatusOS;
+  valorOS: number;                // base de cálculo da glosa (R$)
+  iaeDias?: number;               // calculado
+  glosaCalculada?: number;        // R$
+  glosaFinal?: number;            // R$ (após override)
+  override?: OSGlosaOverride;
+  observacoes?: string;
+  criadoEm: string;
+}
+

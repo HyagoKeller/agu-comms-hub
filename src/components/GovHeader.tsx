@@ -6,6 +6,8 @@ import { auth, useAuth } from "@/lib/auth";
 
 const NAV: { to: string; label: string; adminOnly?: boolean }[] = [
   { to: "/", label: "Painel" },
+  { to: "/contratos", label: "Contratos" },
+  { to: "/ordens-servico", label: "Ordens de Serviço" },
   { to: "/inventario", label: "Inventário" },
   { to: "/whatsapp", label: "WhatsApp" },
   { to: "/custos", label: "Tabela de Custos" },
@@ -16,6 +18,7 @@ const NAV: { to: string; label: string; adminOnly?: boolean }[] = [
   { to: "/auditoria", label: "Auditoria" },
   { to: "/admin", label: "Administração", adminOnly: true },
 ];
+
 
 export function GovHeader() {
   const [open, setOpen] = useState(false);

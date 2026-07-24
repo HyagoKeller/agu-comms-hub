@@ -12,9 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhatsappRouteImport } from './routes/whatsapp'
 import { Route as UsuariosRouteImport } from './routes/usuarios'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as OrdensServicoRouteImport } from './routes/ordens-servico'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EstruturaRouteImport } from './routes/estrutura'
 import { Route as CustosRouteImport } from './routes/custos'
+import { Route as ContratosRouteImport } from './routes/contratos'
 import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
 import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -38,6 +40,11 @@ const RelatoriosRoute = RelatoriosRouteImport.update({
   path: '/relatorios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrdensServicoRoute = OrdensServicoRouteImport.update({
+  id: '/ordens-servico',
+  path: '/ordens-servico',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -51,6 +58,11 @@ const EstruturaRoute = EstruturaRouteImport.update({
 const CustosRoute = CustosRouteImport.update({
   id: '/custos',
   path: '/custos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContratosRoute = ContratosRouteImport.update({
+  id: '/contratos',
+  path: '/contratos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BilhetagemRoute = BilhetagemRouteImport.update({
@@ -94,9 +106,11 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
+  '/ordens-servico': typeof OrdensServicoRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
@@ -109,9 +123,11 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
+  '/ordens-servico': typeof OrdensServicoRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
@@ -125,9 +141,11 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
   '/login': typeof LoginRoute
+  '/ordens-servico': typeof OrdensServicoRoute
   '/relatorios': typeof RelatoriosRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
@@ -142,9 +160,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
+    | '/ordens-servico'
     | '/relatorios'
     | '/usuarios'
     | '/whatsapp'
@@ -157,9 +177,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
+    | '/ordens-servico'
     | '/relatorios'
     | '/usuarios'
     | '/whatsapp'
@@ -172,9 +194,11 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/contratos'
     | '/custos'
     | '/estrutura'
     | '/login'
+    | '/ordens-servico'
     | '/relatorios'
     | '/usuarios'
     | '/whatsapp'
@@ -188,9 +212,11 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuditoriaRoute: typeof AuditoriaRoute
   BilhetagemRoute: typeof BilhetagemRoute
+  ContratosRoute: typeof ContratosRoute
   CustosRoute: typeof CustosRoute
   EstruturaRoute: typeof EstruturaRoute
   LoginRoute: typeof LoginRoute
+  OrdensServicoRoute: typeof OrdensServicoRoute
   RelatoriosRoute: typeof RelatoriosRoute
   UsuariosRoute: typeof UsuariosRoute
   WhatsappRoute: typeof WhatsappRoute
@@ -222,6 +248,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RelatoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ordens-servico': {
+      id: '/ordens-servico'
+      path: '/ordens-servico'
+      fullPath: '/ordens-servico'
+      preLoaderRoute: typeof OrdensServicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -241,6 +274,13 @@ declare module '@tanstack/react-router' {
       path: '/custos'
       fullPath: '/custos'
       preLoaderRoute: typeof CustosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contratos': {
+      id: '/contratos'
+      path: '/contratos'
+      fullPath: '/contratos'
+      preLoaderRoute: typeof ContratosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bilhetagem': {
@@ -300,9 +340,11 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuditoriaRoute: AuditoriaRoute,
   BilhetagemRoute: BilhetagemRoute,
+  ContratosRoute: ContratosRoute,
   CustosRoute: CustosRoute,
   EstruturaRoute: EstruturaRoute,
   LoginRoute: LoginRoute,
+  OrdensServicoRoute: OrdensServicoRoute,
   RelatoriosRoute: RelatoriosRoute,
   UsuariosRoute: UsuariosRoute,
   WhatsappRoute: WhatsappRoute,
