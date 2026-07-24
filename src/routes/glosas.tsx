@@ -8,7 +8,7 @@ import { brl } from "@/lib/imr";
 import type { RelatorioIAR } from "@/lib/types";
 
 export const Route = createFileRoute("/glosas")({
-  head: () => ({ meta: [{ title: "Painel de Glosas (IMR) — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Painel de Glosas (IMR) - SGT AGU" }] }),
   component: GlosasPage,
 });
 
@@ -118,10 +118,10 @@ function LinhaIAR({ r }: { r: RelatorioIAR }) {
       <tr>
         <td className="px-4 py-2 font-semibold">{r.periodo}</td>
         <td className="px-4 py-2 text-xs">{r.prazoEntrega}</td>
-        <td className="px-4 py-2 text-xs">{r.dataUpload ? new Date(r.dataUpload).toLocaleString("pt-BR") : "—"}</td>
+        <td className="px-4 py-2 text-xs">{r.dataUpload ? new Date(r.dataUpload).toLocaleString("pt-BR") : "-"}</td>
         <td className="px-4 py-2 text-right font-mono">{r.diasUteisAtraso ?? 0}</td>
         <td className="px-4 py-2 text-right">{(r.percentualGlosa ?? 0).toFixed(1)}%</td>
-        <td className="px-4 py-2 text-right font-semibold text-gov-danger">{r.glosaIAR ? brl(r.glosaIAR) : "—"}</td>
+        <td className="px-4 py-2 text-right font-semibold text-gov-danger">{r.glosaIAR ? brl(r.glosaIAR) : "-"}</td>
         <td className="px-4 py-2"><GovTag tone={tone}>{r.status}</GovTag></td>
         <td className="px-4 py-2 text-right">
           {r.status === "PENDENTE" && (
@@ -146,7 +146,7 @@ function LinhaIAR({ r }: { r: RelatorioIAR }) {
               </div>
               <button type="submit" className="gov-btn-primary"><Upload className="h-4 w-4" /> Registrar entrega</button>
               <button type="button" className="gov-btn-secondary" onClick={() => setUploading(false)}>Cancelar</button>
-              <p className="w-full text-xs text-muted-foreground">A data de entrega é capturada no clique. O atraso é comparado ao prazo contratual — sem digitação manual de data.</p>
+              <p className="w-full text-xs text-muted-foreground">A data de entrega é capturada no clique. O atraso é comparado ao prazo contratual - sem digitação manual de data.</p>
             </form>
           </td>
         </tr>

@@ -2,9 +2,9 @@
 
 ## Princípios
 
-- **Imutável** — logs nunca são editados nem removidos pela UI.
-- **Automática** — toda mutação passa pela store (`src/lib/store.ts`), que grava o evento; não há caminho paralelo de escrita.
-- **Rastreável** — cada evento identifica ator, timestamp, módulo, ação, registro afetado e o par `antes` / `depois` dos campos modificados.
+- **Imutável** - logs nunca são editados nem removidos pela UI.
+- **Automática** - toda mutação passa pela store (`src/lib/store.ts`), que grava o evento; não há caminho paralelo de escrita.
+- **Rastreável** - cada evento identifica ator, timestamp, módulo, ação, registro afetado e o par `antes` / `depois` dos campos modificados.
 
 ## Estrutura de um evento
 
@@ -43,4 +43,4 @@ Página **Auditoria** (`/auditoria`), disponível para todos os perfis com permi
 
 ## Retenção
 
-No protótipo, os logs vivem no `localStorage` — em produção devem ser persistidos em base transacional com política de retenção definida pela AGU (recomendação: mínimo 5 anos para atender exigências de auditoria pública).
+No protótipo, os logs vivem no `localStorage` - em produção devem ser persistidos em base transacional com política de retenção definida pela AGU (recomendação: mínimo 5 anos para atender exigências de auditoria pública).

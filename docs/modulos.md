@@ -25,12 +25,12 @@ Listagem unificada de PABX + Móvel com:
 
 Formulário completo com seções:
 
-- **Identificação** — categoria, tipo, identificador, MAC (validado).
-- **Localização** — região, unidade, sala.
-- **Responsável** — nome, login, setor, data de atribuição.
-- **Documentação** — status termo, protocolo AGU Serviços (ITSM), observações, anexos.
-- **Status operacional** — Ativo / Disponível / Manutenção / Bloqueado / Inativo.
-- **MDM / Conformidade** — status MDM, categoria WhatsApp (para linhas móveis).
+- **Identificação** - categoria, tipo, identificador, MAC (validado).
+- **Localização** - região, unidade, sala.
+- **Responsável** - nome, login, setor, data de atribuição.
+- **Documentação** - status termo, protocolo AGU Serviços (ITSM), observações, anexos.
+- **Status operacional** - Ativo / Disponível / Manutenção / Bloqueado / Inativo.
+- **MDM / Conformidade** - status MDM, categoria WhatsApp (para linhas móveis).
 
 ### Carga em Lote (`/inventario/importar`)
 
@@ -91,17 +91,17 @@ Cadastro e edição de perfis operacionais:
 
 - Nome, e-mail, perfil (Admin, Gestor Regional, Operador, Auditor).
 - Regiões atribuídas.
-- **Escopo granular por unidade** (opcional) — quando marcado, o usuário vê apenas as unidades selecionadas dentro das regiões atribuídas.
+- **Escopo granular por unidade** (opcional) - quando marcado, o usuário vê apenas as unidades selecionadas dentro das regiões atribuídas.
 - MFA ativo ou não.
 
 ## 9. Admin (`/admin`)
 
 Painel do Administrador Geral:
 
-- **Templates de perfil customizáveis** — cria/edita presets de permissões.
-- **Política de MFA** — obrigatório para admins ou para todos.
-- **Active Directory** — domínio, servidor LDAP, Base DN, grupo admin, usuário de serviço.
-- **Microsoft 365 / Entra ID** — Tenant ID, Client ID, Redirect URI, escopos, flag de Client Secret.
+- **Templates de perfil customizáveis** - cria/edita presets de permissões.
+- **Política de MFA** - obrigatório para admins ou para todos.
+- **Active Directory** - domínio, servidor LDAP, Base DN, grupo admin, usuário de serviço.
+- **Microsoft 365 / Entra ID** - Tenant ID, Client ID, Redirect URI, escopos, flag de Client Secret.
 
 ## 10. Auditoria (`/auditoria`)
 

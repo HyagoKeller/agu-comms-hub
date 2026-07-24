@@ -7,7 +7,7 @@ import { parseWorkbook, type SheetReport } from "@/lib/import-xlsx";
 import { store } from "@/lib/store";
 
 export const Route = createFileRoute("/inventario/importar")({
-  head: () => ({ meta: [{ title: "Carga em Lote — Inventário AGU" }] }),
+  head: () => ({ meta: [{ title: "Carga em Lote - Inventário AGU" }] }),
   component: ImportarPage,
 });
 
@@ -52,7 +52,7 @@ function ImportarPage() {
       <section className="gov-container pb-10">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl">Carga em Lote — Planilha (.xlsx)</h1>
+            <h1 className="text-2xl md:text-3xl">Carga em Lote - Planilha (.xlsx)</h1>
             <p className="text-sm text-muted-foreground mt-1">
               Importe a planilha de controle (todas as abas serão reconhecidas automaticamente).
             </p>
@@ -191,8 +191,8 @@ function ImportarPage() {
 
 function detectedLabel(d: SheetReport["detectedAs"]): string {
   switch (d) {
-    case "PABX_BSB": return "Ramais PABX — Brasília";
-    case "PABX_ESTADOS": return "Ramais PABX — Estados";
+    case "PABX_BSB": return "Ramais PABX - Brasília";
+    case "PABX_ESTADOS": return "Ramais PABX - Estados";
     case "APARELHOS_INVENTARIO": return "Inventário de Aparelhos";
     case "APARELHOS_DISPONIVEIS": return "Aparelhos Disponíveis";
     case "APARELHOS_ENVIADOS": return "Aparelhos Enviados";

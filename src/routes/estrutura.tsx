@@ -7,7 +7,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { REGIOES, REGIAO_LABELS, type Regiao, type Unidade } from "@/lib/types";
 
 export const Route = createFileRoute("/estrutura")({
-  head: () => ({ meta: [{ title: "Estrutura Organizacional — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Estrutura Organizacional - SGT AGU" }] }),
   component: Estrutura,
 });
 
@@ -93,8 +93,8 @@ function Estrutura() {
       R1: {}, R2: {}, R3: {}, R4: {}, R5: {}, R6: {},
     };
     unidades.forEach((u) => {
-      const est = u.estado ?? "—";
-      const cid = u.cidade ?? "—";
+      const est = u.estado ?? "-";
+      const cid = u.cidade ?? "-";
       tree[u.regiao] ??= {};
       tree[u.regiao][est] ??= {};
       tree[u.regiao][est][cid] ??= [];

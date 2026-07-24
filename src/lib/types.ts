@@ -59,9 +59,9 @@ export interface Ativo {
 export type EtapaPortabilidade = "NAO_INICIADA" | "E1" | "E2" | "E3" | "CONCLUIDA";
 export const ETAPAS_PORT: { value: EtapaPortabilidade; label: string }[] = [
   { value: "NAO_INICIADA", label: "Não iniciada" },
-  { value: "E1", label: "Etapa 1 — Levantamento" },
-  { value: "E2", label: "Etapa 2 — Solicitação ANATEL" },
-  { value: "E3", label: "Etapa 3 — Ativação" },
+  { value: "E1", label: "Etapa 1 - Levantamento" },
+  { value: "E2", label: "Etapa 2 - Solicitação ANATEL" },
+  { value: "E3", label: "Etapa 3 - Ativação" },
   { value: "CONCLUIDA", label: "Concluída" },
 ];
 
@@ -374,12 +374,12 @@ export interface OrdemServico {
 }
 
 // =====================================================
-// Fase 2.3 — Chamados Técnicos e IST
+// Fase 2.3 - Chamados Técnicos e IST
 // =====================================================
 
 export type SeveridadeChamado = "S1" | "S2" | "S3" | "S4" | "S5";
 
-/** Prazos exatos do TR (item 7.1.3 — IST) — em horas. */
+/** Prazos exatos do TR (item 7.1.3 - IST) - em horas. */
 export const SEVERIDADES: {
   value: SeveridadeChamado;
   label: string;
@@ -387,11 +387,11 @@ export const SEVERIDADES: {
   prazoSolucaoH: number;
   penalidadeHoraPct: number; // % do valor mensal da OS por hora de atraso
 }[] = [
-  { value: "S1", label: "S1 — Crítica (indisponibilidade total)", prazoRespostaH: 0.5, prazoSolucaoH: 4,   penalidadeHoraPct: 0.5 },
-  { value: "S2", label: "S2 — Alta (múltiplos usuários afetados)", prazoRespostaH: 1,   prazoSolucaoH: 8,   penalidadeHoraPct: 0.3 },
-  { value: "S3", label: "S3 — Média (usuário isolado)",             prazoRespostaH: 2,   prazoSolucaoH: 24,  penalidadeHoraPct: 0.1 },
-  { value: "S4", label: "S4 — Baixa (impacto reduzido)",            prazoRespostaH: 4,   prazoSolucaoH: 48,  penalidadeHoraPct: 0.05 },
-  { value: "S5", label: "S5 — Informativa / solicitação",           prazoRespostaH: 8,   prazoSolucaoH: 120, penalidadeHoraPct: 0.02 },
+  { value: "S1", label: "S1 - Crítica (indisponibilidade total)", prazoRespostaH: 0.5, prazoSolucaoH: 4,   penalidadeHoraPct: 0.5 },
+  { value: "S2", label: "S2 - Alta (múltiplos usuários afetados)", prazoRespostaH: 1,   prazoSolucaoH: 8,   penalidadeHoraPct: 0.3 },
+  { value: "S3", label: "S3 - Média (usuário isolado)",             prazoRespostaH: 2,   prazoSolucaoH: 24,  penalidadeHoraPct: 0.1 },
+  { value: "S4", label: "S4 - Baixa (impacto reduzido)",            prazoRespostaH: 4,   prazoSolucaoH: 48,  penalidadeHoraPct: 0.05 },
+  { value: "S5", label: "S5 - Informativa / solicitação",           prazoRespostaH: 8,   prazoSolucaoH: 120, penalidadeHoraPct: 0.02 },
 ];
 
 export type StatusChamado = "ABERTO" | "RESPONDIDO" | "SOLUCIONADO" | "CANCELADO";
@@ -408,9 +408,9 @@ export interface ChamadoTecnico {
   titulo: string;
   descricao: string;
   valorMensalOS: number;        // base para cálculo IST
-  abertoEm: string;             // ISO — automático
-  respondidoEm?: string;        // ISO — automático ao marcar
-  solucionadoEm?: string;       // ISO — automático ao marcar
+  abertoEm: string;             // ISO - automático
+  respondidoEm?: string;        // ISO - automático ao marcar
+  solucionadoEm?: string;       // ISO - automático ao marcar
   status: StatusChamado;
   conforme?: boolean;           // resultado do SLA (após solução)
   glosaIST?: number;            // penalidade calculada em R$
@@ -419,7 +419,7 @@ export interface ChamadoTecnico {
 }
 
 // =====================================================
-// Fase 2.4 — IAR (Relatório Semestral)
+// Fase 2.4 - IAR (Relatório Semestral)
 // =====================================================
 
 export type StatusIAR = "PENDENTE" | "ENTREGUE" | "ATRASADO" | "INEXECUCAO";
@@ -429,7 +429,7 @@ export interface RelatorioIAR {
   contratoId: string;
   periodo: string;             // "2026-S1" / "2026-S2"
   prazoEntrega: string;        // YYYY-MM-DD
-  dataUpload?: string;         // ISO — automático
+  dataUpload?: string;         // ISO - automático
   arquivoNome?: string;
   arquivoTamanhoBytes?: number;
   totalChamadas?: number;
@@ -445,7 +445,7 @@ export interface RelatorioIAR {
 }
 
 // =====================================================
-// Fase 4 — Sanções
+// Fase 4 - Sanções
 // =====================================================
 
 export type TipoSancao =

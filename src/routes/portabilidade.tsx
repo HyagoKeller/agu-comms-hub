@@ -7,7 +7,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { ETAPAS_PORT, type EtapaPortabilidade } from "@/lib/types";
 
 export const Route = createFileRoute("/portabilidade")({
-  head: () => ({ meta: [{ title: "Portabilidade & Capacidade — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Portabilidade & Capacidade - SGT AGU" }] }),
   component: PortabilidadePage,
 });
 
@@ -48,7 +48,7 @@ function PortabilidadePage() {
         <div className="mb-6">
           <h1 className="text-2xl md:text-3xl">Portabilidade & Capacidade DDR</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Progresso por etapa (E1→E3) do cronograma A do Apêndice A e monitor de capacidade — 9.000 ramais DDR / 2.000 canais.
+            Progresso por etapa (E1→E3) do cronograma A do Apêndice A e monitor de capacidade - 9.000 ramais DDR / 2.000 canais.
           </p>
         </div>
 
@@ -99,7 +99,7 @@ function PortabilidadePage() {
                   <tr key={u.id}>
                     <td className="px-4 py-2 font-semibold text-gov-blue-dark">{u.nome}</td>
                     <td className="px-4 py-2 text-muted-foreground">{u.regiaoLabel ?? u.regiao}</td>
-                    <td className="px-4 py-2 font-mono text-xs">({u.ddd ?? "—"}) {u.troncoPrincipal ?? "—"}</td>
+                    <td className="px-4 py-2 font-mono text-xs">({u.ddd ?? "-"}) {u.troncoPrincipal ?? "-"}</td>
                     <td className="px-4 py-2 text-right font-mono">{u.totalRamaisPlanejados ?? 0}</td>
                     <td className="px-4 py-2"><GovTag tone={ETAPA_TONE[etapa]}>{ETAPAS_PORT.find((e) => e.value === etapa)?.label}</GovTag></td>
                     <td className="px-4 py-2">
@@ -201,9 +201,9 @@ function FaixasDDR() {
             const u = unidades.find((x) => x.id === f.unidadeId);
             return (
               <tr key={f.id}>
-                <td className="px-4 py-2">{u?.nome ?? "—"}</td>
+                <td className="px-4 py-2">{u?.nome ?? "-"}</td>
                 <td className="px-4 py-2 font-mono">{f.prefixo}</td>
-                <td className="px-4 py-2 font-mono">{f.faixaInicio} — {f.faixaFim}</td>
+                <td className="px-4 py-2 font-mono">{f.faixaInicio} - {f.faixaFim}</td>
                 <td className="px-4 py-2 text-right font-mono">{f.totalRamais}</td>
                 <td className="px-4 py-2 text-right">
                   <button className="text-gov-danger hover:underline text-xs" onClick={() => store.removeFaixaDDR(f.id)}><Trash2 className="h-3.5 w-3.5 inline" /></button>

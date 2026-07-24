@@ -11,7 +11,7 @@ import {
 } from "@/lib/types";
 
 export const Route = createFileRoute("/ordens-servico")({
-  head: () => ({ meta: [{ title: "Ordens de Serviço — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Ordens de Serviço - SGT AGU" }] }),
   component: OrdensServico,
 });
 
@@ -157,7 +157,7 @@ function NovaOSModal({ onClose }: { onClose: () => void }) {
         <div className="md:col-span-2">
           <label className="gov-label">Contrato</label>
           <select className="gov-input" value={contratoId} onChange={(e) => setContratoId(e.target.value)}>
-            {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} — {c.fornecedorRazaoSocial}</option>)}
+            {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} - {c.fornecedorRazaoSocial}</option>)}
           </select>
         </div>
         <div>
@@ -175,7 +175,7 @@ function NovaOSModal({ onClose }: { onClose: () => void }) {
           </select>
         </div>
         <div>
-          <label className="gov-label">Prazo contratual (TCE) — dias</label>
+          <label className="gov-label">Prazo contratual (TCE) - dias</label>
           <input className="gov-input" type="number" min={1} value={prazoDias} onChange={(e) => setPrazoDias(Number(e.target.value))} />
         </div>
         <div className="md:col-span-2">
@@ -187,7 +187,7 @@ function NovaOSModal({ onClose }: { onClose: () => void }) {
           <input className="gov-input" value={unidades} onChange={(e) => setUnidades(e.target.value)} />
         </div>
         <div>
-          <label className="gov-label">Valor da OS (R$) — base da glosa</label>
+          <label className="gov-label">Valor da OS (R$) - base da glosa</label>
           <input className="gov-input" placeholder="0,00" value={valorOS} onChange={(e) => setValorOS(e.target.value)} required />
         </div>
         <div className="md:col-span-2 flex justify-end gap-2 pt-2 border-t border-border mt-2">
@@ -195,7 +195,7 @@ function NovaOSModal({ onClose }: { onClose: () => void }) {
           <button className="gov-btn-primary" type="submit"><Plus className="h-4 w-4" /> Emitir OS</button>
         </div>
         <p className="md:col-span-2 text-xs text-muted-foreground">
-          A data de emissão e o prazo-limite serão registrados automaticamente no momento do envio (Categoria A — evento interno da AGU).
+          A data de emissão e o prazo-limite serão registrados automaticamente no momento do envio (Categoria A - evento interno da AGU).
         </p>
       </form>
     </Modal>
@@ -240,9 +240,9 @@ function DetalheOSModal({ os, onClose }: { os: OrdemServico; onClose: () => void
         </div>
         <Info label="Emissão">{new Date(os.dataEmissao).toLocaleString("pt-BR")}</Info>
         <Info label="Prazo (TCE)">{os.prazoDias} dias · limite {os.dataLimite}</Info>
-        <Info label="Início da execução">{os.dataInicioExecucao ? new Date(os.dataInicioExecucao).toLocaleString("pt-BR") : "—"}</Info>
-        <Info label="Conclusão (TEC)">{os.dataConclusao ? new Date(os.dataConclusao).toLocaleString("pt-BR") : "—"}</Info>
-        <Info label="Unidades alvo">{os.unidadesAlvo.join(", ") || "—"}</Info>
+        <Info label="Início da execução">{os.dataInicioExecucao ? new Date(os.dataInicioExecucao).toLocaleString("pt-BR") : "-"}</Info>
+        <Info label="Conclusão (TEC)">{os.dataConclusao ? new Date(os.dataConclusao).toLocaleString("pt-BR") : "-"}</Info>
+        <Info label="Unidades alvo">{os.unidadesAlvo.join(", ") || "-"}</Info>
         <Info label="Valor da OS">{brl(os.valorOS)}</Info>
         {os.iaeDias != null && (
           <>
@@ -255,7 +255,7 @@ function DetalheOSModal({ os, onClose }: { os: OrdemServico; onClose: () => void
               <span className="text-gov-danger font-semibold">{brl(os.glosaCalculada ?? 0)}</span>
               {os.override && (
                 <div className="text-xs text-muted-foreground mt-1">
-                  Ajustada para <strong>{brl(os.glosaFinal ?? 0)}</strong> por {os.override.ator} — {os.override.justificativa}
+                  Ajustada para <strong>{brl(os.glosaFinal ?? 0)}</strong> por {os.override.ator} - {os.override.justificativa}
                 </div>
               )}
             </Info>
@@ -285,7 +285,7 @@ function DetalheOSModal({ os, onClose }: { os: OrdemServico; onClose: () => void
         {os.glosaCalculada != null && os.glosaCalculada > 0 && (
           <div className="md:col-span-2 border-t border-border pt-4">
             <div className="text-xs font-semibold uppercase text-muted-foreground mb-2">
-              Ajuste de glosa (requer justificativa — registra auditoria)
+              Ajuste de glosa (requer justificativa - registra auditoria)
             </div>
             <div className="grid gap-2 md:grid-cols-3">
               <input className="gov-input" placeholder="Novo valor R$" value={override} onChange={(e) => setOverride(e.target.value)} />
@@ -303,7 +303,7 @@ function Info({ label, children }: { label: string; children: React.ReactNode })
   return (
     <div>
       <div className="text-xs font-semibold uppercase text-muted-foreground">{label}</div>
-      <div className="text-sm mt-1">{children ?? "—"}</div>
+      <div className="text-sm mt-1">{children ?? "-"}</div>
     </div>
   );
 }

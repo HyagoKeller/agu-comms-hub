@@ -1,5 +1,5 @@
-// Motor IMR — funções puras para cálculo de indicadores contratuais
-// Referência: TR item 7.1 (IAE, IAR, IST) — Contrato STFC 12/2026
+// Motor IMR - funções puras para cálculo de indicadores contratuais
+// Referência: TR item 7.1 (IAE, IAR, IST) - Contrato STFC 12/2026
 import type { ChamadoTecnico, Contrato, OrdemServico, RelatorioIAR, SeveridadeChamado } from "./types";
 import { SEVERIDADES } from "./types";
 
@@ -130,7 +130,7 @@ export function alertasContrato(c: Contrato, hojeISO = new Date().toISOString().
 
   const diasEncerramento = diffDias(hojeISO, c.vigenciaFim);
   if (diasEncerramento >= 0 && diasEncerramento <= 60) {
-    alertas.push({ tipo: "ANIVERSARIO", texto: `Aniversário / encerramento contratual em ${diasEncerramento} dia(s) — janela de decisão sobre prorrogação.`, dias: diasEncerramento, severidade: diasEncerramento <= 30 ? "danger" : "warning" });
+    alertas.push({ tipo: "ANIVERSARIO", texto: `Aniversário / encerramento contratual em ${diasEncerramento} dia(s) - janela de decisão sobre prorrogação.`, dias: diasEncerramento, severidade: diasEncerramento <= 30 ? "danger" : "warning" });
   }
 
   if (c.reajuste?.proximoElegivelEm) {

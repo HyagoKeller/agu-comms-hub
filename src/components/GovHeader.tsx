@@ -56,7 +56,7 @@ export function GovHeader() {
               Sistema de Gestão de Telecomunicações - SGT AGU
             </div>
             <div className="text-xs text-muted-foreground truncate">
-              Sistema de Gestão — Advocacia-Geral da União
+              Sistema de Gestão - Advocacia-Geral da União
             </div>
             <div className="custom-underline mt-2" />
           </div>
@@ -75,7 +75,7 @@ export function GovHeader() {
           </button>
           <div className="hidden md:flex items-center gap-3 border-l border-border pl-3">
             <div className="text-right leading-tight">
-              <div className="text-sm font-semibold text-gov-blue-dark">{user?.nome ?? "—"}</div>
+              <div className="text-sm font-semibold text-gov-blue-dark">{user?.nome ?? "-"}</div>
               <div className="text-xs text-muted-foreground">{user?.email ?? ""}</div>
             </div>
             <button

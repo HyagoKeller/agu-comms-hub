@@ -7,7 +7,7 @@ import { store, useStore, uid } from "@/lib/store";
 import { REGIOES, type Regiao, type WhatsappNumero, type WhatsCategoria } from "@/lib/types";
 
 export const Route = createFileRoute("/whatsapp")({
-  head: () => ({ meta: [{ title: "Controle de Números WhatsApp — AGU" }] }),
+  head: () => ({ meta: [{ title: "Controle de Números WhatsApp - AGU" }] }),
   component: WhatsappPage,
 });
 
@@ -139,13 +139,13 @@ function WhatsappPage() {
                         <div className="font-medium">{w.responsavelNome}</div>
                         <div className="text-xs text-muted-foreground">{w.responsavelLogin}</div>
                       </>
-                    ) : <span className="italic text-muted-foreground">— sem responsável —</span>}
+                    ) : <span className="italic text-muted-foreground">- sem responsável -</span>}
                   </td>
                   <td className="px-4 py-3">
                     <div className="font-medium">{w.unidade}</div>
                     <div className="text-xs text-muted-foreground">Região {w.regiao.slice(1)}</div>
                   </td>
-                  <td className="px-4 py-3">{w.operadora ?? "—"}</td>
+                  <td className="px-4 py-3">{w.operadora ?? "-"}</td>
                   <td className="px-4 py-3"><StatusBadge status={w.statusMDM} /></td>
                   <td className="px-4 py-3"><StatusBadge status={w.statusTermo} /></td>
                   <td className="px-4 py-3 text-right">

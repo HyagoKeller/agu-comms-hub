@@ -7,7 +7,7 @@ import { useStore, store } from "@/lib/store";
 import { REGIOES, TIPOS_ATIVO } from "@/lib/types";
 
 export const Route = createFileRoute("/inventario/")({
-  head: () => ({ meta: [{ title: "Inventário Unificado — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Inventário Unificado - SGT AGU" }] }),
   component: Inventario,
 });
 
@@ -144,12 +144,12 @@ function Inventario() {
                           <div className="font-medium">{a.usuarioNome}</div>
                           <div className="text-xs text-muted-foreground">{a.usuarioLogin}</div>
                         </>
-                      ) : <span className="text-muted-foreground italic">— sem atribuição —</span>}
+                      ) : <span className="text-muted-foreground italic">- sem atribuição -</span>}
                     </td>
                     <td className="px-4 py-3">
                       {a.protocoloAGUServicos
                         ? <span className="font-mono text-xs rounded bg-muted px-2 py-1">{a.protocoloAGUServicos}</span>
-                        : <span className="text-muted-foreground italic text-xs">—</span>}
+                        : <span className="text-muted-foreground italic text-xs">-</span>}
                     </td>
                     <td className="px-4 py-3"><StatusBadge status={a.status} /></td>
                     <td className="px-4 py-3"><StatusBadge status={a.statusMDM} /></td>

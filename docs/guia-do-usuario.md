@@ -12,7 +12,7 @@
 1. Menu **Inventário → Cadastrar Ativo** (ou botão `+ Cadastrar` no painel).
 2. Escolha a **categoria** (PABX ou Móvel) e o **tipo**.
 3. Preencha identificador (ramal ou MSISDN).
-4. Selecione a **região** e a **unidade** — o combo já filtra por seu escopo.
+4. Selecione a **região** e a **unidade** - o combo já filtra por seu escopo.
 5. Informe o **responsável** (nome, login, setor).
 6. Preencha status operacional, MDM e termo de responsabilidade.
 7. Se o cadastro está associado a um chamado, informe o **Protocolo AGU Serviços (ITSM)**.

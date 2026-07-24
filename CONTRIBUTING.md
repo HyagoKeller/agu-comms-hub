@@ -16,9 +16,9 @@ bun run build
 ## Convenções de código
 
 - **TypeScript estrito** em todo o `src/`.
-- **Tailwind v4** com tokens semânticos (`bg-gov-blue`, `text-gov-blue-dark`) — nunca cores literais.
+- **Tailwind v4** com tokens semânticos (`bg-gov-blue`, `text-gov-blue-dark`) - nunca cores literais.
 - **Componentes shadcn** vivem em `src/components/ui/`.
-- **Rotas** file-based em `src/routes/` — nunca editar `src/routeTree.gen.ts` manualmente.
+- **Rotas** file-based em `src/routes/` - nunca editar `src/routeTree.gen.ts` manualmente.
 - **Store**: toda mutação passa por `src/lib/store.ts` (para preservar a trilha de auditoria).
 
 ## Fluxo de trabalho
@@ -33,7 +33,7 @@ bun run build
 Antes de abrir PR, valide:
 
 - Login em cada um dos 3 perfis de demonstração.
-- Cadastro, edição e exclusão de um ativo — conferindo o registro em `/auditoria`.
+- Cadastro, edição e exclusão de um ativo - conferindo o registro em `/auditoria`.
 - Importação de uma planilha `.xlsx` de exemplo.
 - Cadastro de uma unidade nova no fluxo em cascata.
 

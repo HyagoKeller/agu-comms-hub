@@ -6,7 +6,7 @@ import { GovTag } from "@/components/StatusTag";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/auditoria")({
-  head: () => ({ meta: [{ title: "Auditoria do Sistema — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Auditoria do Sistema - SGT AGU" }] }),
   component: Auditoria,
 });
 
@@ -60,14 +60,14 @@ function Auditoria() {
                   <div className="rounded-md border border-border bg-muted/30 p-3">
                     <div className="font-semibold text-muted-foreground mb-2">ANTES</div>
                     <pre className="whitespace-pre-wrap text-foreground/80 font-mono text-[11px]">
-                      {l.antes ? JSON.stringify(l.antes, null, 2) : "—"}
+                      {l.antes ? JSON.stringify(l.antes, null, 2) : "-"}
                     </pre>
                   </div>
                   <ArrowRight className="hidden md:block h-5 w-5 text-gov-blue" />
                   <div className="rounded-md border border-gov-blue/30 bg-gov-blue-light p-3">
                     <div className="font-semibold text-gov-blue-dark mb-2">DEPOIS</div>
                     <pre className="whitespace-pre-wrap text-gov-blue-dark font-mono text-[11px]">
-                      {l.depois ? JSON.stringify(l.depois, null, 2) : "—"}
+                      {l.depois ? JSON.stringify(l.depois, null, 2) : "-"}
                     </pre>
                   </div>
                 </div>

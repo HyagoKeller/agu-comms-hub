@@ -1,4 +1,4 @@
-# SGT AGU — Sistema de Gestão de Telecomunicações
+# SGT AGU - Sistema de Gestão de Telecomunicações
 
 Sistema web da Advocacia-Geral da União (AGU) para governança unificada dos ativos de telecomunicações institucionais: ramais PABX, softphones, chips de operadora e números de WhatsApp, distribuídos entre as 6 Superintendências de Administração (SAD) e suas unidades regionais.
 
@@ -25,7 +25,7 @@ Substitui o controle descentralizado em planilhas por um repositório único, au
 O SGT AGU centraliza:
 
 - **Inventário unificado** de ramais PABX (fixos e softphones) e linhas móveis com WhatsApp institucional.
-- **Estrutura organizacional hierárquica** — Região (SAD) → Estado → Cidade → Unidade.
+- **Estrutura organizacional hierárquica** - Região (SAD) → Estado → Cidade → Unidade.
 - **Tabela de custos** por tipo de ativo, com vigência (preserva relatórios históricos em reajustes contratuais).
 - **Bilhetagem** consolidada por período, região e tipo.
 - **Trava de conformidade WhatsApp**: apenas Messenger é permitido; WhatsApp Business é vedado; WABA institucional é auditado à parte.
@@ -40,7 +40,7 @@ O SGT AGU centraliza:
 - Painel de resumo com KPIs (ramais, linhas móveis, conformidade MDM, violações).
 - Área dedicada de gestão de números WhatsApp (Messenger pessoal, WABA institucional, Business App).
 - Configuração de autenticação por AD (LDAP) e Microsoft 365 / Entra ID.
-- Políticas de MFA (TOTP) — obrigatório para admins ou para todos.
+- Políticas de MFA (TOTP) - obrigatório para admins ou para todos.
 - Templates de perfil customizáveis dentro do painel Admin.
 
 ## Stack técnica
@@ -50,7 +50,7 @@ O SGT AGU centraliza:
 - **Estado:** store observável leve (`src/lib/store.ts`) + `useSyncExternalStore`
 - **Estilo:** Tailwind CSS v4 (design tokens em `src/styles.css`)
 - **UI base:** shadcn/ui + Lucide Icons
-- **Persistência:** `localStorage` (protótipo institucional — sem backend obrigatório)
+- **Persistência:** `localStorage` (protótipo institucional - sem backend obrigatório)
 - **Import de planilhas:** `xlsx` (SheetJS)
 - **Deploy:** Cloudflare Workers (via wrangler)
 
@@ -115,18 +115,18 @@ Ver [`docs/autenticacao.md`](docs/autenticacao.md).
 
 ## Documentação complementar
 
-- [`docs/visao-geral.md`](docs/visao-geral.md) — objetivos, escopo e benefícios
-- [`docs/arquitetura.md`](docs/arquitetura.md) — decisões técnicas
-- [`docs/modulos.md`](docs/modulos.md) — funcionalidade a funcionalidade
-- [`docs/modelo-de-dados.md`](docs/modelo-de-dados.md) — entidades e relacionamentos
-- [`docs/rbac.md`](docs/rbac.md) — perfis, permissões e escopo por unidade
-- [`docs/autenticacao.md`](docs/autenticacao.md) — login, MFA, AD e M365
-- [`docs/importacao-planilhas.md`](docs/importacao-planilhas.md) — carga em lote
-- [`docs/auditoria.md`](docs/auditoria.md) — trilha imutável
-- [`docs/whatsapp.md`](docs/whatsapp.md) — política e categorias
-- [`docs/guia-do-usuario.md`](docs/guia-do-usuario.md) — passo a passo por perfil
-- [`docs/roadmap.md`](docs/roadmap.md) — próximos passos
+- [`docs/visao-geral.md`](docs/visao-geral.md) - objetivos, escopo e benefícios
+- [`docs/arquitetura.md`](docs/arquitetura.md) - decisões técnicas
+- [`docs/modulos.md`](docs/modulos.md) - funcionalidade a funcionalidade
+- [`docs/modelo-de-dados.md`](docs/modelo-de-dados.md) - entidades e relacionamentos
+- [`docs/rbac.md`](docs/rbac.md) - perfis, permissões e escopo por unidade
+- [`docs/autenticacao.md`](docs/autenticacao.md) - login, MFA, AD e M365
+- [`docs/importacao-planilhas.md`](docs/importacao-planilhas.md) - carga em lote
+- [`docs/auditoria.md`](docs/auditoria.md) - trilha imutável
+- [`docs/whatsapp.md`](docs/whatsapp.md) - política e categorias
+- [`docs/guia-do-usuario.md`](docs/guia-do-usuario.md) - passo a passo por perfil
+- [`docs/roadmap.md`](docs/roadmap.md) - próximos passos
 
 ---
 
-© Advocacia-Geral da União — Uso institucional.
+© Advocacia-Geral da União - Uso institucional.

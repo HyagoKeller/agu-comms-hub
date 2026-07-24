@@ -8,7 +8,7 @@ import { brl } from "@/lib/imr";
 import { TIPOS_SANCAO, type StatusSancao, type TipoSancao } from "@/lib/types";
 
 export const Route = createFileRoute("/sancoes")({
-  head: () => ({ meta: [{ title: "Sanções — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Sanções - SGT AGU" }] }),
   component: SancoesPage,
 });
 
@@ -43,7 +43,7 @@ function SancoesPage() {
           <div>
             <h1 className="text-2xl md:text-3xl">Sanções Administrativas</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              Advertência, multa, impedimento e inidoneidade — infrações do item 8.1 do TR (alíneas a–h) e Lei 14.133/2021.
+              Advertência, multa, impedimento e inidoneidade - infrações do item 8.1 do TR (alíneas a–h) e Lei 14.133/2021.
             </p>
           </div>
           <button className="gov-btn-primary" onClick={() => setAbrir(true)} disabled={contratos.length === 0}>
@@ -72,11 +72,11 @@ function SancoesPage() {
                 return (
                   <tr key={s.id}>
                     <td className="px-4 py-2 font-semibold text-gov-blue-dark">{s.numero}</td>
-                    <td className="px-4 py-2 text-xs">Nº {c?.numero ?? "—"}</td>
+                    <td className="px-4 py-2 text-xs">Nº {c?.numero ?? "-"}</td>
                     <td className="px-4 py-2">{TIPOS_SANCAO.find((t) => t.value === s.tipo)?.label}</td>
-                    <td className="px-4 py-2 text-xs text-muted-foreground">Alínea {s.infracaoAlinea} — {s.descricao}</td>
+                    <td className="px-4 py-2 text-xs text-muted-foreground">Alínea {s.infracaoAlinea} - {s.descricao}</td>
                     <td className="px-4 py-2 text-xs">{new Date(s.dataAbertura).toLocaleString("pt-BR")}</td>
-                    <td className="px-4 py-2 text-right font-semibold">{s.valor ? brl(s.valor) : "—"}</td>
+                    <td className="px-4 py-2 text-right font-semibold">{s.valor ? brl(s.valor) : "-"}</td>
                     <td className="px-4 py-2"><GovTag tone={STATUS_TONE[s.status]}>{STATUS_LABEL[s.status]}</GovTag></td>
                     <td className="px-4 py-2 text-right">
                       <select className="gov-input py-1 h-8 text-xs" value={s.status} onChange={(e) => store.updateSancao(s.id, { status: e.target.value as StatusSancao, dataAplicacao: e.target.value === "APLICADA" ? new Date().toISOString() : s.dataAplicacao })}>
@@ -127,7 +127,7 @@ function NovaSancaoModal({ onClose }: { onClose: () => void }) {
           <div className="md:col-span-2">
             <label className="gov-label">Contrato</label>
             <select className="gov-input" value={contratoId} onChange={(e) => setContratoId(e.target.value)}>
-              {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} — {c.fornecedorRazaoSocial}</option>)}
+              {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} - {c.fornecedorRazaoSocial}</option>)}
             </select>
           </div>
           <div>
