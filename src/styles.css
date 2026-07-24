@@ -124,9 +124,15 @@
 
 @layer components {
   .gov-container {
-    max-width: 1280px;
+    width: 100%;
+    max-width: 1600px;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: 1.5rem;
+  }
+  main > .gov-container,
+  main > section > .gov-container,
+  main .gov-container {
+    max-width: none;
   }
   .gov-card {
     background: var(--card);
