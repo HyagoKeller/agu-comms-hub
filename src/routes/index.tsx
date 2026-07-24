@@ -20,15 +20,31 @@ export const Route = createFileRoute("/")({
 const LIMITE_RAMAIS = 9000;
 const LIMITE_CANAIS = 2000;
 
+function toISODate(d: Date) { return d.toISOString().slice(0, 10); }
+
 function Dashboard() {
   const ativos = useStore((s) => s.ativos);
   const logs = useStore((s) => s.logs);
   const contratos = useStore((s) => s.contratos);
-  const ordens = useStore((s) => s.ordensServico);
-  const chamados = useStore((s) => s.chamados);
+  const ordensAll = useStore((s) => s.ordensServico);
+  const chamadosAll = useStore((s) => s.chamados);
   const iars = useStore((s) => s.relatoriosIAR);
   const unidades = useStore((s) => s.unidades);
   const faixas = useStore((s) => s.faixasDDR);
+
+  const hoje = new Date();
+  const defDe = new Date(hoje.getFullYear(), hoje.getMonth() - 2, 1);
+  const [de, setDe] = useState(toISODate(defDe));
+  const [ate, setAte] = useState(toISODate(hoje));
+
+  const inRange = (iso?: string) => {
+    if (!iso) return false;
+    const t = new Date(iso).getTime();
+    return t >= new Date(de + "T00:00:00").getTime() && t <= new Date(ate + "T23:59:59").getTime();
+  };
+
+  const ordens = useMemo(() => ordensAll.filter((o) => inRange(o.dataEmissao)), [ordensAll, de, ate]);
+  const chamados = useMemo(() => chamadosAll.filter((c) => inRange(c.abertoEm)), [chamadosAll, de, ate]);
 
   const contratoAtivo = contratos.find((c) => c.status === "ATIVO");
   const alertas = contratoAtivo ? alertasContrato(contratoAtivo) : [];
