@@ -39,6 +39,7 @@ const SIDE_NAV: { title: string; items: NavItem[] }[] = [
     title: "Painéis",
     items: [
       { to: "/", label: "Painel Executivo", icon: LayoutDashboard },
+      { to: "/painel/inventario", label: "Painel de Inventário", icon: Package },
       { to: "/glosas", label: "Painel de Glosas", icon: Receipt },
       { to: "/bilhetagem", label: "Painel de Bilhetagem", icon: PhoneCall },
     ],
