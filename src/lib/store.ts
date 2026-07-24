@@ -85,7 +85,65 @@ function seed(): State {
       escopos: "openid profile email User.Read",
     },
   };
-  return { ativos, unidades, custos, logs, usuarios, whats, perfilTemplates, authConfig };
+
+  // Seed do Contrato STFC nº 12/2026 (TR item 1.1)
+  const contratoSTFC: Contrato = {
+    id: "ct1",
+    numero: "12/2026",
+    processoAdministrativo: "00400.001234/2025-99",
+    uasg: "110061",
+    orgaoContratante: "Advocacia-Geral da União",
+    fornecedorRazaoSocial: "Operadora STFC S.A.",
+    fornecedorCnpj: "00.000.000/0001-00",
+    modalidade: "PREGAO",
+    objeto: "Serviço Telefônico Fixo Comutado (STFC) via SIP Trunk, com 2.000 canais simultâneos e 9.000 ramais DDR distribuídos em 158 unidades da AGU.",
+    itens: [
+      { id: "ci1", item: "1", descricao: "Assinatura de tronco SIP (canal simultâneo)", catser: "26069", unidadeMedida: "Canal/mês", quantidade: 2000, valorUnitario: 12.50, valorMensal: 25000, valorTotal: 900000 },
+      { id: "ci2", item: "2", descricao: "Ramal DDR (numeração)", catser: "26069", unidadeMedida: "Ramal/mês", quantidade: 9000, valorUnitario: 0.65, valorMensal: 5850, valorTotal: 210600 },
+      { id: "ci3", item: "3", descricao: "Franquia de minutagem (local, DDD, móvel)", catser: "26077", unidadeMedida: "Verba/mês", quantidade: 36, valorUnitario: 122.28, valorMensal: 122.28, valorTotal: 4402.08 },
+    ],
+    vigenciaAssinatura: "2026-02-01",
+    vigenciaInicio: "2026-02-15",
+    vigenciaFim: "2029-02-14",
+    prazoMeses: 36,
+    prorrogavelAteAnos: 5,
+    valorMensalTotal: 30972.28,
+    valorAnualTotal: 371667.36,
+    valorTotalPeriodo: 1115002.08,
+    dotacao: {
+      gestaoUnidade: "110061",
+      fonte: "0100",
+      programaTrabalho: "03.032.0032.2000",
+      elementoDespesa: "339040",
+      planoInterno: "SGT-AGU-2026",
+      notaEmpenho: "2026NE000123",
+    },
+    garantia: {
+      modalidade: "SEGURO_GARANTIA",
+      percentual: 5,
+      valor: 55750.10,
+      vigenciaInicio: "2026-02-15",
+      vigenciaFim: "2029-05-15",
+      observacao: "Vigência = execução contratual + 90 dias.",
+    },
+    reajuste: {
+      dataBaseOrcamento: "2025-10",
+      indice: "IST-ANATEL",
+      interregnoMeses: 12,
+      proximoElegivelEm: "2026-10-01",
+      historico: [],
+    },
+    fiscalizacao: {},
+    anexos: [],
+    status: "ATIVO",
+    criadoEm: "2026-02-01T10:00:00Z",
+  };
+
+  return {
+    ativos, unidades, custos, logs, usuarios, whats, perfilTemplates, authConfig,
+    contratos: [contratoSTFC],
+    ordensServico: [],
+  };
 }
 
 let state: State = load();
@@ -98,6 +156,7 @@ function load(): State {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<State>;
+
       return {
         ...def,
         ...parsed,
