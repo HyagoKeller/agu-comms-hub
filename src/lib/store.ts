@@ -163,7 +163,10 @@ function load(): State {
         whats: parsed.whats ?? def.whats,
         perfilTemplates: parsed.perfilTemplates ?? def.perfilTemplates,
         authConfig: parsed.authConfig ?? def.authConfig,
+        contratos: parsed.contratos ?? def.contratos,
+        ordensServico: parsed.ordensServico ?? def.ordensServico,
       };
+
     }
   } catch {}
   try { localStorage.setItem(KEY, JSON.stringify(def)); } catch {}
