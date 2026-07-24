@@ -269,11 +269,76 @@ export const store = {
     setState((s) => ({ ...s, authConfig: { ...s.authConfig, ...patch } }));
     log({ modulo: "Administração", acao: "EDITAR", registroId: "authConfig", antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
   },
+
+  // ---------- Contratos ----------
+  addContrato(c: Contrato) {
+    setState((s) => ({ ...s, contratos: [c, ...s.contratos] }));
+    log({ modulo: "Contratos", acao: "CRIAR", registroId: c.id, depois: c as unknown as Record<string, unknown> });
+  },
+  updateContrato(id: string, patch: Partial<Contrato>) {
+    const antes = state.contratos.find((x) => x.id === id);
+    setState((s) => ({ ...s, contratos: s.contratos.map((x) => x.id === id ? { ...x, ...patch } : x) }));
+    log({ modulo: "Contratos", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  addContratoAnexo(contratoId: string, anexo: Contrato["anexos"][number]) {
+    setState((s) => ({ ...s, contratos: s.contratos.map((x) => x.id === contratoId ? { ...x, anexos: [anexo, ...x.anexos] } : x) }));
+    log({ modulo: "Contratos", acao: "CRIAR", registroId: contratoId, depois: { anexo } as unknown as Record<string, unknown> });
+  },
+
+  // ---------- Ordens de Serviço + IAE ----------
+  addOS(input: Omit<OrdemServico, "id" | "numero" | "dataEmissao" | "dataLimite" | "status" | "criadoEm">) {
+    const dataEmissao = new Date().toISOString();
+    const dataLimite = addDias(dataEmissao, input.prazoDias);
+    const seq = state.ordensServico.length + 1;
+    const os: OrdemServico = {
+      ...input,
+      id: uid("os"),
+      numero: `OS-${String(seq).padStart(4, "0")}`,
+      dataEmissao,
+      dataLimite,
+      status: "ABERTA",
+      criadoEm: dataEmissao,
+    };
+    setState((s) => ({ ...s, ordensServico: [os, ...s.ordensServico] }));
+    log({ modulo: "OrdensServico", acao: "CRIAR", registroId: os.id, depois: os as unknown as Record<string, unknown> });
+    return os;
+  },
+  moverOS(id: string, novoStatus: StatusOS) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch: Partial<OrdemServico> = { status: novoStatus };
+    // Ao entrar em execução, marca timestamp automático.
+    if (novoStatus === "EM_EXECUCAO" && !antes.dataInicioExecucao) {
+      patch.dataInicioExecucao = new Date().toISOString();
+    }
+    // Ao passar para recebimento provisório, aplica IAE se ainda não concluída.
+    if (novoStatus === "RECEBIMENTO_PROVISORIO" && !antes.dataConclusao) {
+      Object.assign(patch, aplicaIAE(antes, new Date().toISOString()));
+    }
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { status: antes.status } as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  concluirOS(id: string) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch = { ...aplicaIAE(antes, new Date().toISOString()), status: "RECEBIMENTO_PROVISORIO" as StatusOS };
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { status: antes.status } as Record<string, unknown>, depois: patch as unknown as Record<string, unknown> });
+  },
+  overrideGlosaOS(id: string, override: OSGlosaOverride) {
+    const antes = state.ordensServico.find((o) => o.id === id);
+    if (!antes) return;
+    const patch: Partial<OrdemServico> = { override, glosaFinal: override.valorAjustado };
+    setState((s) => ({ ...s, ordensServico: s.ordensServico.map((o) => o.id === id ? { ...o, ...patch } : o) }));
+    log({ modulo: "OrdensServico", acao: "EDITAR", registroId: id, antes: { glosaFinal: antes.glosaFinal } as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+
   reset() {
     state = seed();
     persist();
   },
 };
+
 
 function log(entry: Omit<AuditoriaLog, "id" | "ts" | "ator">) {
   let ator = "sistema@agu.gov.br";
