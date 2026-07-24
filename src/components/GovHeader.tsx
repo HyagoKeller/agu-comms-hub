@@ -59,7 +59,6 @@ const SIDE_NAV: { title: string; items: NavItem[] }[] = [
       { to: "/inventario", label: "Inventário", icon: Package },
       { to: "/whatsapp", label: "WhatsApp", icon: MessageCircle },
       { to: "/custos", label: "Custos", icon: DollarSign },
-      { to: "/bilhetagem", label: "Bilhetagem", icon: PhoneCall },
     ],
   },
   {
