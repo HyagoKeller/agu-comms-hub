@@ -1,30 +1,78 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { Bell, Menu, X, LogOut } from "lucide-react";
+import { Bell, Menu, X, LogOut, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { useState } from "react";
 import { AguLogo } from "./AguLogo";
 import { auth, useAuth } from "@/lib/auth";
+import {
+  LayoutDashboard,
+  FileText,
+  ClipboardList,
+  Headphones,
+  Receipt,
+  ArrowLeftRight,
+  Gavel,
+  Package,
+  MessageCircle,
+  DollarSign,
+  PhoneCall,
+  Building2,
+  Users,
+  ShieldCheck,
+  Settings,
+} from "lucide-react";
 
-const NAV: { to: string; label: string; adminOnly?: boolean }[] = [
-  { to: "/", label: "Painel" },
-  { to: "/contratos", label: "Contratos" },
-  { to: "/ordens-servico", label: "OS" },
-  { to: "/chamados", label: "Chamados" },
-  { to: "/glosas", label: "Glosas" },
-  { to: "/portabilidade", label: "Portabilidade" },
-  { to: "/sancoes", label: "Sanções" },
-  { to: "/inventario", label: "Inventário" },
-  { to: "/whatsapp", label: "WhatsApp" },
-  { to: "/custos", label: "Custos" },
-  { to: "/bilhetagem", label: "Bilhetagem" },
-  { to: "/estrutura", label: "Estrutura" },
-  { to: "/usuarios", label: "Usuários" },
-  { to: "/auditoria", label: "Auditoria" },
-  { to: "/admin", label: "Administração", adminOnly: true },
+type NavItem = {
+  to: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  adminOnly?: boolean;
+};
+
+// Itens de acesso rápido que ficam no topo
+const TOP_NAV: NavItem[] = [
+  { to: "/", label: "Painel", icon: LayoutDashboard },
+  { to: "/auditoria", label: "Auditoria", icon: ShieldCheck },
 ];
 
+// Menu lateral principal (agrupado)
+const SIDE_NAV: { title: string; items: NavItem[] }[] = [
+  {
+    title: "Contratual",
+    items: [
+      { to: "/contratos", label: "Contratos", icon: FileText },
+      { to: "/ordens-servico", label: "Ordens de Serviço", icon: ClipboardList },
+      { to: "/chamados", label: "Chamados", icon: Headphones },
+      { to: "/glosas", label: "Glosas", icon: Receipt },
+      { to: "/portabilidade", label: "Portabilidade", icon: ArrowLeftRight },
+      { to: "/sancoes", label: "Sanções", icon: Gavel },
+    ],
+  },
+  {
+    title: "Operacional",
+    items: [
+      { to: "/inventario", label: "Inventário", icon: Package },
+      { to: "/whatsapp", label: "WhatsApp", icon: MessageCircle },
+      { to: "/custos", label: "Custos", icon: DollarSign },
+      { to: "/bilhetagem", label: "Bilhetagem", icon: PhoneCall },
+    ],
+  },
+  {
+    title: "Governança",
+    items: [
+      { to: "/estrutura", label: "Estrutura", icon: Building2 },
+      { to: "/usuarios", label: "Usuários", icon: Users },
+      { to: "/admin", label: "Administração", icon: Settings, adminOnly: true },
+    ],
+  },
+];
 
-export function GovHeader() {
-  const [open, setOpen] = useState(false);
+export function GovHeader({
+  onToggleSidebar,
+  sidebarOpen,
+}: {
+  onToggleSidebar?: () => void;
+  sidebarOpen?: boolean;
+}) {
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const user = useAuth();
@@ -48,21 +96,52 @@ export function GovHeader() {
       </div>
 
       {/* Cabeçalho principal */}
-      <div className="gov-container flex items-center justify-between gap-4 py-4">
-        <Link to="/" className="flex items-center gap-3 min-w-0">
-          <AguLogo size={48} />
-          <div className="min-w-0">
-            <div className="font-bold text-base md:text-lg leading-tight text-gov-blue-dark truncate">
-              Sistema de Gestão de Telecomunicações - SGT AGU
+      <div className="gov-container flex items-center justify-between gap-4 py-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <button
+            type="button"
+            onClick={onToggleSidebar}
+            aria-label={sidebarOpen ? "Recolher menu" : "Abrir menu"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gov-blue-dark hover:bg-accent"
+          >
+            {sidebarOpen ? <PanelLeftClose className="h-5 w-5" /> : <PanelLeftOpen className="h-5 w-5" />}
+          </button>
+          <Link to="/" className="flex items-center gap-3 min-w-0">
+            <AguLogo size={44} />
+            <div className="min-w-0 hidden sm:block">
+              <div className="font-bold text-base md:text-lg leading-tight text-gov-blue-dark truncate">
+                Sistema de Gestão de Telecomunicações - SGT AGU
+              </div>
+              <div className="text-xs text-muted-foreground truncate">
+                Advocacia-Geral da União
+              </div>
+              <div className="custom-underline mt-1" />
             </div>
-            <div className="text-xs text-muted-foreground truncate">
-              Sistema de Gestão - Advocacia-Geral da União
-            </div>
-            <div className="custom-underline mt-2" />
-          </div>
-        </Link>
+          </Link>
+        </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          {/* Atalhos rápidos no topo */}
+          <nav aria-label="Atalhos" className="hidden lg:flex items-center gap-1 mr-2">
+            {TOP_NAV.map((n) => {
+              const active = n.to === "/" ? path === "/" : path.startsWith(n.to);
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
+                    active
+                      ? "bg-accent text-gov-blue"
+                      : "text-gov-blue-dark hover:bg-accent"
+                  }`}
+                >
+                  <n.icon className="h-4 w-4" />
+                  {n.label}
+                </Link>
+              );
+            })}
+          </nav>
+
           <button
             type="button"
             aria-label="Notificações"
@@ -88,42 +167,94 @@ export function GovHeader() {
               <LogOut className="h-4 w-4" /> Sair
             </button>
           </div>
-          <button
-            type="button"
-            aria-label="Abrir menu"
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-gov-blue-dark"
-          >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
         </div>
       </div>
-
-      <nav
-        aria-label="Navegação principal"
-        className={`border-t border-border bg-card ${open ? "block" : "hidden md:block"}`}
-      >
-        <div className="gov-container flex flex-col md:flex-row md:items-stretch overflow-x-auto">
-          {NAV.filter((n) => !n.adminOnly || user?.perfil === "ADMIN_GERAL").map((n) => {
-            const active = n.to === "/" ? path === "/" : path.startsWith(n.to);
-            return (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={() => setOpen(false)}
-                className={`relative whitespace-nowrap px-4 py-3 text-sm font-semibold transition-colors ${
-                  active
-                    ? "text-gov-blue border-b-[3px] border-gov-blue"
-                    : "text-foreground/80 hover:text-gov-blue border-b-[3px] border-transparent"
-                }`}
-              >
-                {n.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
     </header>
+  );
+}
+
+export function GovSidebar({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const user = useAuth();
+
+  return (
+    <>
+      {/* Overlay mobile */}
+      {open && (
+        <div
+          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          onClick={onClose}
+          aria-hidden="true"
+        />
+      )}
+      <aside
+        aria-label="Menu principal"
+        className={`fixed lg:sticky top-0 lg:top-0 left-0 z-40 h-screen lg:h-[calc(100vh)] w-64 shrink-0 border-r border-border bg-card transition-transform duration-200 ${
+          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-0 lg:border-r-0 lg:overflow-hidden"
+        }`}
+      >
+        <div className="flex h-full flex-col overflow-y-auto">
+          <div className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-border">
+            <span className="font-bold text-gov-blue-dark">Menu</span>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Fechar menu"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-gov-blue-dark hover:bg-accent"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          <nav className="flex-1 px-3 py-4 space-y-6">
+            {SIDE_NAV.map((group) => {
+              const items = group.items.filter(
+                (i) => !i.adminOnly || user?.perfil === "ADMIN_GERAL",
+              );
+              if (items.length === 0) return null;
+              return (
+                <div key={group.title}>
+                  <div className="px-2 mb-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {group.title}
+                  </div>
+                  <ul className="space-y-0.5">
+                    {items.map((n) => {
+                      const active = path === n.to || path.startsWith(n.to + "/");
+                      return (
+                        <li key={n.to}>
+                          <Link
+                            to={n.to}
+                            onClick={onClose}
+                            className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                              active
+                                ? "bg-gov-blue text-white"
+                                : "text-foreground/80 hover:bg-accent hover:text-gov-blue-dark"
+                            }`}
+                          >
+                            <n.icon className="h-4 w-4 shrink-0" />
+                            <span className="truncate">{n.label}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </nav>
+
+          <div className="border-t border-border px-4 py-3 text-[11px] text-muted-foreground">
+            SGT AGU · v1.0
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }
 
