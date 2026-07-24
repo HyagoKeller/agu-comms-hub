@@ -8,7 +8,7 @@ import { alertasContrato, brl } from "@/lib/imr";
 import type { Contrato } from "@/lib/types";
 
 export const Route = createFileRoute("/contratos")({
-  head: () => ({ meta: [{ title: "Contratos — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Contratos - SGT AGU" }] }),
   component: Contratos,
 });
 
@@ -155,7 +155,7 @@ function Campo({ label, children }: { label: string; children: React.ReactNode }
   return (
     <div>
       <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</div>
-      <div className="text-sm mt-1 text-foreground">{children ?? "—"}</div>
+      <div className="text-sm mt-1 text-foreground">{children ?? "-"}</div>
     </div>
   );
 }
@@ -179,14 +179,14 @@ function AbaGeral({ contrato }: { contrato: Contrato }) {
         <Campo label="Dotação orçamentária">
           {contrato.dotacao ? (
             <div className="grid md:grid-cols-3 gap-2 text-sm mt-1">
-              <div><span className="text-muted-foreground">Gestão/Unidade:</span> {contrato.dotacao.gestaoUnidade ?? "—"}</div>
-              <div><span className="text-muted-foreground">Fonte:</span> {contrato.dotacao.fonte ?? "—"}</div>
-              <div><span className="text-muted-foreground">P.T.:</span> {contrato.dotacao.programaTrabalho ?? "—"}</div>
-              <div><span className="text-muted-foreground">Elemento:</span> {contrato.dotacao.elementoDespesa ?? "—"}</div>
-              <div><span className="text-muted-foreground">P.I.:</span> {contrato.dotacao.planoInterno ?? "—"}</div>
-              <div><span className="text-muted-foreground">Nota Empenho:</span> {contrato.dotacao.notaEmpenho ?? "—"}</div>
+              <div><span className="text-muted-foreground">Gestão/Unidade:</span> {contrato.dotacao.gestaoUnidade ?? "-"}</div>
+              <div><span className="text-muted-foreground">Fonte:</span> {contrato.dotacao.fonte ?? "-"}</div>
+              <div><span className="text-muted-foreground">P.T.:</span> {contrato.dotacao.programaTrabalho ?? "-"}</div>
+              <div><span className="text-muted-foreground">Elemento:</span> {contrato.dotacao.elementoDespesa ?? "-"}</div>
+              <div><span className="text-muted-foreground">P.I.:</span> {contrato.dotacao.planoInterno ?? "-"}</div>
+              <div><span className="text-muted-foreground">Nota Empenho:</span> {contrato.dotacao.notaEmpenho ?? "-"}</div>
             </div>
-          ) : "—"}
+          ) : "-"}
         </Campo>
       </div>
     </div>
@@ -214,7 +214,7 @@ function AbaItens({ contrato }: { contrato: Contrato }) {
             <tr key={i.id} className="hover:bg-muted/30">
               <td className="px-3 py-2">{i.item}</td>
               <td className="px-3 py-2">{i.descricao}</td>
-              <td className="px-3 py-2 text-muted-foreground">{i.catser ?? "—"}</td>
+              <td className="px-3 py-2 text-muted-foreground">{i.catser ?? "-"}</td>
               <td className="px-3 py-2">{i.unidadeMedida}</td>
               <td className="px-3 py-2 text-right">{i.quantidade.toLocaleString("pt-BR")}</td>
               <td className="px-3 py-2 text-right">{brl(i.valorUnitario)}</td>
@@ -258,7 +258,7 @@ function AbaReajuste({ contrato }: { contrato: Contrato }) {
         <Campo label="Data-base do orçamento">{r.dataBaseOrcamento}</Campo>
         <Campo label="Índice">{r.indice}</Campo>
         <Campo label="Interregno mínimo">{r.interregnoMeses} meses</Campo>
-        <Campo label="Próximo elegível em">{r.proximoElegivelEm ?? "—"}</Campo>
+        <Campo label="Próximo elegível em">{r.proximoElegivelEm ?? "-"}</Campo>
       </div>
       <div>
         <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Histórico</div>
@@ -267,7 +267,7 @@ function AbaReajuste({ contrato }: { contrato: Contrato }) {
         ) : (
           <ul className="space-y-1 text-sm">
             {r.historico.map((h, i) => (
-              <li key={i}>{h.data} · {h.percentual}% {h.observacao ? `— ${h.observacao}` : ""}</li>
+              <li key={i}>{h.data} · {h.percentual}% {h.observacao ? `- ${h.observacao}` : ""}</li>
             ))}
           </ul>
         )}
@@ -281,7 +281,7 @@ function AbaFiscalizacao({ contrato, usuarios }: { contrato: Contrato; usuarios:
   const nome = (id?: string) => usuarios.find((u) => u.id === id)?.nome ?? "Não designado";
   function atribuir(campo: keyof typeof f) {
     const id = prompt(
-      `ID do usuário para "${campo}":\n\n` + usuarios.map((u) => `${u.id} — ${u.nome} (${u.email})`).join("\n"),
+      `ID do usuário para "${campo}":\n\n` + usuarios.map((u) => `${u.id} - ${u.nome} (${u.email})`).join("\n"),
       f[campo] ?? ""
     );
     if (id === null) return;

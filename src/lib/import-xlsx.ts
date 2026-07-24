@@ -171,7 +171,7 @@ function makeWhatsFromRow(row: Record<string, unknown>, sheet: string): Whatsapp
     responsavelLogin: String(findKey(row, ["Login", "E-mail", "Email"]) ?? "") || undefined,
     setor: String(findKey(row, ["Setor"]) ?? "") || undefined,
     regiao: detectRegiao(uf),
-    unidade: String(findKey(row, ["Unidade", "Estado"]) ?? "—"),
+    unidade: String(findKey(row, ["Unidade", "Estado"]) ?? "-"),
     statusMDM: "NAO_SINCRONIZADO",
     statusTermo: "PENDENTE",
     status: "ATIVO",

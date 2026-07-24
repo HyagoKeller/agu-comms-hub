@@ -7,7 +7,7 @@ import { store, useStore } from "@/lib/store";
 import { PERM_LABELS, PERFIL_LABELS, REGIAO_LABELS, type PerfilUsuario, type Regiao } from "@/lib/types";
 
 export const Route = createFileRoute("/usuarios")({
-  head: () => ({ meta: [{ title: "Usuários e Permissões — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Usuários e Permissões - SGT AGU" }] }),
   component: Usuarios,
 });
 

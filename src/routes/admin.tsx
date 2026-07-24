@@ -8,7 +8,7 @@ import { auth, useAuth } from "@/lib/auth";
 import { PERM_LABELS, type Permissoes, type PerfilTipo } from "@/lib/types";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Administração — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Administração - SGT AGU" }] }),
   component: AdminPage,
 });
 

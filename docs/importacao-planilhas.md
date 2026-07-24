@@ -8,7 +8,7 @@ Fluxo dedicado para migrar o controle legado em Excel para o SGT sem retrabalho.
 2. Selecione o arquivo `.xlsx` (a planilha oficial de controle da AGU).
 3. O sistema lê **todas as abas** do arquivo.
 4. É exibida uma **pré-visualização** com contadores por aba e por tipo detectado (PABX, Móvel, WhatsApp).
-5. Confirme a importação — os registros entram no inventário e um evento é gravado em auditoria (`acao: IMPORTAR`).
+5. Confirme a importação - os registros entram no inventário e um evento é gravado em auditoria (`acao: IMPORTAR`).
 
 ## O que o parser reconhece
 
@@ -40,6 +40,6 @@ Colunas não reconhecidas são preservadas em `origemImport` para posterior cura
 - Caso contrário, vão para **PABX** (subtipos definidos por `Tipo`: aparelho físico ou softphone).
 
 ## Boas práticas
-- Antes de importar, tenha uma cópia da planilha original — a auditoria registra a carga, mas rollback manual é trabalhoso.
+- Antes de importar, tenha uma cópia da planilha original - a auditoria registra a carga, mas rollback manual é trabalhoso.
 - Padronize colunas de região para `R1..R6` ou `SAD 1ª Região..SAD 6ª Região`.
-- Certifique-se de que MSISDNs estejam em formato E.164 (`+5561...`) — o parser tenta normalizar, mas dados fora do padrão viram alerta.
+- Certifique-se de que MSISDNs estejam em formato E.164 (`+5561...`) - o parser tenta normalizar, mas dados fora do padrão viram alerta.

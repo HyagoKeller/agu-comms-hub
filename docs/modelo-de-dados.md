@@ -4,7 +4,7 @@ Todos os tipos estão em `src/lib/types.ts`.
 
 ## Regiao (enum)
 
-`R1 | R2 | R3 | R4 | R5 | R6` — correspondendo às 6 Superintendências de Administração (SAD) da AGU.
+`R1 | R2 | R3 | R4 | R5 | R6` - correspondendo às 6 Superintendências de Administração (SAD) da AGU.
 
 ## Ativo
 

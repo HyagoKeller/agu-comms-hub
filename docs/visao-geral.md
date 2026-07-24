@@ -2,7 +2,7 @@
 
 ## Problema
 
-A AGU mantém milhares de ativos de telecomunicações — ramais PABX, softphones, chips móveis e números de WhatsApp institucionais — espalhados por todas as unidades da federação. O controle é feito hoje em **planilhas descentralizadas**, o que gera:
+A AGU mantém milhares de ativos de telecomunicações - ramais PABX, softphones, chips móveis e números de WhatsApp institucionais - espalhados por todas as unidades da federação. O controle é feito hoje em **planilhas descentralizadas**, o que gera:
 
 - Divergência entre inventário físico e contratual.
 - Dificuldade de rastrear alterações (quem mudou o quê, quando).
@@ -15,7 +15,7 @@ A AGU mantém milhares de ativos de telecomunicações — ramais PABX, softphon
 O **Sistema de Gestão de Telecomunicações (SGT AGU)** é um portal web único que:
 
 1. Consolida em um mesmo repositório todo o ciclo de vida dos ativos.
-2. Aplica **trava de conformidade** — WhatsApp Messenger obrigatório; Business vedado.
+2. Aplica **trava de conformidade** - WhatsApp Messenger obrigatório; Business vedado.
 3. Registra automaticamente toda alteração numa **trilha de auditoria imutável** com valor "antes" e "depois".
 4. Permite **carga em lote** das planilhas legadas para migração imediata.
 5. Oferece **controle granular de acesso** por região *e* unidade.

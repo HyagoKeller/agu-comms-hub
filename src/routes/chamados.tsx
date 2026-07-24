@@ -8,7 +8,7 @@ import { brl, calcISTMensal, diffHoras, severidadeDef } from "@/lib/imr";
 import { SEVERIDADES, type SeveridadeChamado, type StatusChamado } from "@/lib/types";
 
 export const Route = createFileRoute("/chamados")({
-  head: () => ({ meta: [{ title: "Chamados Técnicos (IST) — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Chamados Técnicos (IST) - SGT AGU" }] }),
   component: ChamadosPage,
 });
 
@@ -90,7 +90,7 @@ function ChamadosPage() {
                         {STATUS_LABEL[c.status]}
                       </GovTag>
                     </td>
-                    <td className="px-4 py-2 text-right font-semibold text-gov-danger">{c.glosaIST ? brl(c.glosaIST) : "—"}</td>
+                    <td className="px-4 py-2 text-right font-semibold text-gov-danger">{c.glosaIST ? brl(c.glosaIST) : "-"}</td>
                     <td className="px-4 py-2 text-right">
                       <button className="text-sm text-gov-blue font-semibold hover:underline" onClick={() => setDetalheId(c.id)}>Abrir</button>
                     </td>
@@ -139,7 +139,7 @@ function NovoChamadoModal({ onClose }: { onClose: () => void }) {
         <div className="md:col-span-2">
           <label className="gov-label">Contrato</label>
           <select className="gov-input" value={contratoId} onChange={(e) => setContratoId(e.target.value)}>
-            {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} — {c.fornecedorRazaoSocial}</option>)}
+            {contratos.map((c) => <option key={c.id} value={c.id}>Nº {c.numero} - {c.fornecedorRazaoSocial}</option>)}
           </select>
         </div>
         <div>
@@ -164,7 +164,7 @@ function NovoChamadoModal({ onClose }: { onClose: () => void }) {
           <textarea className="gov-input" rows={3} value={descricao} onChange={(e) => setDescricao(e.target.value)} />
         </div>
         <div>
-          <label className="gov-label">Valor mensal da OS (R$) — base IST</label>
+          <label className="gov-label">Valor mensal da OS (R$) - base IST</label>
           <input className="gov-input" placeholder="0,00" value={valorMensalOS} onChange={(e) => setValorMensalOS(e.target.value)} required />
         </div>
         <div className="md:col-span-2 flex justify-end gap-2 pt-2 border-t border-border mt-2">
@@ -192,11 +192,11 @@ function DetalheChamadoModal({ id, onClose }: { id: string; onClose: () => void 
         <Info label="Título">{c.titulo}</Info>
         <Info label="Unidade">{c.unidade}</Info>
         <Info label="Aberto em">{new Date(c.abertoEm).toLocaleString("pt-BR")}</Info>
-        <Info label="Respondido em">{c.respondidoEm ? new Date(c.respondidoEm).toLocaleString("pt-BR") : "—"}</Info>
-        <Info label="Solucionado em">{c.solucionadoEm ? new Date(c.solucionadoEm).toLocaleString("pt-BR") : "—"}</Info>
+        <Info label="Respondido em">{c.respondidoEm ? new Date(c.respondidoEm).toLocaleString("pt-BR") : "-"}</Info>
+        <Info label="Solucionado em">{c.solucionadoEm ? new Date(c.solucionadoEm).toLocaleString("pt-BR") : "-"}</Info>
         <Info label="Horas decorridas">{horas.toFixed(1)}h / limite {def.prazoSolucaoH}h</Info>
         <Info label="Valor mensal OS (base)">{brl(c.valorMensalOS)}</Info>
-        <Info label="Glosa IST">{c.glosaIST ? <span className="text-gov-danger font-semibold">{brl(c.glosaIST)}</span> : "—"}</Info>
+        <Info label="Glosa IST">{c.glosaIST ? <span className="text-gov-danger font-semibold">{brl(c.glosaIST)}</span> : "-"}</Info>
         {c.descricao && <div className="md:col-span-2"><div className="text-xs font-semibold uppercase text-muted-foreground">Descrição</div><div className="text-sm mt-1">{c.descricao}</div></div>}
 
         <div className="md:col-span-2 flex flex-wrap gap-2 pt-3 border-t border-border">
@@ -216,7 +216,7 @@ function DetalheChamadoModal({ id, onClose }: { id: string; onClose: () => void 
 }
 
 function Info({ label, children }: { label: string; children: React.ReactNode }) {
-  return (<div><div className="text-xs font-semibold uppercase text-muted-foreground">{label}</div><div className="text-sm mt-1">{children ?? "—"}</div></div>);
+  return (<div><div className="text-xs font-semibold uppercase text-muted-foreground">{label}</div><div className="text-sm mt-1">{children ?? "-"}</div></div>);
 }
 
 function Modal({ titulo, onClose, children }: { titulo: string; onClose: () => void; children: React.ReactNode }) {

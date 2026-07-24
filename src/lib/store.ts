@@ -123,7 +123,7 @@ function seed(): State {
     criadoEm: "2026-02-01T10:00:00Z",
   };
 
-  // Relatório IAR seed — 1º semestre 2026 (a entregar)
+  // Relatório IAR seed - 1º semestre 2026 (a entregar)
   const relatoriosIAR: RelatorioIAR[] = [
     { id: "iar1", contratoId: "ct1", periodo: "2026-S1", prazoEntrega: "2026-08-15", valorMensalReferencia: 30972.28, status: "PENDENTE", criadoEm: "2026-02-15T00:00:00Z" },
   ];

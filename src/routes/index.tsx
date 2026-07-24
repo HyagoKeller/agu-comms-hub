@@ -11,7 +11,7 @@ import { alertasContrato, brl, calcISTMensal } from "@/lib/imr";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [
-    { title: "Painel Executivo — SGT AGU" },
+    { title: "Painel Executivo - SGT AGU" },
     { name: "description", content: "Painel executivo IMR do Contrato STFC 12/2026: glosas, IST, portabilidade e capacidade." },
   ] }),
   component: Dashboard,
@@ -70,7 +70,7 @@ function Dashboard() {
       <GovBreadcrumb items={[{ label: "Painel Executivo" }]} />
       <section className="gov-container pb-10">
         <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl">Painel Executivo — Contrato STFC {contratoAtivo?.numero ?? "—"}</h1>
+          <h1 className="text-2xl md:text-3xl">Painel Executivo - Contrato STFC {contratoAtivo?.numero ?? "-"}</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Visão consolidada de execução contratual, IMR (IAE/IST/IAR), capacidade e portabilidade.
           </p>
@@ -94,7 +94,7 @@ function Dashboard() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
           <KpiCard label="Glosa total (IMR)" value={brl(kpi.glosaTotal)} icon={Wallet} tone={kpi.glosaTotal > 0 ? "danger" : "success"} sub={`de ${brl(valorMensal)} mensais`} />
           <KpiCard label="Valor líquido a pagar" value={brl(valorLiquido)} icon={FileBarChart2} tone="success" sub="após glosas" />
-          <KpiCard label="IST — conformidade" value={`${kpi.ist.pct}%`} icon={TicketCheck} tone={kpi.ist.pct >= 95 ? "success" : kpi.ist.pct >= 80 ? "warning" : "danger"} sub={`${kpi.ist.conformes}/${kpi.ist.total} chamados`} />
+          <KpiCard label="IST - conformidade" value={`${kpi.ist.pct}%`} icon={TicketCheck} tone={kpi.ist.pct >= 95 ? "success" : kpi.ist.pct >= 80 ? "warning" : "danger"} sub={`${kpi.ist.conformes}/${kpi.ist.total} chamados`} />
           <KpiCard label="IAE médio (dias)" value={kpi.iaeMedio.toFixed(1)} icon={AlertTriangle} tone={kpi.iaeMedio > 15 ? "danger" : kpi.iaeMedio > 5 ? "warning" : "success"} sub="atrasos em OS" />
         </div>
 
@@ -102,9 +102,9 @@ function Dashboard() {
         <div className="grid gap-6 lg:grid-cols-3 mb-6">
           <div className="gov-card lg:col-span-2">
             <h2 className="text-lg mb-3">Composição das glosas do período</h2>
-            <GlosaBar label="IAE — Ordens de Serviço" v={kpi.glosaIAE} total={kpi.glosaTotal} />
-            <GlosaBar label="IST — Chamados Técnicos" v={kpi.glosaIST} total={kpi.glosaTotal} />
-            <GlosaBar label="IAR — Relatório Semestral" v={kpi.glosaIAR} total={kpi.glosaTotal} />
+            <GlosaBar label="IAE - Ordens de Serviço" v={kpi.glosaIAE} total={kpi.glosaTotal} />
+            <GlosaBar label="IST - Chamados Técnicos" v={kpi.glosaIST} total={kpi.glosaTotal} />
+            <GlosaBar label="IAR - Relatório Semestral" v={kpi.glosaIAR} total={kpi.glosaTotal} />
             <Link to="/glosas" className="mt-3 inline-block text-sm text-gov-blue font-semibold hover:underline">Abrir Painel de Glosas →</Link>
           </div>
 

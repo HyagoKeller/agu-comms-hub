@@ -14,7 +14,7 @@ Após login bem-sucedido, a sessão é armazenada em `localStorage` (`agu-auth-v
 ## Métodos suportados
 
 ### Local
-Usuários criados em `/usuarios`. Senha validada localmente (protótipo — qualquer senha é aceita para os perfis de demo).
+Usuários criados em `/usuarios`. Senha validada localmente (protótipo - qualquer senha é aceita para os perfis de demo).
 
 ### Active Directory (LDAP)
 Configurável em **Admin → Autenticação → Active Directory**:

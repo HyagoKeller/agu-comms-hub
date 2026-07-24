@@ -29,7 +29,7 @@ Templates podem ser customizados em **Admin → Templates de Perfil**.
 O escopo do usuário combina duas listas:
 
 - `regioes`: as SADs em que ele atua (R1..R6).
-- `unidades` *(opcional)*: quando informada, restringe a visão às unidades específicas — mesmo dentro de uma região autorizada, ele só vê essas unidades.
+- `unidades` *(opcional)*: quando informada, restringe a visão às unidades específicas - mesmo dentro de uma região autorizada, ele só vê essas unidades.
 
 Se `unidades` estiver vazio, o usuário enxerga **todas as unidades das regiões atribuídas**.
 
@@ -44,4 +44,4 @@ O escopo é editado em **Usuários → Editar escopo**.
 ## Aplicação
 - No filtro padrão das listagens (Inventário, WhatsApp).
 - Nos totais do Painel.
-- Nas exportações — usuário nunca exporta dados fora do seu escopo.
+- Nas exportações - usuário nunca exporta dados fora do seu escopo.

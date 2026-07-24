@@ -4,7 +4,7 @@
 
 Nas linhas móveis institucionais é permitido **exclusivamente o WhatsApp Messenger**. O uso de **WhatsApp Business** em dispositivos corporativos é **vedado** e caracteriza violação de conformidade.
 
-O uso de **WABA (WhatsApp Business API)** é permitido apenas em contas **institucionais** aprovadas — nunca em dispositivos pessoais dos servidores.
+O uso de **WABA (WhatsApp Business API)** é permitido apenas em contas **institucionais** aprovadas - nunca em dispositivos pessoais dos servidores.
 
 ## Categorias no SGT
 
@@ -12,7 +12,7 @@ O uso de **WABA (WhatsApp Business API)** é permitido apenas em contas **instit
 |---|---|---|
 | `MESSENGER_PESSOAL` | App Messenger em chip institucional atribuído a um servidor | Verde / Conforme |
 | `WABA_INSTITUCIONAL` | Números conectados à API oficial em canais institucionais | Azul / Institucional |
-| `BUSINESS_APP` | Aplicativo WhatsApp Business detectado — violação | Vermelho / Violação |
+| `BUSINESS_APP` | Aplicativo WhatsApp Business detectado - violação | Vermelho / Violação |
 
 ## Módulo WhatsApp (`/whatsapp`)
 
@@ -25,8 +25,8 @@ O uso de **WABA (WhatsApp Business API)** é permitido apenas em contas **instit
 
 O painel principal exibe a "Trava de Conformidade" com contadores em tempo real de:
 
-- **Conformes** — número correto de linhas Messenger auditadas pelo MDM.
-- **Não sincronizados** — dispositivos sem retorno recente do MDM.
-- **Violações** — presença de WhatsApp Business ou app não autorizado.
+- **Conformes** - número correto de linhas Messenger auditadas pelo MDM.
+- **Não sincronizados** - dispositivos sem retorno recente do MDM.
+- **Violações** - presença de WhatsApp Business ou app não autorizado.
 
 Cada violação gera evento em auditoria e deve ser tratada pela equipe da SAD responsável.

@@ -6,7 +6,7 @@ import { auth, MOCK_USERS, useAuth } from "@/lib/auth";
 import { useStore } from "@/lib/store";
 
 export const Route = createFileRoute("/login")({
-  head: () => ({ meta: [{ title: "Entrar — SGT AGU" }] }),
+  head: () => ({ meta: [{ title: "Entrar - SGT AGU" }] }),
   component: LoginPage,
 });
 
@@ -70,7 +70,7 @@ function LoginPage() {
               <div className="font-bold text-lg text-gov-blue-dark leading-tight mt-3">
                 Sistema de Gestão de Telecomunicações
               </div>
-              <div className="text-xs text-muted-foreground">SGT AGU — Advocacia-Geral da União</div>
+              <div className="text-xs text-muted-foreground">SGT AGU - Advocacia-Geral da União</div>
               <div className="custom-underline mt-2" />
             </div>
 
