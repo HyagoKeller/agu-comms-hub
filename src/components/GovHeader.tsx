@@ -188,19 +188,19 @@ export function GovSidebar({
       {/* Overlay mobile */}
       {open && (
         <div
-          className="fixed inset-0 z-30 bg-black/40 lg:hidden"
+          className="fixed inset-0 z-30 bg-black/40 md:hidden"
           onClick={onClose}
           aria-hidden="true"
         />
       )}
       <aside
         aria-label="Menu principal"
-        className={`fixed lg:sticky top-0 lg:top-0 left-0 z-40 h-screen lg:h-[calc(100vh)] w-64 shrink-0 border-r border-border bg-card transition-transform duration-200 ${
-          open ? "translate-x-0" : "-translate-x-full lg:translate-x-0 lg:w-0 lg:border-r-0 lg:overflow-hidden"
+        className={`fixed md:sticky top-0 md:top-0 left-0 z-40 h-screen md:h-[calc(100vh)] w-64 shrink-0 border-r border-border bg-card transition-transform duration-200 ${
+          open ? "translate-x-0" : "-translate-x-full md:translate-x-0 md:w-0 md:border-r-0 md:overflow-hidden"
         }`}
       >
         <div className="flex h-full flex-col overflow-y-auto">
-          <div className="lg:hidden flex items-center justify-between px-4 h-14 border-b border-border">
+          <div className="md:hidden flex items-center justify-between px-4 h-14 border-b border-border">
             <span className="font-bold text-gov-blue-dark">Menu</span>
             <button
               type="button"
@@ -211,6 +211,7 @@ export function GovSidebar({
               <X className="h-5 w-5" />
             </button>
           </div>
+
 
           <nav className="flex-1 px-3 py-4 space-y-6">
             {SIDE_NAV.map((group) => {
