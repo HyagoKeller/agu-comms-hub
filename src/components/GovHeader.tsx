@@ -101,8 +101,9 @@ export function GovHeader({
           <button
             type="button"
             onClick={onToggleSidebar}
-            aria-label={sidebarOpen ? "Recolher menu" : "Abrir menu"}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gov-blue-dark hover:bg-accent"
+            aria-label={sidebarOpen ? "Recolher menu lateral" : "Abrir menu lateral"}
+            title={sidebarOpen ? "Recolher menu" : "Abrir menu"}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-gov-blue-dark hover:bg-accent hover:border-gov-blue"
           >
             {sidebarOpen ? <PanelLeftClose className="h-5 w-5" /> : <PanelLeftOpen className="h-5 w-5" />}
           </button>
