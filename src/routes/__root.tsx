@@ -125,6 +125,16 @@ function RootComponent() {
   const isLogin = path === "/login";
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
+  // Restaura preferência do usuário
+  useEffect(() => {
+    const saved = localStorage.getItem("sgt.sidebarOpen");
+    if (saved !== null) setSidebarOpen(saved === "1");
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("sgt.sidebarOpen", sidebarOpen ? "1" : "0");
+  }, [sidebarOpen]);
+
   useEffect(() => {
     if (!user && !isLogin) {
       router.navigate({ to: "/login" });
