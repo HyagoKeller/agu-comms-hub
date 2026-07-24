@@ -85,11 +85,27 @@ function Dashboard() {
     <>
       <GovBreadcrumb items={[{ label: "Painel Executivo" }]} />
       <section className="gov-container pb-10">
-        <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl">Painel Executivo - Contrato STFC {contratoAtivo?.numero ?? "-"}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            Visão consolidada de execução contratual, IMR (IAE/IST/IAR), capacidade e portabilidade.
-          </p>
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="text-2xl md:text-3xl">Painel Executivo - Contrato STFC {contratoAtivo?.numero ?? "-"}</h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              Visão consolidada de execução contratual, IMR (IAE/IST/IAR), capacidade e portabilidade.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-end gap-2">
+            <div>
+              <label className="gov-label">De</label>
+              <input type="date" className="gov-input" value={de} onChange={(e) => setDe(e.target.value)} />
+            </div>
+            <div>
+              <label className="gov-label">Até</label>
+              <input type="date" className="gov-input" value={ate} onChange={(e) => setAte(e.target.value)} />
+            </div>
+            <button
+              className="gov-btn-secondary h-10"
+              onClick={() => { setDe(toISODate(defDe)); setAte(toISODate(hoje)); }}
+            >Últimos 3 meses</button>
+          </div>
         </div>
 
         {alertas.length > 0 && (
