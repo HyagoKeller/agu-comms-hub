@@ -1,8 +1,9 @@
 import { useSyncExternalStore } from "react";
 import type {
-  Ativo, AuditoriaLog, AuthConfig, CustoItem, PerfilTemplate, PerfilUsuario,
-  Permissoes, Unidade, WhatsappNumero,
+  Ativo, AuditoriaLog, AuthConfig, Contrato, CustoItem, OrdemServico, OSGlosaOverride,
+  PerfilTemplate, PerfilUsuario, Permissoes, StatusOS, Unidade, WhatsappNumero,
 } from "./types";
+import { addDias, aplicaIAE } from "./imr";
 
 interface State {
   ativos: Ativo[];
@@ -13,9 +14,12 @@ interface State {
   whats: WhatsappNumero[];
   perfilTemplates: PerfilTemplate[];
   authConfig: AuthConfig;
+  contratos: Contrato[];
+  ordensServico: OrdemServico[];
 }
 
-const KEY = "agu-telefonia-v2";
+const KEY = "agu-telefonia-v3";
+
 
 const FULL: Permissoes = {
   verCadastro: true, editar: true, excluir: true,
