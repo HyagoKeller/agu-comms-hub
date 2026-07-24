@@ -30,19 +30,25 @@ type NavItem = {
 
 // Itens de acesso rápido que ficam no topo
 const TOP_NAV: NavItem[] = [
-  { to: "/", label: "Painel", icon: LayoutDashboard },
   { to: "/auditoria", label: "Auditoria", icon: ShieldCheck },
 ];
 
 // Menu lateral principal (agrupado)
 const SIDE_NAV: { title: string; items: NavItem[] }[] = [
   {
+    title: "Painéis",
+    items: [
+      { to: "/", label: "Painel Executivo", icon: LayoutDashboard },
+      { to: "/glosas", label: "Painel de Glosas", icon: Receipt },
+      { to: "/bilhetagem", label: "Painel de Bilhetagem", icon: PhoneCall },
+    ],
+  },
+  {
     title: "Contratual",
     items: [
       { to: "/contratos", label: "Contratos", icon: FileText },
       { to: "/ordens-servico", label: "Ordens de Serviço", icon: ClipboardList },
       { to: "/chamados", label: "Chamados", icon: Headphones },
-      { to: "/glosas", label: "Glosas", icon: Receipt },
       { to: "/portabilidade", label: "Portabilidade", icon: ArrowLeftRight },
       { to: "/sancoes", label: "Sanções", icon: Gavel },
     ],
