@@ -231,7 +231,11 @@ export function GovSidebar({
                         <li key={n.to}>
                           <Link
                             to={n.to}
-                            onClick={onClose}
+                            onClick={() => {
+                              if (typeof window !== "undefined" && window.innerWidth < 768) {
+                                onClose();
+                              }
+                            }}
                             className={`flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                               active
                                 ? "bg-gov-blue text-white"
