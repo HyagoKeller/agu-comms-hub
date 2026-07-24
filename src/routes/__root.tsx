@@ -9,9 +9,9 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { GovHeader } from "@/components/GovHeader";
+import { GovHeader, GovSidebar } from "@/components/GovHeader";
 import { useAuth } from "@/lib/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function NotFoundComponent() {
   return (
@@ -123,6 +123,7 @@ function RootComponent() {
   const router = useRouter();
   const path = router.state.location.pathname;
   const isLogin = path === "/login";
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     if (!user && !isLogin) {
@@ -136,16 +137,24 @@ function RootComponent() {
         <Outlet />
       ) : (
         <div className="min-h-screen flex flex-col bg-background">
-          <GovHeader />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <footer className="border-t border-border bg-card mt-12">
-            <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
-              <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
-              <span>Sistema de Gestão de Telecomunicações - SGT AGU · v1.0</span>
+          <GovHeader
+            sidebarOpen={sidebarOpen}
+            onToggleSidebar={() => setSidebarOpen((v) => !v)}
+          />
+          <div className="flex flex-1 min-h-0">
+            <GovSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+            <div className="flex-1 flex flex-col min-w-0">
+              <main className="flex-1">
+                <Outlet />
+              </main>
+              <footer className="border-t border-border bg-card mt-12">
+                <div className="gov-container py-6 text-xs text-muted-foreground flex flex-wrap justify-between gap-2">
+                  <span>Advocacia-Geral da União · Coordenação-Geral de Tecnologia da Informação</span>
+                  <span>Sistema de Gestão de Telecomunicações - SGT AGU · v1.0</span>
+                </div>
+              </footer>
             </div>
-          </footer>
+          </div>
         </div>
       )}
     </QueryClientProvider>
