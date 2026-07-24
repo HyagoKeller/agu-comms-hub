@@ -11,12 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhatsappRouteImport } from './routes/whatsapp'
 import { Route as UsuariosRouteImport } from './routes/usuarios'
+import { Route as SancoesRouteImport } from './routes/sancoes'
 import { Route as RelatoriosRouteImport } from './routes/relatorios'
+import { Route as PortabilidadeRouteImport } from './routes/portabilidade'
 import { Route as OrdensServicoRouteImport } from './routes/ordens-servico'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as GlosasRouteImport } from './routes/glosas'
 import { Route as EstruturaRouteImport } from './routes/estrutura'
 import { Route as CustosRouteImport } from './routes/custos'
 import { Route as ContratosRouteImport } from './routes/contratos'
+import { Route as ChamadosRouteImport } from './routes/chamados'
 import { Route as BilhetagemRouteImport } from './routes/bilhetagem'
 import { Route as AuditoriaRouteImport } from './routes/auditoria'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -35,9 +39,19 @@ const UsuariosRoute = UsuariosRouteImport.update({
   path: '/usuarios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SancoesRoute = SancoesRouteImport.update({
+  id: '/sancoes',
+  path: '/sancoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RelatoriosRoute = RelatoriosRouteImport.update({
   id: '/relatorios',
   path: '/relatorios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortabilidadeRoute = PortabilidadeRouteImport.update({
+  id: '/portabilidade',
+  path: '/portabilidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrdensServicoRoute = OrdensServicoRouteImport.update({
@@ -48,6 +62,11 @@ const OrdensServicoRoute = OrdensServicoRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlosasRoute = GlosasRouteImport.update({
+  id: '/glosas',
+  path: '/glosas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstruturaRoute = EstruturaRouteImport.update({
@@ -63,6 +82,11 @@ const CustosRoute = CustosRouteImport.update({
 const ContratosRoute = ContratosRouteImport.update({
   id: '/contratos',
   path: '/contratos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChamadosRoute = ChamadosRouteImport.update({
+  id: '/chamados',
+  path: '/chamados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BilhetagemRoute = BilhetagemRouteImport.update({
@@ -106,12 +130,16 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/chamados': typeof ChamadosRoute
   '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/glosas': typeof GlosasRoute
   '/login': typeof LoginRoute
   '/ordens-servico': typeof OrdensServicoRoute
+  '/portabilidade': typeof PortabilidadeRoute
   '/relatorios': typeof RelatoriosRoute
+  '/sancoes': typeof SancoesRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
@@ -123,12 +151,16 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/chamados': typeof ChamadosRoute
   '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/glosas': typeof GlosasRoute
   '/login': typeof LoginRoute
   '/ordens-servico': typeof OrdensServicoRoute
+  '/portabilidade': typeof PortabilidadeRoute
   '/relatorios': typeof RelatoriosRoute
+  '/sancoes': typeof SancoesRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
@@ -141,12 +173,16 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/auditoria': typeof AuditoriaRoute
   '/bilhetagem': typeof BilhetagemRoute
+  '/chamados': typeof ChamadosRoute
   '/contratos': typeof ContratosRoute
   '/custos': typeof CustosRoute
   '/estrutura': typeof EstruturaRoute
+  '/glosas': typeof GlosasRoute
   '/login': typeof LoginRoute
   '/ordens-servico': typeof OrdensServicoRoute
+  '/portabilidade': typeof PortabilidadeRoute
   '/relatorios': typeof RelatoriosRoute
+  '/sancoes': typeof SancoesRoute
   '/usuarios': typeof UsuariosRoute
   '/whatsapp': typeof WhatsappRoute
   '/inventario/importar': typeof InventarioImportarRoute
@@ -160,12 +196,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/chamados'
     | '/contratos'
     | '/custos'
     | '/estrutura'
+    | '/glosas'
     | '/login'
     | '/ordens-servico'
+    | '/portabilidade'
     | '/relatorios'
+    | '/sancoes'
     | '/usuarios'
     | '/whatsapp'
     | '/inventario/importar'
@@ -177,12 +217,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/chamados'
     | '/contratos'
     | '/custos'
     | '/estrutura'
+    | '/glosas'
     | '/login'
     | '/ordens-servico'
+    | '/portabilidade'
     | '/relatorios'
+    | '/sancoes'
     | '/usuarios'
     | '/whatsapp'
     | '/inventario/importar'
@@ -194,12 +238,16 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auditoria'
     | '/bilhetagem'
+    | '/chamados'
     | '/contratos'
     | '/custos'
     | '/estrutura'
+    | '/glosas'
     | '/login'
     | '/ordens-servico'
+    | '/portabilidade'
     | '/relatorios'
+    | '/sancoes'
     | '/usuarios'
     | '/whatsapp'
     | '/inventario/importar'
@@ -212,12 +260,16 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   AuditoriaRoute: typeof AuditoriaRoute
   BilhetagemRoute: typeof BilhetagemRoute
+  ChamadosRoute: typeof ChamadosRoute
   ContratosRoute: typeof ContratosRoute
   CustosRoute: typeof CustosRoute
   EstruturaRoute: typeof EstruturaRoute
+  GlosasRoute: typeof GlosasRoute
   LoginRoute: typeof LoginRoute
   OrdensServicoRoute: typeof OrdensServicoRoute
+  PortabilidadeRoute: typeof PortabilidadeRoute
   RelatoriosRoute: typeof RelatoriosRoute
+  SancoesRoute: typeof SancoesRoute
   UsuariosRoute: typeof UsuariosRoute
   WhatsappRoute: typeof WhatsappRoute
   InventarioImportarRoute: typeof InventarioImportarRoute
@@ -241,11 +293,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsuariosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sancoes': {
+      id: '/sancoes'
+      path: '/sancoes'
+      fullPath: '/sancoes'
+      preLoaderRoute: typeof SancoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/relatorios': {
       id: '/relatorios'
       path: '/relatorios'
       fullPath: '/relatorios'
       preLoaderRoute: typeof RelatoriosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portabilidade': {
+      id: '/portabilidade'
+      path: '/portabilidade'
+      fullPath: '/portabilidade'
+      preLoaderRoute: typeof PortabilidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ordens-servico': {
@@ -260,6 +326,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glosas': {
+      id: '/glosas'
+      path: '/glosas'
+      fullPath: '/glosas'
+      preLoaderRoute: typeof GlosasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estrutura': {
@@ -281,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/contratos'
       fullPath: '/contratos'
       preLoaderRoute: typeof ContratosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chamados': {
+      id: '/chamados'
+      path: '/chamados'
+      fullPath: '/chamados'
+      preLoaderRoute: typeof ChamadosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bilhetagem': {
@@ -340,12 +420,16 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   AuditoriaRoute: AuditoriaRoute,
   BilhetagemRoute: BilhetagemRoute,
+  ChamadosRoute: ChamadosRoute,
   ContratosRoute: ContratosRoute,
   CustosRoute: CustosRoute,
   EstruturaRoute: EstruturaRoute,
+  GlosasRoute: GlosasRoute,
   LoginRoute: LoginRoute,
   OrdensServicoRoute: OrdensServicoRoute,
+  PortabilidadeRoute: PortabilidadeRoute,
   RelatoriosRoute: RelatoriosRoute,
+  SancoesRoute: SancoesRoute,
   UsuariosRoute: UsuariosRoute,
   WhatsappRoute: WhatsappRoute,
   InventarioImportarRoute: InventarioImportarRoute,
