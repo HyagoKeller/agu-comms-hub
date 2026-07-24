@@ -9,9 +9,9 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { GovHeader } from "@/components/GovHeader";
+import { GovHeader, GovSidebar } from "@/components/GovHeader";
 import { useAuth } from "@/lib/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function NotFoundComponent() {
   return (
