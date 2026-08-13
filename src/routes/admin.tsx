@@ -1,6 +1,6 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Shield, KeyRound, ShieldCheck, Server, Cloud, Save, Sliders } from "lucide-react";
+import { Shield, KeyRound, ShieldCheck, Server, Cloud, Save, Sliders, BookOpen } from "lucide-react";
 import { GovBreadcrumb } from "@/components/GovHeader";
 import { GovTag } from "@/components/StatusTag";
 import { store, useStore } from "@/lib/store";
