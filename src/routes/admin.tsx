@@ -27,7 +27,7 @@ function AdminPage() {
     );
   }
 
-  const [aba, setAba] = useState<"perfis" | "mfa" | "ad" | "m365">("perfis");
+  const [aba, setAba] = useState<"perfis" | "mfa" | "ad" | "m365" | "manual">("perfis");
 
   return (
     <>
@@ -46,6 +46,7 @@ function AdminPage() {
             { id: "mfa", label: "Autenticação MFA", icon: ShieldCheck },
             { id: "ad", label: "Active Directory", icon: Server },
             { id: "m365", label: "Microsoft 365", icon: Cloud },
+            { id: "manual", label: "Manual do Administrador", icon: BookOpen },
           ] as const).map((t) => {
             const ativo = aba === t.id;
             const Icon = t.icon;
@@ -64,10 +65,87 @@ function AdminPage() {
         {aba === "mfa" && <MfaPanel />}
         {aba === "ad" && <AdPanel />}
         {aba === "m365" && <M365Panel />}
+        {aba === "manual" && <ManualPanel />}
       </section>
     </>
   );
 }
+
+function ManualPanel() {
+  return (
+    <div className="gov-card space-y-6">
+      <div>
+        <h2 className="text-xl text-gov-blue-dark">Manual do Administrador - SGT</h2>
+        <p className="text-sm text-muted-foreground mt-1">
+          Roteiro operacional do Sistema de Gestão de Telecomunicações. Versão completa em <code>docs/manual-do-administrador.md</code>.
+        </p>
+      </div>
+
+      {MANUAL.map((sec) => (
+        <section key={sec.titulo}>
+          <h3 className="text-base font-bold text-gov-blue-dark">{sec.titulo}</h3>
+          <ol className="mt-2 space-y-1 text-sm list-decimal pl-5">
+            {sec.passos.map((p, i) => <li key={i}>{p}</li>)}
+          </ol>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+const MANUAL: { titulo: string; passos: string[] }[] = [
+  {
+    titulo: "1. Primeiro acesso e segurança",
+    passos: [
+      "Entre com o e-mail institucional na tela de login centralizada.",
+      "Ative o MFA na aba \"Autenticação MFA\" - obrigatório para administradores.",
+      "Configure o Active Directory e/ou o Microsoft 365 (Entra ID) nas abas correspondentes e defina o método primário de autenticação.",
+    ],
+  },
+  {
+    titulo: "2. Perfis, permissões e escopo de acesso",
+    passos: [
+      "Edite os modelos de perfil na aba \"Perfis & Permissões\" (Admin, Gestor Regional, Operador, Auditor, Gestor do Contrato, Fiscais).",
+      "Em Usuários, cadastre o servidor, escolha o perfil e marque as regiões (SAD) de escopo.",
+      "Se necessário, restrinja o acesso a unidades específicas dentro das regiões autorizadas.",
+    ],
+  },
+  {
+    titulo: "3. Estrutura organizacional e inventário",
+    passos: [
+      "Em Estrutura, cadastre a hierarquia Região (SAD) > Estado > Cidade > Unidade, ou use a carga em massa no formato hierárquico.",
+      "Em Inventário, cadastre ativos individualmente ou importe planilhas .xlsx multi-aba em Carga em Lote.",
+      "Informe o Protocolo AGU Serviços (ITSM) quando o cadastro decorrer de um chamado.",
+      "Acompanhe conformidade MDM e a política de WhatsApp no módulo WhatsApp.",
+    ],
+  },
+  {
+    titulo: "4. Contrato, ordens de serviço e chamados",
+    passos: [
+      "Em Contratos, mantenha itens, garantia, reajuste e fiscalização do Contrato STFC nº 12/2026 atualizados.",
+      "Emita Ordens de Serviço com o tipo correto - o prazo (TCE) é preenchido pelo padrão contratual.",
+      "Ao concluir a OS, o sistema calcula o IAE e a glosa automaticamente; ajustes exigem justificativa registrada em auditoria.",
+      "Em Chamados, registre incidentes com a severidade S1-S5; a glosa IST é apurada ao marcar como solucionado.",
+    ],
+  },
+  {
+    titulo: "5. Glosas",
+    passos: [
+      "Abra o Painel de Glosas e selecione o contrato e o período (De/Até).",
+      "IAE, IST e IAR são calculados automaticamente a partir de OS, chamados e do envio do relatório semestral.",
+      "Use o bloco \"Cadastro de glosas\" para lançar manualmente ocorrências fora desses fluxos (IDT, descontos de faturamento etc.), informando origem, competência, referência, valor e memória de cálculo.",
+      "Homologue a glosa após a análise da fiscalização; o valor líquido a pagar é recalculado no painel.",
+    ],
+  },
+  {
+    titulo: "6. Sanções, portabilidade e auditoria",
+    passos: [
+      "Registre infrações e sanções administrativas conforme o item 8.1 do TR e a Lei 14.133.",
+      "Acompanhe a portabilidade por unidade (etapas E1-E3) e as faixas DDR no módulo Portabilidade.",
+      "Consulte a trilha completa Antes > Depois em Auditoria, filtrando por módulo, ator ou registro.",
+    ],
+  },
+];
 
 function PerfisPanel() {
   const templates = useStore((s) => s.perfilTemplates);
