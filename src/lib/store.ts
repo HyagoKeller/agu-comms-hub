@@ -1,7 +1,7 @@
 import { useSyncExternalStore } from "react";
 import type {
   Ativo, AuditoriaLog, AuthConfig, ChamadoTecnico, Contrato, CustoItem, EtapaPortabilidade,
-  FaixaDDR, OrdemServico, OSGlosaOverride, PerfilTemplate, PerfilUsuario, Permissoes,
+  FaixaDDR, GlosaManual, OrdemServico, OSGlosaOverride, PerfilTemplate, PerfilUsuario, Permissoes,
   RelatorioIAR, Sancao, StatusChamado, StatusOS, Unidade, WhatsappNumero,
 } from "./types";
 import { addDias, aplicaIAE, avaliaChamado, calcIAR } from "./imr";
@@ -20,6 +20,7 @@ interface State {
   chamados: ChamadoTecnico[];
   relatoriosIAR: RelatorioIAR[];
   sancoes: Sancao[];
+  glosasManuais: GlosaManual[];
   faixasDDR: FaixaDDR[];
 }
 
@@ -135,6 +136,7 @@ function seed(): State {
     chamados: [],
     relatoriosIAR,
     sancoes: [],
+    glosasManuais: [],
     faixasDDR,
   };
 }
@@ -160,6 +162,7 @@ function load(): State {
         chamados: parsed.chamados ?? def.chamados,
         relatoriosIAR: parsed.relatoriosIAR ?? def.relatoriosIAR,
         sancoes: parsed.sancoes ?? def.sancoes,
+        glosasManuais: parsed.glosasManuais ?? def.glosasManuais,
         faixasDDR: parsed.faixasDDR ?? def.faixasDDR,
       };
     }
@@ -386,6 +389,30 @@ export const store = {
     const antes = state.sancoes.find((x) => x.id === id);
     setState((s) => ({ ...s, sancoes: s.sancoes.map((x) => x.id === id ? { ...x, ...patch } : x) }));
     log({ modulo: "Sanções", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+
+  // ---------- Glosas lançadas manualmente ----------
+  addGlosaManual(input: Omit<GlosaManual, "id" | "numero" | "status" | "registradoEm">) {
+    const now = new Date().toISOString();
+    const seq = state.glosasManuais.length + 1;
+    const g: GlosaManual = { ...input, id: uid("gl"), numero: `GL-${String(seq).padStart(4, "0")}`, status: "LANCADA", registradoEm: now };
+    setState((s) => ({ ...s, glosasManuais: [g, ...s.glosasManuais] }));
+    log({ modulo: "Glosas", acao: "CRIAR", registroId: g.id, depois: g as unknown as Record<string, unknown> });
+    return g;
+  },
+  updateGlosaManual(id: string, patch: Partial<GlosaManual>) {
+    const antes = state.glosasManuais.find((g) => g.id === id);
+    if (!antes) return;
+    setState((s) => ({ ...s, glosasManuais: s.glosasManuais.map((g) => g.id === id ? { ...g, ...patch } : g) }));
+    log({ modulo: "Glosas", acao: "EDITAR", registroId: id, antes: antes as unknown as Record<string, unknown>, depois: patch as Record<string, unknown> });
+  },
+  homologarGlosaManual(id: string, ator: string) {
+    store.updateGlosaManual(id, { status: "HOMOLOGADA", homologadoPor: ator, homologadoEm: new Date().toISOString() });
+  },
+  removeGlosaManual(id: string) {
+    const antes = state.glosasManuais.find((g) => g.id === id);
+    setState((s) => ({ ...s, glosasManuais: s.glosasManuais.filter((g) => g.id !== id) }));
+    log({ modulo: "Glosas", acao: "EXCLUIR", registroId: id, antes: antes as unknown as Record<string, unknown> });
   },
 
   // ---------- Portabilidade e Faixas DDR ----------
