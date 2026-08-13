@@ -1,4 +1,4 @@
-# SGT AGU - Sistema de Gestão de Telecomunicações
+# SGT - Sistema de Gestão de Telecomunicações (AGU)
 
 Sistema web da Advocacia-Geral da União (AGU) para governança unificada dos ativos de telecomunicações institucionais: ramais PABX, softphones, chips de operadora e números de WhatsApp, distribuídos entre as 6 Superintendências de Administração (SAD) e suas unidades regionais.
 
@@ -89,7 +89,8 @@ src/
 │   ├── bilhetagem.tsx     # painel de bilhetagem
 │   ├── estrutura.tsx      # estrutura organizacional hierárquica
 │   ├── usuarios.tsx       # gestão de usuários + escopo por unidade
-│   ├── admin.tsx          # templates de perfil, MFA, AD, M365
+│   ├── admin.tsx          # templates de perfil, MFA, AD, M365, manual do admin
+│   ├── glosas.tsx         # painel e cadastro de glosas (IAE/IST/IAR/manuais)
 │   ├── auditoria.tsx      # trilha antes/depois
 │   └── login.tsx          # autenticação centralizada + MFA
 ├── components/            # GovHeader, StatusTag, AguLogo
@@ -124,6 +125,7 @@ Ver [`docs/autenticacao.md`](docs/autenticacao.md).
 - [`docs/importacao-planilhas.md`](docs/importacao-planilhas.md) - carga em lote
 - [`docs/auditoria.md`](docs/auditoria.md) - trilha imutável
 - [`docs/whatsapp.md`](docs/whatsapp.md) - política e categorias
+- [`docs/manual-do-administrador.md`](docs/manual-do-administrador.md) - roteiro completo do perfil Administrador
 - [`docs/guia-do-usuario.md`](docs/guia-do-usuario.md) - passo a passo por perfil
 - [`docs/roadmap.md`](docs/roadmap.md) - próximos passos
 
