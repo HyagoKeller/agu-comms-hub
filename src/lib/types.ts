@@ -480,3 +480,33 @@ export interface Sancao {
   observacoes?: string;
   criadoEm: string;
 }
+
+// ---------- Glosas lançadas manualmente pela fiscalização ----------
+export type OrigemGlosa = "IAE" | "IST" | "IAR" | "IDT" | "OUTRA";
+
+export const ORIGENS_GLOSA: { value: OrigemGlosa; label: string }[] = [
+  { value: "IAE", label: "IAE - Atraso na execução de OS" },
+  { value: "IST", label: "IST - Solução de chamado técnico" },
+  { value: "IAR", label: "IAR - Relatório semestral" },
+  { value: "IDT", label: "IDT - Disponibilidade do tronco/serviço" },
+  { value: "OUTRA", label: "Outra ocorrência contratual" },
+];
+
+export type StatusGlosaManual = "LANCADA" | "HOMOLOGADA" | "CANCELADA";
+
+export interface GlosaManual {
+  id: string;
+  numero: string;
+  contratoId: string;
+  origem: OrigemGlosa;
+  competencia: string; // AAAA-MM
+  referencia?: string; // nº da OS, chamado, unidade etc.
+  descricao: string;
+  valor: number;
+  baseCalculo?: string;
+  status: StatusGlosaManual;
+  registradoPor: string;
+  registradoEm: string;
+  homologadoPor?: string;
+  homologadoEm?: string;
+}
